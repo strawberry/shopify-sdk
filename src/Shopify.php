@@ -89,6 +89,3 @@ final class Shopify
         return $this->getClient()->{$method}(...$params);
     }
 }
-
-
-$shopify->shop();

@@ -22,7 +22,7 @@ final class Client
     public static function forPublicApp(array $config): self
     {
         $httpClient = new GuzzleHttpClient([
-            'base_uri' => $config['store_uri'],
+            'base_uri' => "{$config['store_uri']}/admin/api/{$config['version']}/",
             'headers' => [
                 'X-Shopify-Access-Token' => $config['access_token'],
             ],
@@ -38,7 +38,7 @@ final class Client
     public static function forPrivateApp(array $config): self
     {
         $httpClient = new GuzzleHttpClient([
-            'base_uri' => $config['store_uri'],
+            'base_uri' => "{$config['store_uri']}/admin/api/{$config['version']}/",
             'auth' => [
                 $config['api_key'],
                 $config['api_password'],
