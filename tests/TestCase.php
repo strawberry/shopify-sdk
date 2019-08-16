@@ -3,12 +3,21 @@
 namespace Strawberry\Shopify\Tests;
 
 use Mockery;
+use Dotenv\Dotenv;
 use PHPUnit\Framework\TestCase as BaseTestCase;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
 abstract class TestCase extends BaseTestCase
 {
     use MockeryPHPUnitIntegration;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $dotenv = Dotenv::create(__DIR__ . '/../');
+        $dotenv->load();
+    }
 
     /**
      * Shortcut for mocking classes.
