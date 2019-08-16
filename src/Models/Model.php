@@ -2,11 +2,15 @@
 
 namespace Strawberry\Shopify\Models;
 
-use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Arr;
+use Strawberry\Shopify\Http\Response;
+use Illuminate\Contracts\Support\Arrayable;
+use Strawberry\Shopify\Models\Concerns\HasAttributes;
 
 abstract class Model
 {
+    use HasAttributes;
+
     /**
      * @param  Arrayable|array
      */

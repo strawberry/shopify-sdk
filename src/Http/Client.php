@@ -2,6 +2,7 @@
 
 namespace Strawberry\Shopify\Http;
 
+use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\ClientInterface;
 
 final class Client
@@ -26,7 +27,7 @@ final class Client
         try {
             $request = new Request($method, $url, $headers);
 
-            $response = $this->client->send($request, [
+            $response = $this->httpClient->send($request, [
                 'query' => $params,
                 'form_params' => $data,
             ]);

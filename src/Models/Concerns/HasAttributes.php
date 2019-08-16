@@ -1,6 +1,6 @@
 <?php
 
-namespace Strawberry\Models\Concerns;
+namespace Strawberry\Shopify\Models\Concerns;
 
 use Carbon\Carbon;
 use DateTimeInterface;
