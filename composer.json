@@ -15,5 +15,15 @@
             "email": "kieran.marshall@strawberry.co.uk"
         }
     ],
-    "minimum-stability": "dev"
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Strawberry\\Shopify\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Strawberry\\Shopify\\Tests\\": "tests"
+        }
+    }
 }

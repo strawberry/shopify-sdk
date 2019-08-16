@@ -2,17 +2,21 @@
 
 namespace Strawberry\Shopify\Rest;
 
-use GuzzleHttp\Client as GuzzleHttpClient;
 use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Client as GuzzleClient;
+use Strawberry\Shopify\Http\Client as HttpClient;
+use Strawberry\Shopify\Rest\Concerns\HasResources;
 
-final class Client
+class Client
 {
-    /** @var ClientInterface */
+    use HasResources;
+
+    /** @var HttpClient */
     private $httpClient;
 
     public function __construct(ClientInterface $httpClient)
     {
-        $this->httpClient = $httpClient;
+        $this->httpClient = new HttpClient($httpClient);
     }
 
     /**
@@ -21,7 +25,7 @@ final class Client
      */
     public static function forPublicApp(array $config): self
     {
-        $httpClient = new GuzzleHttpClient([
+        $httpClient = new GuzzleClient([
             'base_uri' => "{$config['store_uri']}/admin/api/{$config['version']}/",
             'headers' => [
                 'X-Shopify-Access-Token' => $config['access_token'],
@@ -37,7 +41,7 @@ final class Client
      */
     public static function forPrivateApp(array $config): self
     {
-        $httpClient = new GuzzleHttpClient([
+        $httpClient = new GuzzleClient([
             'base_uri' => "{$config['store_uri']}/admin/api/{$config['version']}/",
             'auth' => [
                 $config['api_key'],

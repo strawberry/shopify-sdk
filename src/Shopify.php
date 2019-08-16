@@ -2,7 +2,10 @@
 
 namespace Strawberry\Shopify;
 
-final class Shopify
+use Strawberry\Shopify\Rest\Client;
+use Strawberry\Shopify\Exceptions\ClientException;
+
+class Shopify
 {
     /**
      * Configuration for the SDK.
@@ -16,11 +19,9 @@ final class Shopify
      */
     private $client;
 
-    /** @throws ClientException */
     public function __construct(array $config)
     {
         $this->config = $config;
-        $this->client = $this->setupClient();
     }
 
     /**
@@ -53,7 +54,7 @@ final class Shopify
             return false;
         }
 
-        if (empty($this->config['api_passowrd'])) {
+        if (empty($this->config['api_password'])) {
             return false;
         }
 
@@ -73,9 +74,15 @@ final class Shopify
 
     /**
      * Returns an instance of the REST client.
+     *
+     * @throws ClientException
      */
     public function getClient(): Client
     {
+        if (is_null($this->client)) {
+            $this->client = $this->setupClient();
+        }
+
         return $this->client;
     }
 
@@ -84,7 +91,7 @@ final class Shopify
      *
      * @return mixed
      */
-    public function __call(string $method, array $params = [])
+    public function __call(string $method, array $params)
     {
         return $this->getClient()->{$method}(...$params);
     }
