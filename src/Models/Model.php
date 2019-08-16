@@ -7,7 +7,7 @@ use Strawberry\Shopify\Http\Response;
 use Illuminate\Contracts\Support\Arrayable;
 use Strawberry\Shopify\Models\Concerns\HasAttributes;
 
-abstract class Model
+abstract class Model implements Arrayable
 {
     use HasAttributes;
 
@@ -31,12 +31,10 @@ abstract class Model
     }
 
     /**
-     * Build a model instance from an API response.
+     * Return an array representation of the model.
      */
-    public static function fromResponse(Response $response, string $key): self
+    public function toArray(): array
     {
-        $data = Arr::get($response->getContent(), $key);
-
-        return new static($data);
+        return $this->attributes;
     }
 }
