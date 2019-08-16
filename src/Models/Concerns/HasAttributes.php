@@ -66,7 +66,7 @@ trait HasAttributes
         $value = $this->attributes[$key] ?? null;
 
         if ($this->isDateTime($key)) {
-            return $this->asDateTime($key, $value);
+            return $this->asDateTime($value);
         }
 
         return $value;
