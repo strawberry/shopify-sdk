@@ -44,7 +44,7 @@ final class Response
      * Returns as true if the status code is in the 2XX or 3XX region
      * of status codes.
      */
-    public function ok(): bool
+    public function isSuccess(): bool
     {
         return $this->getStatusCode() < 400;
     }
@@ -52,8 +52,8 @@ final class Response
     /**
      * Returns as true if the response was not a success.
      */
-    public function error(): bool
+    public function isError(): bool
     {
-        return ! $this->ok();
+        return ! $this->isSuccess();
     }
 }

@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Strawberry\Shopify\Http;
 
-use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Exception\RequestException;
+use Strawberry\Shopify\Exceptions\HttpException;
 
 final class Client
 {
@@ -33,23 +35,12 @@ final class Client
                 'query' => $params,
                 'form_params' => $data,
             ]);
-        }
-
-        // If we received a bad response from the API we keep the response
-        // data as we want the developer to be able to handle that from
-        // within their application.
-        catch (BadResponseException $exception) {
-            $response = $exception->getResponse();
-        }
-
-        // Any other exception means something went wrong with the actual
-        // request, so we want to let the user know about that.
-        catch (Exception $exception) {
+        } catch (RequestException $exception) {
             throw HttpException::failedRequest($exception);
         }
 
         return new Response(
-            $response->getBody()->getContents(),
+            (string) $response->getBody(),
             $response->getStatusCode(),
             $response->getHeaders()
         );

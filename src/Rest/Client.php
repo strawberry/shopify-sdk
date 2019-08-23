@@ -39,9 +39,9 @@ final class Client
         'shop' => ShopResource::class,
     ];
 
-    public function __construct(ClientInterface $httpClient)
+    public function __construct(ClientInterface $guzzleClient)
     {
-        $this->httpClient = $httpClient;
+        $this->httpClient = new HttpClient($guzzleClient);
     }
 
     /**
