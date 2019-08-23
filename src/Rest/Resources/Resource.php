@@ -3,11 +3,11 @@
 namespace Strawberry\Shopify\Rest\Resources;
 
 use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Strawberry\Shopify\Http\Client;
-use Strawberry\Shopify\Models\Model;
 use Strawberry\Shopify\Http\Response;
+use Strawberry\Shopify\Models\Model;
 
 abstract class Resource
 {
@@ -16,6 +16,7 @@ abstract class Resource
 
     /**
      * The model that represents this resource.
+     *
      * @var string
      */
     protected $model = Shop::class;
@@ -41,8 +42,10 @@ abstract class Resource
     /**
      * Transforms the given response to a collection of models.
      */
-    protected function toCollection(Response $response, string $key = null): Collection
-    {
+    protected function toCollection(
+        Response $response,
+        string $key = null
+    ): Collection {
         $key = $key ?? Str::plural($this->guessKey());
 
         return (new Collection(

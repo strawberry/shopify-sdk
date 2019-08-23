@@ -26,8 +26,10 @@ trait HasResources
      * Returns a resource instance from the cache. If no instance exists
      * already, then we create a new instance and add that to the cache.
      */
-    protected function getResourceInstance(string $resource, array $params = []): Resource
-    {
+    protected function getResourceInstance(
+        string $resource,
+        array $params = []
+    ): Resource {
         if (! isset($this->resourceCache[$resource])) {
             $this->resourceCache[$resource] = new $resource(
                 $this->httpClient, ...$params

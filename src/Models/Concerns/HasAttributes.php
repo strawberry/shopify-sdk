@@ -3,8 +3,8 @@
 namespace Strawberry\Shopify\Models\Concerns;
 
 use Carbon\Carbon;
-use DateTimeInterface;
 use Carbon\CarbonInterface;
+use DateTimeInterface;
 
 trait HasAttributes
 {
@@ -25,6 +25,7 @@ trait HasAttributes
      * Fills the attributes for this model from the given data source.
      *
      * @param  Arrayable|array
+     *
      * @return $this
      */
     public function fill($attributes): self
@@ -59,6 +60,7 @@ trait HasAttributes
      * casting, from the model.
      *
      * @param  string  $key
+     *
      * @return mixed
      */
     public function getAttributeValue(string $key)
@@ -93,8 +95,8 @@ trait HasAttributes
             return $value;
         }
 
-        // Otherwise if the value is an object that implements the base interface
-        // we can just create a Carbon instance direct from that.
+        // Otherwise if the value is an object that implements the base
+        // interface we can just create a Carbon instance direct from that.
         if ($value instanceof DateTimeInterface) {
             return Carbon::instance($value);
         }

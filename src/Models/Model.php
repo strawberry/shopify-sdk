@@ -2,8 +2,6 @@
 
 namespace Strawberry\Shopify\Models;
 
-use Illuminate\Support\Arr;
-use Strawberry\Shopify\Http\Response;
 use Illuminate\Contracts\Support\Arrayable;
 use Strawberry\Shopify\Models\Concerns\HasAttributes;
 

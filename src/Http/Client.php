@@ -2,8 +2,8 @@
 
 namespace Strawberry\Shopify\Http;
 
-use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Psr7\Request;
 
 final class Client
 {
@@ -56,8 +56,11 @@ final class Client
     /**
      * Helper method for GET requests to the Shopify API.
      */
-    public function get(string $url, array $params = [], array $headers = []): Response
-    {
+    public function get(
+        string $url,
+        array $params = [],
+        array $headers = []
+    ): Response {
         return $this->request('GET', $url, $params, [], $headers);
     }
 }

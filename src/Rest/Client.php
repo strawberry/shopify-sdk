@@ -3,8 +3,8 @@
 namespace Strawberry\Shopify\Rest;
 
 use BadMethodCallException;
-use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Client as GuzzleClient;
+use GuzzleHttp\ClientInterface;
 use Strawberry\Shopify\Http\Client as HttpClient;
 use Strawberry\Shopify\Rest\Concerns\HasResources;
 use Strawberry\Shopify\Rest\Resources\ShopResource;
@@ -44,7 +44,9 @@ class Client
             return $this->getResourceInstance($resource);
         }
 
-        throw new BadMethodCallException("Method [{$method}] does not exist on class [" . static::class . "]");
+        throw new BadMethodCallException(
+            "Method [{$method}] does not exist on class [" . static::class . "]"
+        );
     }
 
     /**
@@ -54,7 +56,7 @@ class Client
     public static function forPublicApp(array $config): self
     {
         $httpClient = new GuzzleClient([
-            'base_uri' => "https://{$config['store_uri']}/admin/api/{$config['version']}/",
+            'base_uri' => static::getApiUrl($config),
             'headers' => [
                 'X-Shopify-Access-Token' => $config['access_token'],
             ],
@@ -70,7 +72,7 @@ class Client
     public static function forPrivateApp(array $config): self
     {
         $httpClient = new GuzzleClient([
-            'base_uri' => "https://{$config['store_uri']}/admin/api/{$config['version']}/",
+            'base_uri' => static::getApiUrl($config),
             'auth' => [
                 $config['api_key'],
                 $config['api_password'],
@@ -78,5 +80,10 @@ class Client
         ]);
 
         return new self($httpClient);
+    }
+
+    private static function getApiUrl(array $config): string
+    {
+        return "https://{$config['store_uri']}/admin/api/{$config['version']}/";
     }
 }

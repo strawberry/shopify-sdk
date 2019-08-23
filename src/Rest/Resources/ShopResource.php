@@ -8,6 +8,7 @@ class ShopResource extends Resource
 {
     /**
      * The model that represents this resource.
+     *
      * @var string
      */
     protected $model = Shop::class;

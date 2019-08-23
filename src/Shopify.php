@@ -2,19 +2,21 @@
 
 namespace Strawberry\Shopify;
 
-use Strawberry\Shopify\Rest\Client;
 use Strawberry\Shopify\Exceptions\ClientException;
+use Strawberry\Shopify\Rest\Client;
 
 class Shopify
 {
     /**
      * Configuration for the SDK.
+     *
      * @var array
      */
     private $config = [];
 
     /**
      * The Shopify REST client instance.
+     *
      * @var Client
      */
     private $client;

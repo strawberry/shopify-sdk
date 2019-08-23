@@ -13,8 +13,11 @@ final class Response
     /** @var array */
     private $headers;
 
-    public function __construct(string $content, int $statusCode, array $headers = [])
-    {
+    public function __construct(
+        string $content,
+        int $statusCode,
+        array $headers = []
+    ) {
         $this->content = $content;
         $this->statusCode = $statusCode;
         $this->headers = $headers;
