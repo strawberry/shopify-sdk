@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Strawberry\Shopify\Rest\Resources;
 
 use Illuminate\Support\Arr;
@@ -29,7 +31,7 @@ abstract class Resource
     /**
      * Transforms the given response to a model.
      */
-    protected function toModel(Response $response, string $key = null): Model
+    protected function toModel(Response $response, ?string $key = null): Model
     {
         $key = $key ?? $this->guessKey();
         $model = $this->model;
@@ -44,7 +46,7 @@ abstract class Resource
      */
     protected function toCollection(
         Response $response,
-        string $key = null
+        ?string $key = null
     ): Collection {
         $key = $key ?? Str::plural($this->guessKey());
 

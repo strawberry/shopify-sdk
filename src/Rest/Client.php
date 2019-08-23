@@ -1,23 +1,34 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Strawberry\Shopify\Rest;
 
-use BadMethodCallException;
-use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\ClientInterface;
 use Strawberry\Shopify\Http\Client as HttpClient;
 use Strawberry\Shopify\Rest\Concerns\HasResources;
-use Strawberry\Shopify\Rest\Resources\ShopResource;
 
 /**
  * @method  ShopResource  shop(?integer id)
  */
-class Client
+final class Client
 {
     use HasResources;
 
-    /** @var HttpClient */
+    /**
+     * The HTTP client for making requests to the API.
+     *
+     * @var HttpClient
+     */
     private $httpClient;
+
+    /**
+     * Cached resource instances to save creating new instances each time
+     * a resource is accessed.
+     *
+     * @var array
+     */
+    private $resourceCache = [];
 
     /**
      * A list of the registered resources for each client.
@@ -30,11 +41,38 @@ class Client
 
     public function __construct(ClientInterface $httpClient)
     {
-        $this->httpClient = new HttpClient($httpClient);
+        $this->httpClient = $httpClient;
+    }
+
+    /**
+     * Get a resource classname by the given key.
+     */
+    protected function getResourceClass(string $key): ?string
+    {
+        return $this->resources[$key] ?? null;
+    }
+
+    /**
+     * Returns a resource instance from the cache. If no instance exists
+     * already, then we create a new instance and add that to the cache.
+     */
+    protected function getResourceInstance(
+        string $resource,
+        array $params = []
+    ): Resource {
+        if (! isset($this->resourceCache[$resource])) {
+            $this->resourceCache[$resource] = new $resource(
+                $this->httpClient, ...$params
+            );
+        }
+
+        return $this->resourceCache[$resource];
     }
 
     /**
      * Magic method for loading the resources.
+     *
+     * @return mixed
      *
      * @throws BadMethodCallException
      */
@@ -45,45 +83,7 @@ class Client
         }
 
         throw new BadMethodCallException(
-            "Method [{$method}] does not exist on class [" . static::class . "]"
+            "Method [{$method}] does not exist on class [" . self::class . "]"
         );
-    }
-
-    /**
-     * Create a new instance of the client, set up with the credentials for
-     * a public Shopify application.
-     */
-    public static function forPublicApp(array $config): self
-    {
-        $httpClient = new GuzzleClient([
-            'base_uri' => static::getApiUrl($config),
-            'headers' => [
-                'X-Shopify-Access-Token' => $config['access_token'],
-            ],
-        ]);
-
-        return new self($httpClient);
-    }
-
-    /**
-     * Create a new instance of the client, set up with the credentials for
-     * a private Shopify application.
-     */
-    public static function forPrivateApp(array $config): self
-    {
-        $httpClient = new GuzzleClient([
-            'base_uri' => static::getApiUrl($config),
-            'auth' => [
-                $config['api_key'],
-                $config['api_password'],
-            ],
-        ]);
-
-        return new self($httpClient);
-    }
-
-    private static function getApiUrl(array $config): string
-    {
-        return "https://{$config['store_uri']}/admin/api/{$config['version']}/";
     }
 }

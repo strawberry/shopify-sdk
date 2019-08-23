@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Strawberry\Shopify\Exceptions;
 
 use RuntimeException;

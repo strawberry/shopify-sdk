@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Strawberry\Shopify\Models;
 
 use Carbon\Carbon;
@@ -17,7 +19,7 @@ use Carbon\Carbon;
  * @property  string  $customer_email
  * @property  string  $currency
  * @property  string  $domain
- * @property  string[]  $enabled_presentment_currencies
+ * @property  array  $enabled_presentment_currencies
  * @property  bool  $eligible_for_card_reader_giveaway
  * @property  bool  $eligible_for_payments
  * @property  string  $email
@@ -61,6 +63,6 @@ use Carbon\Carbon;
  *
  * @see https://help.shopify.com/en/api/reference/store-properties/shop#properties-2019-07
  */
-class Shop extends Model
+final class Shop extends Model
 {
 }

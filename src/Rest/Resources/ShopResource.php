@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Strawberry\Shopify\Rest\Resources;
 
 use Strawberry\Shopify\Models\Shop;
 
-class ShopResource extends Resource
+final class ShopResource extends Resource
 {
     /**
      * The model that represents this resource.
