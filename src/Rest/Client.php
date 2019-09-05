@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Strawberry\Shopify\Rest;
 
+use BadMethodCallException;
 use GuzzleHttp\ClientInterface;
+use Strawberry\Shopify\Rest\Resources\Resource;
 use Strawberry\Shopify\Http\Client as HttpClient;
-use Strawberry\Shopify\Rest\Concerns\HasResources;
+use Strawberry\Shopify\Rest\Resources\ShopResource;
 
 /**
  * @method  ShopResource  shop(?integer id)
  */
 final class Client
 {
-    use HasResources;
-
     /**
      * The HTTP client for making requests to the API.
      *
@@ -56,14 +56,10 @@ final class Client
      * Returns a resource instance from the cache. If no instance exists
      * already, then we create a new instance and add that to the cache.
      */
-    protected function getResourceInstance(
-        string $resource,
-        array $params = []
-    ): Resource {
+    protected function getResourceInstance(string $resource): Resource
+    {
         if (! isset($this->resourceCache[$resource])) {
-            $this->resourceCache[$resource] = new $resource(
-                $this->httpClient, ...$params
-            );
+            $this->resourceCache[$resource] = new $resource($this->httpClient);
         }
 
         return $this->resourceCache[$resource];
