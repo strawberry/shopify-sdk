@@ -43,6 +43,11 @@ trait HasAttributes
         return $this;
     }
 
+    public function getAttributes(): array
+    {
+        return $this->attributes;
+    }
+
     /**
      * Get an attribute from the model.
      *
