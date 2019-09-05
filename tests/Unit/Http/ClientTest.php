@@ -29,7 +29,7 @@ final class ClientTest extends TestCase
     public function it_returns_response_successfully(): void
     {
         $client = $this->client(new MockHandler([
-            new GuzzleResponse(200, ['Foo' => 'Bar'], '{"hello": "world"}'),
+            new Response(200, ['Foo' => 'Bar'], '{"hello": "world"}'),
         ]));
 
         $response = $client->request('GET', '/');
