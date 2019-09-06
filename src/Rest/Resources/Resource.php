@@ -21,7 +21,7 @@ abstract class Resource
      *
      * @var string
      */
-    protected $model = Shop::class;
+    protected $model;
 
     public function __construct(Client $client)
     {
