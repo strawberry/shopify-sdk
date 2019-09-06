@@ -11,12 +11,16 @@ abstract class TestCase extends BaseTestCase
 {
     use MockeryPHPUnitIntegration;
 
+    protected $base;
+
     public function setUp(): void
     {
         parent::setUp();
 
         $dotenv = Dotenv::create(__DIR__ . '/../');
         $dotenv->load();
+
+        $this->base = __DIR__ . '/';
     }
 
     /**
