@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Strawberry\Shopify\Models\Concerns;
 
 use Carbon\Carbon;
-use Carbon\CarbonInterface;
 use DateTimeInterface;
+use Carbon\CarbonInterface;
+use Illuminate\Contracts\Support\Arrayable;
 
 trait HasAttributes
 {

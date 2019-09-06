@@ -2,8 +2,11 @@
 
 namespace Strawberry\Shopify\Tests\Unit\Models;
 
-use Strawberry\Shopify\Models\Concerns\HasAttributes;
+use DateTime;
+use Carbon\Carbon;
 use Strawberry\Shopify\Tests\TestCase;
+use Illuminate\Contracts\Support\Arrayable;
+use Strawberry\Shopify\Models\Concerns\HasAttributes;
 
 final class HasAttributesTest extends TestCase
 {
@@ -19,6 +22,19 @@ final class HasAttributesTest extends TestCase
         $stub->fill($attributes);
 
         $this->assertSame($attributes, $stub->getAttributes());
+    }
+
+    /** @test */
+    public function it_is_fillable_with_arrayable(): void
+    {
+        $stub = new HasAttributesStub;
+
+        $stub->fill(new ArrayableStub);
+
+        $this->assertSame([
+            'name' => 'foo',
+            'age' => 'bar'
+        ], $stub->getAttributes());
     }
 
     /** @test */
@@ -52,19 +68,42 @@ final class HasAttributesTest extends TestCase
         $this->assertTrue($stub->isDateTime('created_at'));
     }
 
-    /** @test */
-    public function it_gets_dates_as_carbon_instances(): void
+    /**
+     * @dataProvider dateValues
+     * @test
+     */
+    public function it_gets_dates_as_carbon_instances($date): void
     {
         $stub = new HasAttributesStub;
         $carbon = new \Carbon\Carbon('2019-01-01');
 
-        $stub->fill(['created_at' => '2019-01-01']);
-
+        $stub->fill(['created_at' => $date]);
         $this->assertEquals($carbon, $stub->getAttribute('created_at'));
+    }
+
+    public function dateValues(): array
+    {
+        return [
+            [new Carbon('2019-01-01')], // Carbon instance
+            [new DateTime('2019-01-01')], // DateTimeInterface
+            [1546300800], // Timestamp
+            ['2019-01-01'],  // String
+        ];
     }
 }
 
 final class HasAttributesStub
 {
     use HasAttributes;
+}
+
+final class ArrayableStub implements Arrayable
+{
+    public function toArray(): array
+    {
+        return [
+            'name' => 'foo',
+            'age' => 'bar'
+        ];
+    }
 }
