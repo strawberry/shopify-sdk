@@ -55,10 +55,6 @@ abstract class Resource
         ))->mapInto($this->model);
     }
 
-    /**
-     * Normalise the given key. If an empty string was given, then we will try
-     * and guess the key from the classname for this resource.
-     */
     private function guessKey(): string
     {
         return Str::snake(class_basename($this->model));
