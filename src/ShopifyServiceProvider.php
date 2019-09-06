@@ -52,13 +52,13 @@ final class ShopifyServiceProvider extends ServiceProvider
      * Determine whether we're connecting to the Shopify API with
      * private application credentials.
      */
-    private function isPrivateApp(): bool
+    private function isPrivateApp(array $config): bool
     {
-        if (empty($this->config['api_key'])) {
+        if (empty($config['api_key'])) {
             return false;
         }
 
-        if (empty($this->config['api_password'])) {
+        if (empty($config['api_password'])) {
             return false;
         }
 
@@ -69,8 +69,8 @@ final class ShopifyServiceProvider extends ServiceProvider
      * Determine whether we're connecting to the Shopify API with
      * public application credentials.
      */
-    private function isPublicApp(): bool
+    private function isPublicApp(array $config): bool
     {
-        return ! empty($this->config['access_token']);
+        return ! empty($config['access_token']);
     }
 }
