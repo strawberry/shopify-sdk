@@ -5,7 +5,7 @@ namespace Strawberry\Shopify\Tests\Unit\Rest;
 use BadMethodCallException;
 use GuzzleHttp\Client as GuzzleClient;
 use Strawberry\Shopify\Rest\Client;
-use Strawberry\Shopify\Rest\Resources\ShopResource;
+use Strawberry\Shopify\Rest\Resources\Store\ShopResource;
 use Strawberry\Shopify\Tests\TestCase;
 
 final class ClientTest extends TestCase

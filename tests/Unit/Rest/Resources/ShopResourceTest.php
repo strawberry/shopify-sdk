@@ -3,12 +3,12 @@
 namespace Strawberry\Shopify\Tests\Unit\Rest\Resources;
 
 use GuzzleHttp\Client as GuzzleClient;
-use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\Psr7\Response;
 use Strawberry\Shopify\Http\Client;
 use Strawberry\Shopify\Models\Shop;
 use Strawberry\Shopify\Tests\TestCase;
-use Strawberry\Shopify\Rest\Resources\ShopResource;
+use Strawberry\Shopify\Rest\Resources\Store\ShopResource;
 
 final class ShopResourceTest extends TestCase
 {

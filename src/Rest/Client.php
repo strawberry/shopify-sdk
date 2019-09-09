@@ -8,7 +8,7 @@ use BadMethodCallException;
 use GuzzleHttp\ClientInterface;
 use Strawberry\Shopify\Rest\Resources\Resource;
 use Strawberry\Shopify\Http\Client as HttpClient;
-use Strawberry\Shopify\Rest\Resources\ShopResource;
+use Strawberry\Shopify\Rest\Resources\Store\ShopResource;
 
 /**
  * @method  ShopResource  shop(?integer id)
