@@ -54,18 +54,37 @@ final class ClientTest extends TestCase
         $client->get($uri, $query, $headers);
     }
 
+    /** @test */
+    public function it_performs_post_requests(): void
+    {
+        $guzzleClient = $this->mock(GuzzleClient::class);
+        $client = new Client($guzzleClient);
+
+        $uri = '/test';
+        $body = 'This is the body';
+        $query = ['hello' => 'world'];
+        $formParams = ['form' => 'params'];
+        $headers = ['foo' => 'bar'];
+
+        $this->assertRequest($guzzleClient, 'POST', $uri, $headers, $query, $formParams, $body);
+
+        $client->post($uri, $body, $query, $formParams, $headers);
+    }
+
     private function assertRequest(
         GuzzleClient $client,
         string $method,
         string $uri,
         array $headers = [],
         array $query = [],
-        array $params = []
+        array $params = [],
+        string $body = ''
     ): void {
         $expectedRequest = new Request($method, $uri, $headers);
         $expectedOptions = [
             'query' => $query,
-            'form_params' => $params
+            'form_params' => $params,
+            'body' => $body,
         ];
 
         $client->shouldReceive('send')->withArgs(function (

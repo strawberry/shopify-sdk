@@ -24,16 +24,18 @@ final class Client
     public function request(
         string $method,
         string $url,
-        array $params = [],
-        array $data = [],
+        array $query = [],
+        string $body = '',
+        array $formParams = [],
         array $headers = []
     ): Response {
         try {
             $request = new Request($method, $url, $headers);
 
             $response = $this->httpClient->send($request, [
-                'query' => $params,
-                'form_params' => $data,
+                'query' => $query,
+                'form_params' => $formParams,
+                'body' => $body
             ]);
         } catch (RequestException $exception) {
             throw HttpException::failedRequest($exception);
@@ -51,9 +53,22 @@ final class Client
      */
     public function get(
         string $url,
-        array $params = [],
+        array $query = [],
         array $headers = []
     ): Response {
-        return $this->request('GET', $url, $params, [], $headers);
+        return $this->request('GET', $url, $query, "", [], $headers);
+    }
+
+    /**
+     * Helper method for POST requests to the Shopify API.
+     */
+    public function post(
+        string $url,
+        string $body = "",
+        array $query = [],
+        array $formParams = [],
+        array $headers = []
+    ): Response {
+        return $this->request('POST', $url, $query, $body, $formParams, $headers);
     }
 }
