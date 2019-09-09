@@ -25,8 +25,7 @@ final class Client
         string $method,
         string $url,
         array $query = [],
-        string $body = '',
-        array $formParams = [],
+        array $json = [],
         array $headers = []
     ): Response {
         try {
@@ -34,8 +33,7 @@ final class Client
 
             $response = $this->httpClient->send($request, [
                 'query' => $query,
-                'form_params' => $formParams,
-                'body' => $body
+                'json' => $json,
             ]);
         } catch (RequestException $exception) {
             throw HttpException::failedRequest($exception);
@@ -56,7 +54,7 @@ final class Client
         array $query = [],
         array $headers = []
     ): Response {
-        return $this->request('GET', $url, $query, "", [], $headers);
+        return $this->request('GET', $url, $query, [], $headers);
     }
 
     /**
@@ -64,12 +62,11 @@ final class Client
      */
     public function post(
         string $url,
-        string $body = "",
+        array $json = [],
         array $query = [],
-        array $formParams = [],
         array $headers = []
     ): Response {
-        return $this->request('POST', $url, $query, $body, $formParams, $headers);
+        return $this->request('POST', $url, $query, $json, $headers);
     }
 
     /**
@@ -77,12 +74,11 @@ final class Client
      */
     public function put(
         string $url,
-        string $body = "",
+        array $json = [],
         array $query = [],
-        array $formParams = [],
         array $headers = []
     ): Response {
-        return $this->request('PUT', $url, $query, $body, $formParams, $headers);
+        return $this->request('PUT', $url, $query, $json, $headers);
     }
 
     /**
@@ -90,12 +86,11 @@ final class Client
      */
     public function patch(
         string $url,
-        string $body = "",
+        array $json = [],
         array $query = [],
-        array $formParams = [],
         array $headers = []
     ): Response {
-        return $this->request('PATCH', $url, $query, $body, $formParams, $headers);
+        return $this->request('PATCH', $url, $query, $json, $headers);
     }
 
     /**
@@ -103,6 +98,6 @@ final class Client
      */
     public function delete(string $url, array $headers = []): Response
     {
-        return $this->request('DELETE', $url, [], "", [], $headers);
+        return $this->request('DELETE', $url, [], [], $headers);
     }
 }

@@ -61,14 +61,13 @@ final class ClientTest extends TestCase
         $client = new Client($guzzleClient);
 
         $uri = '/test';
-        $body = 'This is the body';
+        $json = ['json' => 'content'];
         $query = ['hello' => 'world'];
-        $formParams = ['form' => 'params'];
         $headers = ['foo' => 'bar'];
 
-        $this->assertRequest($guzzleClient, 'POST', $uri, $headers, $query, $formParams, $body);
+        $this->assertRequest($guzzleClient, 'POST', $uri, $headers, $query, $json);
 
-        $client->post($uri, $body, $query, $formParams, $headers);
+        $client->post($uri, $json, $query, $headers);
     }
 
     /** @test */
@@ -78,14 +77,13 @@ final class ClientTest extends TestCase
         $client = new Client($guzzleClient);
 
         $uri = '/test';
-        $body = 'This is the body';
+        $json = ['json' => 'content'];
         $query = ['hello' => 'world'];
-        $formParams = ['form' => 'params'];
         $headers = ['foo' => 'bar'];
 
-        $this->assertRequest($guzzleClient, 'PUT', $uri, $headers, $query, $formParams, $body);
+        $this->assertRequest($guzzleClient, 'PUT', $uri, $headers, $query, $json);
 
-        $client->put($uri, $body, $query, $formParams, $headers);
+        $client->put($uri, $json, $query, $headers);
     }
 
     /** @test */
@@ -95,14 +93,13 @@ final class ClientTest extends TestCase
         $client = new Client($guzzleClient);
 
         $uri = '/test';
-        $body = 'This is the body';
+        $json = ['json' => 'content'];
         $query = ['hello' => 'world'];
-        $formParams = ['form' => 'params'];
         $headers = ['foo' => 'bar'];
 
-        $this->assertRequest($guzzleClient, 'PATCH', $uri, $headers, $query, $formParams, $body);
+        $this->assertRequest($guzzleClient, 'PATCH', $uri, $headers, $query, $json);
 
-        $client->patch($uri, $body, $query, $formParams, $headers);
+        $client->patch($uri, $json, $query, $headers);
     }
 
     /** @test */
@@ -125,14 +122,12 @@ final class ClientTest extends TestCase
         string $uri,
         array $headers = [],
         array $query = [],
-        array $params = [],
-        string $body = ''
+        array $json = []
     ): void {
         $expectedRequest = new Request($method, $uri, $headers);
         $expectedOptions = [
             'query' => $query,
-            'form_params' => $params,
-            'body' => $body,
+            'json' => $json,
         ];
 
         $client->shouldReceive('send')->withArgs(function (
