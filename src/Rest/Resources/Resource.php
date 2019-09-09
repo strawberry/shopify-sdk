@@ -71,6 +71,14 @@ abstract class Resource
     }
 
     /**
+     * Build the URI for a request to the Shopify resource.
+     */
+    protected function uri(string $uri = ''): string
+    {
+        return $this->pluralResourceKey() . $uri . '.json';
+    }
+
+    /**
      * Grab the data from the response.
      */
     protected function data(Response $response, string $key): array
