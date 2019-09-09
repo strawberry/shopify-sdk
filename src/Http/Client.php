@@ -71,4 +71,38 @@ final class Client
     ): Response {
         return $this->request('POST', $url, $query, $body, $formParams, $headers);
     }
+
+    /**
+     * Helper method for PUT requests to the Shopify API.
+     */
+    public function put(
+        string $url,
+        string $body = "",
+        array $query = [],
+        array $formParams = [],
+        array $headers = []
+    ): Response {
+        return $this->request('PUT', $url, $query, $body, $formParams, $headers);
+    }
+
+    /**
+     * Helper method for PATCH requests to the Shopify API.
+     */
+    public function patch(
+        string $url,
+        string $body = "",
+        array $query = [],
+        array $formParams = [],
+        array $headers = []
+    ): Response {
+        return $this->request('PATCH', $url, $query, $body, $formParams, $headers);
+    }
+
+    /**
+     * Helper method for DELETE requests to the Shopify API.
+     */
+    public function delete(string $url, array $headers = []): Response
+    {
+        return $this->request('DELETE', $url, [], "", [], $headers);
+    }
 }

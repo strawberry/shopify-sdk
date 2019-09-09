@@ -71,6 +71,54 @@ final class ClientTest extends TestCase
         $client->post($uri, $body, $query, $formParams, $headers);
     }
 
+    /** @test */
+    public function it_performs_put_requests(): void
+    {
+        $guzzleClient = $this->mock(GuzzleClient::class);
+        $client = new Client($guzzleClient);
+
+        $uri = '/test';
+        $body = 'This is the body';
+        $query = ['hello' => 'world'];
+        $formParams = ['form' => 'params'];
+        $headers = ['foo' => 'bar'];
+
+        $this->assertRequest($guzzleClient, 'PUT', $uri, $headers, $query, $formParams, $body);
+
+        $client->put($uri, $body, $query, $formParams, $headers);
+    }
+
+    /** @test */
+    public function it_performs_patch_requests(): void
+    {
+        $guzzleClient = $this->mock(GuzzleClient::class);
+        $client = new Client($guzzleClient);
+
+        $uri = '/test';
+        $body = 'This is the body';
+        $query = ['hello' => 'world'];
+        $formParams = ['form' => 'params'];
+        $headers = ['foo' => 'bar'];
+
+        $this->assertRequest($guzzleClient, 'PATCH', $uri, $headers, $query, $formParams, $body);
+
+        $client->patch($uri, $body, $query, $formParams, $headers);
+    }
+
+    /** @test */
+    public function it_performs_delete_requests(): void
+    {
+        $guzzleClient = $this->mock(GuzzleClient::class);
+        $client = new Client($guzzleClient);
+
+        $uri = '/test';
+        $headers = ['foo' => 'bar'];
+
+        $this->assertRequest($guzzleClient, 'DELETE', $uri, $headers);
+
+        $client->delete($uri, $headers);
+    }
+
     private function assertRequest(
         GuzzleClient $client,
         string $method,
