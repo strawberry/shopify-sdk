@@ -8,9 +8,11 @@ use BadMethodCallException;
 use GuzzleHttp\ClientInterface;
 use Strawberry\Shopify\Rest\Resources\Resource;
 use Strawberry\Shopify\Http\Client as HttpClient;
+use Strawberry\Shopify\Rest\Resources\Store\CountryResource;
 use Strawberry\Shopify\Rest\Resources\Store\ShopResource;
 
 /**
+ * @method  CountryResource  shop(?integer id)
  * @method  ShopResource  shop(?integer id)
  */
 final class Client
@@ -36,6 +38,7 @@ final class Client
      * @var array
      */
     protected $resources = [
+        'country' => CountryResource::class,
         'shop' => ShopResource::class,
     ];
 

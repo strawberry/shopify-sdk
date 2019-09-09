@@ -33,7 +33,7 @@ abstract class Resource
      */
     protected function toModel(Response $response, ?string $key = null): Model
     {
-        $key = $key ?? $this->guessKey();
+        $key = $key ?? $this->singularResourceKey();
         $model = $this->model;
 
         return new $model(
@@ -48,14 +48,24 @@ abstract class Resource
         Response $response,
         ?string $key = null
     ): Collection {
-        $key = $key ?? Str::plural($this->guessKey());
+        $key = $key ?? $this->pluralResourceKey();
 
         return (new Collection(
             $this->data($response, $key)
         ))->mapInto($this->model);
     }
 
-    private function guessKey(): string
+    public function singularResourceKey(): string
+    {
+        return $this->guessResourceKey();
+    }
+
+    public function pluralResourceKey(): string
+    {
+        return Str::plural($this->singularResourceKey());
+    }
+
+    protected function guessResourceKey(): string
     {
         return Str::snake(class_basename($this->model));
     }
@@ -63,8 +73,16 @@ abstract class Resource
     /**
      * Grab the data from the response.
      */
-    private function data(Response $response, string $key): array
+    protected function data(Response $response, string $key): array
     {
         return Arr::get($response->getContent(), $key);
+    }
+
+    /**
+     * Prepares data to be sent to a write operation.
+     */
+    protected function prepareJson(array $data, string $key): array
+    {
+        return [$key => $data];
     }
 }
