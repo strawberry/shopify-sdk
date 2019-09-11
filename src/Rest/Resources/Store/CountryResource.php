@@ -6,9 +6,12 @@ namespace Strawberry\Shopify\Rest\Resources\Store;
 
 use Illuminate\Support\Collection;
 use Strawberry\Shopify\Models\Country;
-use Strawberry\Shopify\Rest\Resources\Resource;
+use Strawberry\Shopify\Rest\Resources\ParentResource;
 
-final class CountryResource extends Resource
+/**
+ * @method  ProvinceResource  provinces(?integer id)
+ */
+final class CountryResource extends ParentResource
 {
     /**
      * The model that represents this resource.
@@ -18,13 +21,22 @@ final class CountryResource extends Resource
     protected $model = Country::class;
 
     /**
+     * A list of the child resources for this resource.
+     *
+     * @var array
+     */
+    protected $childResources = [
+        'provinces' => ProvinceResource::class,
+    ];
+
+    /**
      * Retrieves a list of countries.
      *
      * @see https://help.shopify.com/en/api/reference/store-properties/country#index-2019-07
      */
     public function get(array $fields = [], ?int $sinceId = null): Collection
     {
-        $response = $this->client->get('countries.json', [
+        $response = $this->client->get($this->uri(), [
             'fields' => implode(',', $fields),
             'since_id' => $sinceId
         ]);
@@ -39,7 +51,7 @@ final class CountryResource extends Resource
      */
     public function find(int $id, array $fields = []): Country
     {
-        $response = $this->client->get("countries/{$id}.json", [
+        $response = $this->client->get($this->uri((string) $id), [
             'fields' => implode(',', $fields),
         ]);
 
@@ -55,7 +67,7 @@ final class CountryResource extends Resource
     {
         $json = $this->prepareJson($data, $this->singularResourceKey());
 
-        $response = $this->client->post("countries.json", $json);
+        $response = $this->client->post($this->uri(), $json);
 
         return $this->toModel($response);
     }
@@ -69,7 +81,7 @@ final class CountryResource extends Resource
     {
         $json = $this->prepare($data, $this->singularResourceKey());
 
-        $response = $this->client->put("countries/{$id}.json", $json);
+        $response = $this->client->put($this->uri((string) $id), $json);
 
         return $this->toModel($response);
     }
@@ -81,7 +93,7 @@ final class CountryResource extends Resource
      */
     public function delete(int $id): void
     {
-        $this->client->delete("countries/{$id}.json");
+        $this->client->delete($this->uri((string) $id));
     }
 
     /**
@@ -91,7 +103,7 @@ final class CountryResource extends Resource
      */
     public function count(): int
     {
-        $response = $this->client->get('countries/count.json');
+        $response = $this->client->get($this->uri('count'));
 
         return (int) $this->data($response, 'count');
     }
