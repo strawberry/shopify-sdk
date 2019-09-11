@@ -1,13 +1,13 @@
 <?php
 
-namespace Strawberry\Shopify\Tests\Unit\Rest\Resources;
+namespace Strawberry\Shopify\Tests\Unit\Rest;
 
 use GuzzleHttp\Client as GuzzleHttpClient;
 use Illuminate\Support\Collection;
 use Strawberry\Shopify\Http\Client;
 use Strawberry\Shopify\Http\Response;
 use Strawberry\Shopify\Models\Model;
-use Strawberry\Shopify\Rest\Resources\Resource;
+use Strawberry\Shopify\Rest\Resource;
 use Strawberry\Shopify\Tests\TestCase;
 
 final class ResourceTest extends TestCase

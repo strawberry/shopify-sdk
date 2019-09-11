@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Strawberry\Shopify\Rest\Resources;
+namespace Strawberry\Shopify\Rest;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;

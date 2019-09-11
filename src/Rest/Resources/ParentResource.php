@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Strawberry\Shopify\Rest\Resources;
 
 use RuntimeException;
+use Strawberry\Shopify\Rest\Resource;
 
-abstract class ParentResource
+abstract class ParentResource extends Resource
 {
     /**
      * A list of the child resources for this resource.

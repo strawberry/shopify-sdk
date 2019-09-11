@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Strawberry\Shopify\Rest\Resources;
 
+use Strawberry\Shopify\Rest\Resource;
+
 abstract class ChildResource extends Resource
 {
     /**

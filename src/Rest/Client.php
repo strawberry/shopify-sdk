@@ -6,7 +6,7 @@ namespace Strawberry\Shopify\Rest;
 
 use BadMethodCallException;
 use GuzzleHttp\ClientInterface;
-use Strawberry\Shopify\Rest\Resources\Resource;
+use Strawberry\Shopify\Rest\Resource;
 use Strawberry\Shopify\Http\Client as HttpClient;
 use Strawberry\Shopify\Rest\Resources\Store\CountryResource;
 use Strawberry\Shopify\Rest\Resources\Store\ShopResource;
@@ -38,7 +38,7 @@ final class Client
      * @var array
      */
     protected $resources = [
-        'country' => CountryResource::class,
+        'countries' => CountryResource::class,
         'shop' => ShopResource::class,
     ];
 
