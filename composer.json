@@ -3,7 +3,8 @@
     "description": "An (opinionated) Shopify SDK for PHP",
     "require": {
         "illuminate/support": "~5.8.0",
-        "guzzlehttp/guzzle": "^6.3@dev"
+        "guzzlehttp/guzzle": "^6.3@dev",
+        "jenssegers/model": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "^8.0",

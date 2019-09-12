@@ -7,39 +7,38 @@ use Strawberry\Shopify\Tests\TestCase;
 
 final class ModelTest extends TestCase
 {
-    /** @test */
-    public function it_fills_attributes_from_constructor(): void
+    public function testCastsToModel(): void
     {
-        $attributes = [
-            'name' => 'foo',
-            'age' => 'bar'
-        ];
+        $model = new ModelStub([
+            'model' => [
+                'first_name' => 'foo',
+                'last_name' => 'bar',
+            ]
+        ]);
 
-        $stub = new ModelStub($attributes);
-
-        $this->assertSame($attributes, $stub->getAttributes());
+        $this->assertInstanceOf(ModelStub::class, $model->model);
+        $this->assertSame('foo', $model->model->first_name);
+        $this->assertSame('bar', $model->model->last_name);
     }
 
-    /** @test */
-    public function it_gets_attributes_as_properties(): void
+    public function testCastsToModelArray(): void
     {
-        $stub = new ModelStub(['name' => 'foo', 'age' => 'bar']);
+        $model = new ModelStub([
+            'array' => [
+                ['first_name' => 'foo'],
+                ['first_name' => 'bar'],
+                ['first_name' => 'baz'],
+            ]
+        ]);
 
-        $this->assertSame('foo', $stub->name);
-        $this->assertSame('bar', $stub->age);
-    }
-
-    /** @test */
-    public function it_casts_to_array(): void
-    {
-        $attributes = ['name' => 'foo', 'age' => 'bar'];
-
-        $stub = new ModelStub($attributes);
-
-        $this->assertEquals($attributes, $stub->toArray());
+        $this->assertIsArray($model->array);
+        $this->assertCount(3, $model->array);
+        $this->assertContainsOnlyInstancesOf(ModelStub::class, $model->array);
     }
 }
 
 final class ModelStub extends Model
 {
+    protected $casts = ['model' => ModelStub::class];
+    protected $castArrays = ['array' => ModelStub::class];
 }
