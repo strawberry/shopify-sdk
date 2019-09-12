@@ -79,7 +79,7 @@ abstract class Model extends BaseModel
             case 'json':
                 return $this->fromJson($value);
             case 'collection':
-                return new BaseCollection($this->fromJson($value));
+                return new Collection($this->fromJson($value));
             default:
                 return $value;
         }
@@ -93,7 +93,7 @@ abstract class Model extends BaseModel
      */
     protected function shouldCastToSingleModel($key): bool
     {
-        if (! class_exists($this->casts[$key])) {
+        if (! isset($this->casts[$key]) || ! class_exists($this->casts[$key])) {
             return false;
         }
 
@@ -111,7 +111,7 @@ abstract class Model extends BaseModel
      */
     protected function hasModelArrayCast($key): bool
     {
-        if (! isset($this->castArrays[$key])) {
+        if (is_null($key) || ! isset($this->castArrays[$key])) {
             return false;
         }
 
