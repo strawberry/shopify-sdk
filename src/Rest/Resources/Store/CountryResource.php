@@ -8,11 +8,12 @@ use Illuminate\Support\Collection;
 use Strawberry\Shopify\Models\Country;
 use Strawberry\Shopify\Rest\Concerns\HasChildren;
 use Strawberry\Shopify\Rest\Contracts\HasChildren as HasChildrenContract;
+use Strawberry\Shopify\Rest\Resource;
 
 /**
  * @method  ProvinceResource  provinces(?integer id)
  */
-final class CountryResource implements HasChildrenContract
+final class CountryResource extends Resource implements HasChildrenContract
 {
     use HasChildren;
 

@@ -15,4 +15,20 @@ namespace Strawberry\Shopify\Models;
  */
 final class Country extends Model
 {
+    /**
+     * The attributes that should be cast to the given type.
+     */
+    protected $casts = [
+        'id' => 'int',
+        'tax' => 'float',
+    ];
+
+    /**
+     * The attributes that should be cast to arrays of the given type.
+     *
+     * @var array
+     */
+    protected $castArrays = [
+        'provinces' => Province::class,
+    ];
 }

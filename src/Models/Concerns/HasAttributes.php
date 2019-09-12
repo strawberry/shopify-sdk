@@ -25,6 +25,18 @@ trait HasAttributes
     ];
 
     /**
+     * The attributes that should be cast to the given type.
+     */
+    protected $casts = [];
+
+    /**
+     * The attributes that should be cast to arrays of the given type.
+     *
+     * @var array
+     */
+    protected $castArrays = [];
+
+    /**
      * Fills the attributes for this model from the given data source.
      *
      * @param  Arrayable|array
@@ -79,6 +91,10 @@ trait HasAttributes
             return $this->asDateTime($value);
         }
 
+        if ($this->shouldCast($key)) {
+            return $this->castAttribute($key, $value);
+        }
+
         return $value;
     }
 
@@ -118,5 +134,104 @@ trait HasAttributes
         // If we've made it this far, we're going to presume it's striaght from
         // the Shopify API and the string is a date in ISO-8601 format.
         return Carbon::parse($value);
+    }
+
+    /**
+     * Determine whether the given attribute has a defined cast.
+     */
+    public function shouldCast(string $key): bool
+    {
+        return array_key_exists($key, $this->casts)
+            || array_key_exists($key, $this->castArrays);
+    }
+
+    /**
+     * Cast the given attribute to the specified type.
+     *
+     * @param  mixed $value
+     *
+     * @return mixed
+     */
+    public function castAttribute(string $key, $value)
+    {
+        if (array_key_exists($key, $this->castArrays)) {
+            return $this->castArrayAttribute($key, $value);
+        }
+
+        return $this->castTo($this->casts[$key], $value);
+    }
+
+    /**
+     * Cast the given attribute to an array the specified type.
+     *
+     * @param  array|Arrayable  $value
+     *
+     * @return array
+     */
+    public function castArrayAttribute(string $key, $array): array
+    {
+        if ($array instanceof Arrayable) {
+            $array = $array->toArray();
+        }
+
+        return (new Collection($array))->map(function ($value) use ($key) {
+            return $this->castTo($this->castArrays[$key], $value);
+        });
+    }
+
+    /**
+     * Cast the given value to the given type.
+     *
+     * @param  mixed $value
+     * @return mixed
+     *
+     * @see https://github.com/laravel/framework/blob/6.x/src/Illuminate/Database/Eloquent/Concerns/HasAttributes.php#L478
+     */
+    public function castTo(string $type, $value)
+    {
+        if (class_exists($type)) {
+            return new $type($value);
+        }
+
+        switch ($type) {
+            case 'int':
+            case 'integer':
+                return (int) $value;
+
+            case 'real':
+            case 'float':
+            case 'double':
+                return $this->fromFloat($value);
+
+            case 'bool':
+            case 'boolean':
+                return (bool) $value;
+
+            default:
+                return $value;
+        }
+    }
+
+    /**
+     * Decode the given float.
+     *
+     * @param  mixed  $value
+     *
+     * @return mixed
+     *
+     * @see https://github.com/laravel/framework/blob/6.x/src/Illuminate/Database/Eloquent/Concerns/HasAttributes.php#L728
+     */
+    public function fromFloat($value)
+    {
+        switch ((string) $value) {
+            case 'Infinity':
+                return INF;
+            case '-Infinity':
+                return -INF;
+            case 'NaN':
+                return NAN;
+            default:
+                return (float) $value;
+        }
     }
 }
