@@ -23,7 +23,7 @@ final class ShopResource extends Resource
      */
     public function get(array $fields = []): Shop
     {
-        $response = $this->client->get('shop.json', [
+        $response = $this->client->get($this->uri('shop'), [
             'fields' => implode(',', $fields),
         ]);
 
