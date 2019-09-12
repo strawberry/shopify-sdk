@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Strawberry\Shopify\Rest\Concerns;
 
+use Strawberry\Shopify\Exceptions\ClientException;
 use Strawberry\Shopify\Rest\Contracts\HasParent;
 
 trait HasChildren
@@ -18,9 +19,15 @@ trait HasChildren
 
     /**
      * Return an instance of the child resource with the given key.
+     *
+     * @throws ClientException
      */
     public function getChild(string $key): HasParent
     {
+        if (! $this->hasChild($key)) {
+            throw ClientException::childDoesntExist(get_class($this), $key);
+        }
+
         $resource = $this->children[$key];
 
         return new $resource($this->client);
@@ -32,10 +39,6 @@ trait HasChildren
      */
     public function __call(string $method, array $params): HasParent
     {
-        if (! $this->hasChild($method)) {
-            throw ClientException::childDoesntExist(get_class($this), $method);
-        }
-
         return $this->getChild($method)->parent($params[0]);
     }
 }
