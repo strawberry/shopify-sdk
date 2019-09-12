@@ -6,10 +6,13 @@ namespace Strawberry\Shopify\Rest\Resources\Store;
 
 use Illuminate\Support\Collection;
 use Strawberry\Shopify\Models\Province;
-use Strawberry\Shopify\Rest\Resources\ChildResource;
+use Strawberry\Shopify\Rest\Concerns\HasParent;
+use Strawberry\Shopify\Rest\Contracts\HasParent as HasParentContract;
 
-final class ProvinceResource extends ChildResource
+final class ProvinceResource implements HasParentContract
 {
+    use HasParent;
+
     /**
      * The model that represents this resource.
      *

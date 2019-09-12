@@ -12,4 +12,9 @@ final class ClientException extends RuntimeException
     {
         return new self('No credentials set for Shopify SDK.');
     }
+
+    public static function childDoesntExist(string $parent, string $child): self
+    {
+        return new self("Child resource [$child] does not exist on parent [$parent]");
+    }
 }
