@@ -6,9 +6,12 @@ namespace Strawberry\Shopify\Rest;
 
 use BadMethodCallException;
 use GuzzleHttp\ClientInterface;
-use Strawberry\Shopify\Rest\Resource;
+use Illuminate\Support\Str;
 use Strawberry\Shopify\Http\Client as HttpClient;
+use Strawberry\Shopify\Rest\Resource;
 use Strawberry\Shopify\Rest\Resources\Store\CountryResource;
+use Strawberry\Shopify\Rest\Resources\Store\CurrencyResource;
+use Strawberry\Shopify\Rest\Resources\Store\PolicyResource;
 use Strawberry\Shopify\Rest\Resources\Store\ShopResource;
 
 /**
@@ -37,8 +40,10 @@ final class Client
      *
      * @var array
      */
-    protected $resources = [
+    private $resources = [
         'countries' => CountryResource::class,
+        'currencies' => CurrencyResource::class,
+        'policies' => PolicyResource::class,
         'shop' => ShopResource::class,
     ];
 
@@ -48,24 +53,47 @@ final class Client
     }
 
     /**
-     * Get a resource classname by the given key.
+     * Determine whether the given resource exists.
      */
-    protected function getResourceClass(string $key): ?string
+    private function hasResource(string $key): bool
     {
-        return $this->resources[$key] ?? null;
+        return array_key_exists($key, $this->resources);
+    }
+
+    /**
+     * Determine whether the given key should be proxied.
+     */
+    private function shouldBeProxied(string $key): bool
+    {
+        $resource = Str::plural($key);
+
+        return $this->hasResource($resource);
     }
 
     /**
      * Returns a resource instance from the cache. If no instance exists
      * already, then we create a new instance and add that to the cache.
      */
-    protected function getResourceInstance(string $resource): Resource
+    private function getResourceInstance(string $key): Resource
     {
+        $resource = $this->resources[$key];
+
         if (! isset($this->resourceCache[$resource])) {
             $this->resourceCache[$resource] = new $resource($this->httpClient);
         }
 
         return $this->resourceCache[$resource];
+    }
+
+    /**
+     * Returns a proxy instance for the given resource.
+     */
+    private function getProxyInstance(string $key, array $params): ResourceProxy
+    {
+        return new ResourceProxy(
+            $this->getResourceInstance(Str::plural($key)),
+            $params[0]
+        );
     }
 
     /**
@@ -77,8 +105,12 @@ final class Client
      */
     public function __call(string $method, array $params)
     {
-        if ($resource = $this->getResourceClass($method)) {
-            return $this->getResourceInstance($resource);
+        if ($this->hasResource($method)) {
+            return $this->getResourceInstance($method);
+        }
+
+        if ($this->shouldBeProxied($method)) {
+            return $this->getProxyInstance($method, $params);
         }
 
         throw new BadMethodCallException(

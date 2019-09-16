@@ -2,15 +2,15 @@
 
 namespace Strawberry\Shopify\Tests\Unit\Rest;
 
-use GuzzleHttp\Middleware;
-use GuzzleHttp\HandlerStack;
 use Illuminate\Support\Collection;
 use Strawberry\Shopify\Http\Client;
 use Strawberry\Shopify\Models\Model;
 use Strawberry\Shopify\Http\Response;
 use Strawberry\Shopify\Rest\Resource;
-use Strawberry\Shopify\Tests\TestCase;
 use GuzzleHttp\Client as GuzzleClient;
+use Strawberry\Shopify\Tests\TestCase;
+use Strawberry\Shopify\Rest\ChildResource;
+use Strawberry\Shopify\Exceptions\ClientException;
 
 final class ResourceTest extends TestCase
 {
@@ -19,7 +19,7 @@ final class ResourceTest extends TestCase
     {
         $model = $this->resource()->find();
 
-        $this->assertInstanceOf(ModelStub::class, $model);
+        $this->assertInstanceOf(ResourceTestModelStub::class, $model);
         $this->assertEquals('Foo', $model->first_name);
         $this->assertEquals('Bar', $model->last_name);
     }
@@ -38,7 +38,7 @@ final class ResourceTest extends TestCase
         $guzzleClient = $this->mock(GuzzleClient::class);
         $client = new Client($guzzleClient);
 
-        return new ResourceStub($client);
+        return new ResourceTestResourceStub($client);
     }
 
     /** @test */
@@ -46,10 +46,11 @@ final class ResourceTest extends TestCase
     {
         $guzzle = $this->mock(GuzzleClient::class);
         $client = new Client($guzzle);
-        $resource = new ResourceStub($client);
+        $resource = new ResourceTestResourceStub($client);
 
-        $this->assertSame('model_stubs/test.json', $resource->buildUri('/test'));
-        $this->assertSame('model_stubs/uri/with/multiple/directories.json', $resource->buildUri('/uri/with/multiple/directories'));
+        $this->assertSame('resource_test_model_stubs/test.json', $resource->buildUri('test'));
+        $this->assertSame('resource_test_model_stubs/test.json', $resource->buildUri('/test'));
+        $this->assertSame('resource_test_model_stubs/uri/with/multiple/directories.json', $resource->buildUri('/uri/with/multiple/directories'));
     }
 
     /** @test */
@@ -57,20 +58,66 @@ final class ResourceTest extends TestCase
     {
         $guzzle = $this->mock(GuzzleClient::class);
         $client = new Client($guzzle);
-        $resource = new ResourceStub($client);
+        $resource = new ResourceTestResourceStub($client);
 
         $this->assertSame(['foo' => ['bar' => 'baz']], $resource->getPreparedJson(['bar' => 'baz'], 'foo'));
     }
+
+    /** @test */
+    public function it_determines_whether_it_has_children(): void
+    {
+        $guzzle = $this->mock(GuzzleClient::class);
+        $client = new Client($guzzle);
+
+        $resourceWithoutChildren = new ResourceTestResourceStub($client);
+        $resourceWithChildren = new ResourceTestResourceWithChildrenStub($client);
+
+        $this->assertFalse($resourceWithoutChildren->hasChildren());
+        $this->assertTrue($resourceWithChildren->hasChildren());
+    }
+
+    /** @test */
+    public function it_determines_whether_it_has_a_given_child(): void
+    {
+        $guzzle = $this->mock(GuzzleClient::class);
+        $client = new Client($guzzle);
+        $resource = new ResourceTestResourceWithChildrenStub($client);
+
+        $this->assertTrue($resource->hasChild('foo'));
+        $this->assertFalse($resource->hasChild('bar'));
+    }
+
+    /** @test */
+    public function it_throws_an_exception_when_getting_instance_of_nonexistent_child(): void
+    {
+        $this->expectException(ClientException::class);
+
+        $guzzle = $this->mock(GuzzleClient::class);
+        $client = new Client($guzzle);
+        $resource = new ResourceTestResourceWithChildrenStub($client);
+
+        $resource->getChild('bar');
+    }
+
+    /** @test */
+    public function it_returns_instance_of_given_child(): void
+    {
+        $guzzle = $this->mock(GuzzleClient::class);
+        $client = new Client($guzzle);
+        $resource = new ResourceTestResourceWithChildrenStub($client);
+
+        $this->assertInstanceOf(ResourceTestChildResourceStub::class, $resource->getChild('foo'));
+    }
 }
 
-final class ResourceStub extends Resource
+final class ResourceTestResourceStub extends Resource
 {
-    protected $model = ModelStub::class;
+    protected $model = ResourceTestModelStub::class;
 
     public function find(): Model
     {
         $response = new Response(json_encode([
-            'model_stub' => [
+            'resource_test_model_stub' => [
                 'first_name' => 'Foo',
                 'last_name' => 'Bar',
             ]
@@ -82,7 +129,7 @@ final class ResourceStub extends Resource
     public function get(): Collection
     {
         $response = new Response(json_encode([
-            'model_stubs' => [
+            'resource_test_model_stubs' => [
                 ['first_name' => 'Foo', 'last_name' => 'Bar'],
                 ['first_name' => 'Baz', 'last_name' => 'Qux'],
             ]
@@ -102,6 +149,19 @@ final class ResourceStub extends Resource
     }
 }
 
-final class ModelStub extends Model
+final class ResourceTestChildResourceStub extends ChildResource
+{
+    protected $model = ResourceTestModelStub::class;
+    protected $parent = ResourceTestResourceStub::class;
+}
+
+final class ResourceTestResourceWithChildrenStub extends Resource
+{
+    protected $childResources = [
+        'foo' => ResourceTestChildResourceStub::class,
+    ];
+}
+
+final class ResourceTestModelStub extends Model
 {
 }

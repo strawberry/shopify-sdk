@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Strawberry\Shopify\Rest\Resources\Store;
 
-use Strawberry\Shopify\Models\Shop;
+use Strawberry\Shopify\Models\Store\Shop;
 use Strawberry\Shopify\Rest\Resource;
 
 final class ShopResource extends Resource

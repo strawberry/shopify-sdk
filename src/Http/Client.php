@@ -96,8 +96,11 @@ final class Client
     /**
      * Helper method for DELETE requests to the Shopify API.
      */
-    public function delete(string $url, array $headers = []): Response
-    {
-        return $this->request('DELETE', $url, [], [], $headers);
+    public function delete(
+        string $url,
+        array $headers = [],
+        array $query = []
+    ): Response {
+        return $this->request('DELETE', $url, $query, [], $headers);
     }
 }

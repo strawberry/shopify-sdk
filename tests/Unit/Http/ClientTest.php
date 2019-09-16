@@ -125,10 +125,10 @@ final class ClientTest extends TestCase
         array $json = []
     ): void {
         $expectedRequest = new Request($method, $uri, $headers);
-        $expectedOptions = [
+        $expectedOptions = array_filter([
             'query' => $query,
             'json' => $json,
-        ];
+        ]);
 
         $client->shouldReceive('send')->withArgs(function (
             $request, $options

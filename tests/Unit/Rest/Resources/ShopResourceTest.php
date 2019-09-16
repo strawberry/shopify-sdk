@@ -6,7 +6,7 @@ use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Psr7\Response;
 use Strawberry\Shopify\Http\Client;
-use Strawberry\Shopify\Models\Shop;
+use Strawberry\Shopify\Models\Store\Shop;
 use Strawberry\Shopify\Tests\TestCase;
 use Strawberry\Shopify\Rest\Resources\Store\ShopResource;
 
