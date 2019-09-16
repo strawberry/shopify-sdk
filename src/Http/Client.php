@@ -31,10 +31,10 @@ final class Client
         try {
             $request = new Request($method, $url, $headers);
 
-            $response = $this->httpClient->send($request, [
+            $response = $this->httpClient->send($request, array_filter([
                 'query' => $query,
                 'json' => $json,
-            ]);
+            ]));
         } catch (RequestException $exception) {
             throw HttpException::failedRequest($exception);
         }
