@@ -45,6 +45,6 @@ trait HasParent
     {
         $uri = parent::uri($uri);
 
-        return $this->getParentInstance()->uri($uri);
+        return $this->getParentInstance()->uri('/' . $uri);
     }
 }

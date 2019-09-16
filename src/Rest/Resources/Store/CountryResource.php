@@ -42,7 +42,7 @@ final class CountryResource extends Resource implements HasChildrenContract
     {
         $response = $this->client->get($this->uri(), [
             'fields' => implode(',', $fields),
-            'since_id' => $sinceId
+            'since_id' => $sinceId,
         ]);
 
         return $this->toCollection($response);
