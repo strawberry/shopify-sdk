@@ -9,9 +9,12 @@ use Strawberry\Shopify\Http\Client;
 use Strawberry\Shopify\Models\Store\Shop;
 use Strawberry\Shopify\Tests\TestCase;
 use Strawberry\Shopify\Rest\Resources\Store\ShopResource;
+use Strawberry\Shopify\Tests\Concerns\LoadsData;
 
 final class ShopResourceTest extends TestCase
 {
+    use LoadsData;
+
     /** @test */
     public function it_gets_shop_data(): void
     {
@@ -47,10 +50,5 @@ final class ShopResourceTest extends TestCase
         ]);
 
         return new Client($guzzleClient);
-    }
-
-    private function data(string $file): string
-    {
-        return file_get_contents($this->base . $file);
     }
 }

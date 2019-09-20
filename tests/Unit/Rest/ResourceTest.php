@@ -8,6 +8,7 @@ use Strawberry\Shopify\Models\Model;
 use Strawberry\Shopify\Http\Response;
 use Strawberry\Shopify\Rest\Resource;
 use GuzzleHttp\Client as GuzzleClient;
+use Illuminate\Contracts\Support\Arrayable;
 use Strawberry\Shopify\Tests\TestCase;
 use Strawberry\Shopify\Rest\ChildResource;
 use Strawberry\Shopify\Exceptions\ClientException;
@@ -60,7 +61,14 @@ final class ResourceTest extends TestCase
         $client = new Client($guzzle);
         $resource = new ResourceTestResourceStub($client);
 
+        $arrayable = new class implements Arrayable {
+            public function toArray(): array {
+                return ['bar' => 'baz'];
+            }
+        };
+
         $this->assertSame(['foo' => ['bar' => 'baz']], $resource->getPreparedJson(['bar' => 'baz'], 'foo'));
+        $this->assertSame(['foo' => ['bar' => 'baz']], $resource->getPreparedJson($arrayable, 'foo'));
     }
 
     /** @test */
@@ -143,7 +151,7 @@ final class ResourceTestResourceStub extends Resource
         return $this->uri($uri);
     }
 
-    public function getPreparedJson(array $data, string $key): array
+    public function getPreparedJson($data, string $key): array
     {
         return $this->prepareJson($data, $key);
     }
