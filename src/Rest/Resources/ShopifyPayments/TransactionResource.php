@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace Strawberry\Shopify\Rest\Resources\Store;
 
-use Illuminate\Support\Collection;
-use Strawberry\Shopify\Rest\Resource;
-use Strawberry\Shopify\Rest\Concerns;
 use Strawberry\Shopify\Models\ShopifyPayments\Transaction;
+use Strawberry\Shopify\Rest\Concerns;
+use Strawberry\Shopify\Rest\Resource;
 
 final class TransactionResource extends Resource
 {

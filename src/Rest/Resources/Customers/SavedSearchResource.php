@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Strawberry\Shopify\Rest\Resources\Customers;
 
 use Illuminate\Support\Collection;
-use Strawberry\Shopify\Rest\Concerns;
-use Strawberry\Shopify\Rest\ChildResource;
 use Strawberry\Shopify\Models\Customers\Customer;
 use Strawberry\Shopify\Models\Customers\SavedSearch;
+use Strawberry\Shopify\Rest\ChildResource;
+use Strawberry\Shopify\Rest\Concerns;
 
 final class SavedSearchResource extends ChildResource
 {

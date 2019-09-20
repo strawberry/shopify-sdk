@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Strawberry\Shopify\Rest\Resources\Sales;
 
-use Strawberry\Shopify\Rest\Concerns;
-use Strawberry\Shopify\Rest\Resource;
 use Illuminate\Contracts\Support\Arrayable;
 use Strawberry\Shopify\Models\Sales\CollectionListing;
+use Strawberry\Shopify\Rest\Concerns;
+use Strawberry\Shopify\Rest\Resource;
 
 final class CollectionListingResource extends Resource
 {
@@ -24,6 +24,8 @@ final class CollectionListingResource extends Resource
 
     /**
      * Retrieve product_ids that are published to a collection_id
+     *
+     * @return int[]
      */
     public function productIds(int $id, array $options = []): array
     {

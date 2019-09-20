@@ -28,7 +28,7 @@ final class Country extends Model
     /**
      * The attributes that should be cast to arrays of the given type.
      *
-     * @var array
+     * @var string[]
      */
     protected $castArrays = [
         'provinces' => Province::class,

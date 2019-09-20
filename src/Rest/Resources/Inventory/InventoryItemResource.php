@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Strawberry\Shopify\Rest\Resources\Inventory;
 
+use Strawberry\Shopify\Models\Inventory\InventoryItem;
 use Strawberry\Shopify\Rest\Concerns;
 use Strawberry\Shopify\Rest\Resource;
-use Strawberry\Shopify\Models\Inventory\InventoryItem;
 
 final class InventoryItemResource extends Resource
 {

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Strawberry\Shopify\Rest\Resources\Plus;
 
+use Strawberry\Shopify\Models\Plus\User;
 use Strawberry\Shopify\Rest\Concerns;
 use Strawberry\Shopify\Rest\Resource;
-use Strawberry\Shopify\Models\Plus\User;
 
 final class UserResource extends Resource
 {

@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace Strawberry\Shopify\Rest\Resources\Sales;
 
+use Strawberry\Shopify\Models\Sales\ResourceFeedback;
 use Strawberry\Shopify\Rest\Concerns;
 use Strawberry\Shopify\Rest\Resource;
-use Illuminate\Contracts\Support\Arrayable;
-use Strawberry\Shopify\Models\Sales\ResourceFeedback;
 
 final class ResourceFeedbackResource extends Resource
 {

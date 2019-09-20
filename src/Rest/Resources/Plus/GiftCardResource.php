@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Strawberry\Shopify\Rest\Resources\Plus;
 
 use Illuminate\Support\Collection;
+use Strawberry\Shopify\Models\Plus\GiftCard;
 use Strawberry\Shopify\Rest\Concerns;
 use Strawberry\Shopify\Rest\Resource;
-use Strawberry\Shopify\Models\Plus\GiftCard;
 
 final class GiftCardResource extends Resource
 {

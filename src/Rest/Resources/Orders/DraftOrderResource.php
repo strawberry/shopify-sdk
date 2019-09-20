@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Strawberry\Shopify\Rest\Resources\Orders;
 
-use Strawberry\Shopify\Rest\Resource;
-use Strawberry\Shopify\Rest\Concerns;
 use Strawberry\Shopify\Models\Orders\DraftOrder;
 use Strawberry\Shopify\Models\Orders\DraftOrderInvoice;
+use Strawberry\Shopify\Rest\Concerns;
+use Strawberry\Shopify\Rest\Resource;
 
 final class DraftOrderResource extends Resource
 {

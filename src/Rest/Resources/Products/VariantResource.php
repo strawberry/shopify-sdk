@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Strawberry\Shopify\Rest\Resources\Products;
 
+use Strawberry\Shopify\Models\Products\Variant;
 use Strawberry\Shopify\Rest\Concerns;
 use Strawberry\Shopify\Rest\Resource;
-use Strawberry\Shopify\Models\Products\Variant;
 
 final class VariantResource extends Resource
 {

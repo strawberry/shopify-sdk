@@ -6,9 +6,9 @@ namespace Strawberry\Shopify\Models\Sales;
 
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
+use Strawberry\Shopify\Models\Customers\Address;
 use Strawberry\Shopify\Models\Model;
 use Strawberry\Shopify\Models\Orders\Order;
-use Strawberry\Shopify\Models\Customers\Address;
 
 /**
  * @property  string  $applied_discount

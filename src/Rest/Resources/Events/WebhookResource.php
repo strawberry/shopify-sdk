@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Strawberry\Shopify\Rest\Resources\Events;
 
+use Strawberry\Shopify\Models\Events\Webhook;
 use Strawberry\Shopify\Rest\Concerns;
 use Strawberry\Shopify\Rest\Resource;
-use Strawberry\Shopify\Models\Events\Webhook;
 
 final class WebhookResource extends Resource
 {

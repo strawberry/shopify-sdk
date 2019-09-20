@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Strawberry\Shopify\Rest\Resources\Sales;
 
 use Illuminate\Support\Collection;
-use Strawberry\Shopify\Rest\Resource;
 use Strawberry\Shopify\Models\Sales\Checkout;
 use Strawberry\Shopify\Models\Sales\ShippingRate;
+use Strawberry\Shopify\Rest\Resource;
 
 final class CheckoutResource extends Resource
 {
@@ -21,7 +21,7 @@ final class CheckoutResource extends Resource
     /**
      * A list of the child resources.
      *
-     * @var array
+     * @var string[]
      */
     protected $childResources = [
         'payments' => PaymentResource::class,

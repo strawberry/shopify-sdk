@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Strawberry\Shopify\Rest\Resources\OnlineStore;
 
+use Strawberry\Shopify\Models\OnlineStore\Article;
 use Strawberry\Shopify\Rest\ChildResource;
 use Strawberry\Shopify\Rest\Concerns;
-use Strawberry\Shopify\Models\OnlineStore\Article;
 
 final class ArticleResource extends ChildResource
 {
@@ -33,6 +33,8 @@ final class ArticleResource extends ChildResource
 
     /**
      * Retrieves a list all of article authors.
+     *
+     * @return string[]
      */
     public function authors(): array
     {
@@ -43,6 +45,8 @@ final class ArticleResource extends ChildResource
 
     /**
      * Retrieves a list of all the tags.
+     *
+     * @return string[]
      */
     public function tags(array $options = []): array
     {

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Strawberry\Shopify\Rest\Resources\Discounts;
 
+use Strawberry\Shopify\Models\Discounts\PriceRule;
 use Strawberry\Shopify\Rest\Concerns;
 use Strawberry\Shopify\Rest\Resource;
-use Strawberry\Shopify\Models\Discounts\PriceRule;
 
 final class PriceRuleResource extends Resource
 {
@@ -27,7 +27,7 @@ final class PriceRuleResource extends Resource
     /**
      * A list of the child resources.
      *
-     * @var array
+     * @var string[]
      */
     protected $childResources = [
         'batchs' => BatchResource::class,

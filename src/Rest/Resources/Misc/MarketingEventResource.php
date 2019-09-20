@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Strawberry\Shopify\Rest\Resources\Misc;
 
 use Illuminate\Support\Collection;
-use Strawberry\Shopify\Rest\Concerns;
-use Strawberry\Shopify\Rest\Resource;
 use Strawberry\Shopify\Models\Misc\Engagement;
 use Strawberry\Shopify\Models\Misc\MarketingEvent;
+use Strawberry\Shopify\Rest\Concerns;
+use Strawberry\Shopify\Rest\Resource;
 
 final class MarketingEventResource extends Resource
 {

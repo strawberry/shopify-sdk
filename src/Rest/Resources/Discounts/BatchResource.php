@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Strawberry\Shopify\Rest\Resources\Discounts;
 
 use Strawberry\Shopify\Models\Discounts\Batch;
-use Strawberry\Shopify\Rest\Concerns;
 use Strawberry\Shopify\Rest\ChildResource;
+use Strawberry\Shopify\Rest\Concerns;
 
 final class BatchResource extends ChildResource
 {

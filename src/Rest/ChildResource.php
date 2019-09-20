@@ -21,25 +21,15 @@ abstract class ChildResource extends Resource
     protected $parent;
 
     /**
-     * Set the resource's parent ID.
-     *
-     * @param  int|string  $id
-     */
-    public function setParentId($id): void
-    {
-        $this->parentId = $id;
-    }
-
-    /**
      * Fluently set the resource's parent ID.
      *
      * @param  int|string  $id
      *
      * @return $this
      */
-    public function parent($id)
+    public function withParent($id)
     {
-        $this->setParentId($id);
+        $this->parentId = $id;
 
         return $this;
     }

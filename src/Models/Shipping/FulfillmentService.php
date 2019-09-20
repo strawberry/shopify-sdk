@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Strawberry\Shopify\Models\Shipping;
 
-use Carbon\Carbon;
 use Strawberry\Shopify\Models\Model;
 
 /**

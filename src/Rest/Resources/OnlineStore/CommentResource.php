@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Strawberry\Shopify\Rest\Resources\OnlineStore;
 
 use Illuminate\Support\Collection;
-use Strawberry\Shopify\Rest\Resource;
-use Strawberry\Shopify\Rest\Concerns;
 use Strawberry\Shopify\Models\OnlineStore\Comment;
+use Strawberry\Shopify\Rest\Concerns;
+use Strawberry\Shopify\Rest\Resource;
 
 final class CommentResource extends Resource
 {

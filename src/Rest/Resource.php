@@ -8,10 +8,10 @@ use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use Strawberry\Shopify\Http\Client;
-use Strawberry\Shopify\Models\Model;
-use Strawberry\Shopify\Http\Response;
 use Strawberry\Shopify\Exceptions\ClientException;
+use Strawberry\Shopify\Http\Client;
+use Strawberry\Shopify\Http\Response;
+use Strawberry\Shopify\Models\Model;
 
 abstract class Resource
 {
@@ -21,7 +21,7 @@ abstract class Resource
     /**
      * A list of the child resources.
      *
-     * @var array
+     * @var string[]
      */
     protected $childResources = [];
 
@@ -100,7 +100,7 @@ abstract class Resource
     public function getChild(string $key): ChildResource
     {
         if (! $this->hasChild($key)) {
-            throw ClientException::childDoesntExist(get_class($this), $key);
+            throw ClientException::childDoesntExist(static::class, $key);
         }
 
         $resource = $this->childResources[$key];

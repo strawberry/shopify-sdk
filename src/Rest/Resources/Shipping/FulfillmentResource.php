@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Strawberry\Shopify\Rest\Resources\Shipping;
 
-use Strawberry\Shopify\Rest\Concerns;
-use Strawberry\Shopify\Rest\ChildResource;
 use Strawberry\Shopify\Models\Shipping\Fulfillment;
+use Strawberry\Shopify\Rest\ChildResource;
+use Strawberry\Shopify\Rest\Concerns;
 use Strawberry\Shopify\Rest\Resources\Orders\OrderResource;
 
 final class FulfillmentResource extends ChildResource
@@ -34,7 +34,7 @@ final class FulfillmentResource extends ChildResource
     /**
      * A list of the child resources.
      *
-     * @var array
+     * @var string[]
      */
     protected $childResources = [
         'events' => FulfillmentEventResource::class,

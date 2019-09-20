@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Strawberry\Shopify\Rest\Resources\OnlineStore;
 
+use Strawberry\Shopify\Models\OnlineStore\Asset;
 use Strawberry\Shopify\Rest\ChildResource;
 use Strawberry\Shopify\Rest\Concerns;
-use Strawberry\Shopify\Models\OnlineStore\Asset;
 
 final class AssetResource extends ChildResource
 {

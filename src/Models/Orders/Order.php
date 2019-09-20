@@ -6,9 +6,9 @@ namespace Strawberry\Shopify\Models\Orders;
 
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
-use Strawberry\Shopify\Models\Model;
 use Strawberry\Shopify\Models\Customers\Address;
 use Strawberry\Shopify\Models\Customers\Customer;
+use Strawberry\Shopify\Models\Model;
 
 /**
  * @property  int  $app_id

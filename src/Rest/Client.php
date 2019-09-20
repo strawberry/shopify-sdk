@@ -8,7 +8,6 @@ use BadMethodCallException;
 use GuzzleHttp\ClientInterface;
 use Illuminate\Support\Str;
 use Strawberry\Shopify\Http\Client as HttpClient;
-use Strawberry\Shopify\Rest\Resource;
 use Strawberry\Shopify\Rest\Resources\Store\CountryResource;
 use Strawberry\Shopify\Rest\Resources\Store\CurrencyResource;
 use Strawberry\Shopify\Rest\Resources\Store\PolicyResource;
@@ -31,14 +30,14 @@ final class Client
      * Cached resource instances to save creating new instances each time
      * a resource is accessed.
      *
-     * @var array
+     * @var Resource[]
      */
     private $resourceCache = [];
 
     /**
      * A list of the registered resources for each client.
      *
-     * @var array
+     * @var string[]
      */
     private $resources = [
         'countries' => CountryResource::class,

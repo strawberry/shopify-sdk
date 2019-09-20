@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Strawberry\Shopify\Http;
 
-use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Psr7\Request;
 use Strawberry\Shopify\Exceptions\HttpException;
 
 final class Client
