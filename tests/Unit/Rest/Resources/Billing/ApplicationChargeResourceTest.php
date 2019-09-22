@@ -7,12 +7,15 @@ use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Handler\MockHandler;
 use Strawberry\Shopify\Http\Client;
 use GuzzleHttp\Client as GuzzleClient;
-use Strawberry\Shopify\Models\Billing\ApplicationCharge;
+use Strawberry\Shopify\Tests\Concerns\MocksRequests;
 use Strawberry\Shopify\Tests\TestCase;
+use Strawberry\Shopify\Models\Billing\ApplicationCharge;
 use Strawberry\Shopify\Rest\Resources\Billing\ApplicationChargeResource;
 
 final class ApplicationChargeResourceTest extends TestCase
 {
+    use MocksRequests;
+
     /** @var MockHandler */
     private $mockHandler;
 
@@ -32,22 +35,13 @@ final class ApplicationChargeResourceTest extends TestCase
     public function testActivate(): void
     {
         $this->mockHandler->append(
-            new Response(200, [], $this->data('data/responses/billing/application_charge/activate.json'))
+            new Response(200, [], $this->response('billing/application_charge/activate'))
         );
 
-        $response = $this->applicationCharges->activate(675931192, [
-            'id' => 675931192,
-            'name' => 'iPod Cleaning',
-            'api_client_id' => 755357713,
-            'price' => '5.00',
-            'status' => 'active',
-            'return_url' => 'http://google.com/',
-            'test' => null,
-            'created_at' => '2019-07-22T11:27:39-04:00',
-            'updated_at' => '2019-07-22T11:41:28-04:00',
-            'charge_type' => null,
-            'decorated_return_url' => 'http://google.com/?charge_id=675931192'
-        ]);
+        $response = $this->applicationCharges->activate(
+            675931192,
+            $this->request('billing/application_charge/activate')
+        );
 
         $this->assertInstanceOf(ApplicationCharge::class, $response);
         $this->assertSame(675931192, $response->id);

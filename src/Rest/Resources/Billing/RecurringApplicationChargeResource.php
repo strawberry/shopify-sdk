@@ -63,7 +63,7 @@ final class RecurringApplicationChargeResource extends Resource
         float $amount
     ): RecurringApplicationCharge {
         $response = $this->client->put($this->uri("{$id}/customize"), [], [
-            'recurring_application_charge[capped_amount]' => $amount,
+            'recurring_application_charge' => ['capped_amount' => $amount],
         ]);
 
         return $this->toModel($response);

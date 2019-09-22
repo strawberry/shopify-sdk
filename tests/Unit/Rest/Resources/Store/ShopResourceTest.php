@@ -9,10 +9,13 @@ use GuzzleHttp\Psr7\Response;
 use Strawberry\Shopify\Http\Client;
 use Strawberry\Shopify\Models\Store\Shop;
 use Strawberry\Shopify\Rest\Resources\Store\ShopResource;
+use Strawberry\Shopify\Tests\Concerns\MocksRequests;
 use Strawberry\Shopify\Tests\TestCase;
 
 final class ShopResourceTest extends TestCase
 {
+    use MocksRequests;
+
     /** @var MockHandler */
     private $mockHandler;
 
@@ -32,13 +35,13 @@ final class ShopResourceTest extends TestCase
     public function testGet(): void
     {
         $this->mockHandler->append(
-            new Response(200, [], $this->data('data/responses/shop/get.json'))
+            new Response(200, [], $this->response('shop/get'))
         );
 
         $response = $this->shop->get();
 
         $this->assertInstanceOf(Shop::class, $response);
-        $this->assertSame(1234567890, $response->id);
+        $this->assertSame(690933842, $response->id);
 
         $request = $this->mockHandler->getLastRequest();
 
@@ -49,7 +52,7 @@ final class ShopResourceTest extends TestCase
     public function testGetWithOptions(): void
     {
         $this->mockHandler->append(
-            new Response(200, [], $this->Data('data/responses/shop/get.json'))
+            new Response(200, [], $this->response('shop/get'))
         );
 
         $this->shop->get(['fields' => 'id']);
