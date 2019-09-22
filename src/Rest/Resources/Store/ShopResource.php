@@ -21,12 +21,18 @@ final class ShopResource extends Resource
      *
      * @see https://help.shopify.com/en/api/reference/store-properties/shop#show-2019-07
      */
-    public function get(array $fields = []): Shop
+    public function get(array $options = []): Shop
     {
-        $response = $this->client->get('shop.json', [
-            'fields' => implode(',', $fields),
-        ]);
+        $response = $this->client->get(
+            $this->uri(),
+            $options
+        );
 
         return $this->toModel($response);
+    }
+
+    public function pluralResourceKey(): string
+    {
+        return 'shop';
     }
 }

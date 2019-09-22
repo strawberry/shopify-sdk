@@ -37,6 +37,6 @@ class ResourceProxy
     {
         return $this->resourceClass
             ->getChild($method)
-            ->parent($this->resourceId);
+            ->withParent($this->resourceId);
     }
 }

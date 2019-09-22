@@ -2,28 +2,35 @@
 
 namespace Strawberry\Shopify\Tests\Unit\Rest;
 
-use Strawberry\Shopify\Rest\ChildResource;
+use Mockery\MockInterface;
 use Strawberry\Shopify\Rest\Resource;
-use Strawberry\Shopify\Rest\ResourceProxy;
 use Strawberry\Shopify\Tests\TestCase;
+use Strawberry\Shopify\Rest\ChildResource;
+use Strawberry\Shopify\Rest\ResourceProxy;
 
 final class ResourceProxyTest extends TestCase
 {
-    /** @test */
-    public function it_forwards_call_onto_child_resource(): void
+    /** @var Resource|MockInterface */
+    private $resource;
+
+    public function setUpTestCase(): void
     {
-        $resource = $this->mock(Resource::class);
-        $child = $this->mock(ChildResource::class);
-        $proxy = new ResourceProxy($resource, 123456789);
+        $this->resource = $this->mock(Resource::class);
+        $this->childResource = $this->mock(ChildResource::class);
+    }
 
-        $resource->shouldReceive('getChild')
-            ->with('child')
-            ->andReturn($child);
+    public function testCallIsForwardedToChild(): void
+    {
+        $proxy = new ResourceProxy($this->resource, 123456789);
 
-        $child->shouldReceive('parent')
+        $this->resource->shouldReceive('getChild')
+            ->with('childResource')
+            ->andReturn($this->childResource);
+
+        $this->childResource->shouldReceive('withParent')
             ->with(123456789)
-            ->andReturn($child);
+            ->andReturn($this->childResource);
 
-        $proxy->child();
+        $proxy->childResource();
     }
 }

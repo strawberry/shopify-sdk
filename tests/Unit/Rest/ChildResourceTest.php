@@ -2,68 +2,49 @@
 
 namespace Strawberry\Shopify\Tests\Unit\Rest;
 
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\Handler\MockHandler;
 use Strawberry\Shopify\Http\Client;
 use GuzzleHttp\Client as GuzzleClient;
-use Strawberry\Shopify\Models\Model;
 use Strawberry\Shopify\Tests\TestCase;
 use Strawberry\Shopify\Rest\ChildResource;
-use Strawberry\Shopify\Rest\Resource;
+use Strawberry\Shopify\Tests\Stubs\Resources\ChildResourceStub;
 
 final class ChildResourceTest extends TestCase
 {
-    /** @test */
-    public function it_fluently_sets_the_parent_id(): void
-    {
-        $resource = $this->childResource();
+    /** @var MockHandler */
+    private $mockHandler;
 
-        $this->assertSame($resource, $resource->withParent(123456789));
-        $this->assertSame(123456789, $resource->getParentId());
+    /** @var ChildResource */
+    private $resource;
+
+    public function setUpTestCase(): void
+    {
+        $this->mockHandler = new MockHandler();
+        $client = new Client(new GuzzleClient([
+            'handler' => HandlerStack::create($this->mockHandler)
+        ]));
+
+        $this->resource = new ChildResourceStub($client);
     }
 
-    /** @test */
-    public function it_builds_uri_correctly(): void
+    public function testWithParent(): void
     {
-        $resource = $this->childResource()->withParent(123456789);
+        $this->resource->withParent(123456789);
 
-        $this->assertSame('parent/123456789/child.json', $resource->buildUri());
-        $this->assertSame('parent/123456789/child/one-level.json', $resource->buildUri('one-level'));
-        $this->assertSame('parent/123456789/child/multiple/levels.json', $resource->buildUri('multiple/levels'));
+        $this->assertSame(123456789, $this->resource->getParentId());
     }
 
-    private function childResource(): ChildResource
+    public function testUri(): void
     {
-        $guzzleClient = $this->mock(GuzzleClient::class);
-        $client = new Client($guzzleClient);
+        $this->mockHandler->append(new Response(
+            201, [], '{"model_stub":{"foo":"bar"}}'
+        ));
 
-        return new ChildResourceTestChildResourceStub($client);
-    }
-}
+        $this->resource->withParent(123456789)->create(['foo' => 'bar']);
 
-final class ChildResourceTestChildResourceStub extends ChildResource
-{
-    protected $parent = ChildResourceTestResourceStub::class;
-
-    public function getParentId(): int
-    {
-        return $this->parentId;
-    }
-
-    public function buildUri(string $uri = ''): string
-    {
-        return $this->uri($uri);
-    }
-
-    public function pluralResourceKey(): string
-    {
-        return 'child';
-    }
-}
-
-
-final class ChildResourceTestResourceStub extends Resource
-{
-    public function pluralResourceKey(): string
-    {
-        return 'parent';
+        $request = $this->mockHandler->getLastRequest();
+        $this->assertSame('model_stubs/123456789/model_stubs.json', (string) $request->getUri());
     }
 }

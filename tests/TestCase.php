@@ -22,9 +22,11 @@ abstract class TestCase extends BaseTestCase
 
         $this->base = __DIR__ . '/';
 
-        if (method_exists($this, 'setUpTestCase')) {
-            $this->setUpTestCase();
-        }
+        $this->setUpTestCase();
+    }
+
+    public function setUpTestCase(): void
+    {
     }
 
     /**
@@ -41,5 +43,13 @@ abstract class TestCase extends BaseTestCase
     protected function spy(...$args)
     {
         return Mockery::spy(...$args);
+    }
+
+    /**
+     * Load data from a file.
+     */
+    protected function data(string $file): string
+    {
+        return file_get_contents($this->base . $file);
     }
 }

@@ -2,174 +2,179 @@
 
 namespace Strawberry\Shopify\Tests\Unit\Rest;
 
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Collection;
+use GuzzleHttp\Handler\MockHandler;
 use Strawberry\Shopify\Http\Client;
-use Strawberry\Shopify\Models\Model;
-use Strawberry\Shopify\Http\Response;
 use Strawberry\Shopify\Rest\Resource;
 use GuzzleHttp\Client as GuzzleClient;
 use Illuminate\Contracts\Support\Arrayable;
 use Strawberry\Shopify\Tests\TestCase;
-use Strawberry\Shopify\Rest\ChildResource;
 use Strawberry\Shopify\Exceptions\ClientException;
+use Strawberry\Shopify\Tests\Stubs\Models\ModelStub;
+use Strawberry\Shopify\Tests\Stubs\Resources\ChildResourceStub;
+use Strawberry\Shopify\Tests\Stubs\Resources\ResourceStub;
+use Strawberry\Shopify\Tests\Stubs\Resources\ResourceWithChildrenStub;
 
 final class ResourceTest extends TestCase
 {
-    /** @test */
-    public function it_transforms_response_to_model(): void
-    {
-        $model = $this->resource()->find();
+    /** @var MockHandler */
+    private $mockHandler;
 
-        $this->assertInstanceOf(ResourceTestModelStub::class, $model);
-        $this->assertEquals('Foo', $model->first_name);
-        $this->assertEquals('Bar', $model->last_name);
+    /** @var Resource */
+    private $resource;
+
+    /** @var Resource */
+    private $resourceWithChildren;
+
+    public function setUpTestCase(): void
+    {
+        $this->mockHandler = new MockHandler();
+        $client = new Client(new GuzzleClient([
+            'handler' => HandlerStack::create($this->mockHandler)
+        ]));
+
+        $this->resource = new ResourceStub($client);
+        $this->resourceWithChildren = new ResourceWithChildrenStub($client);
     }
 
-    /** @test */
-    public function it_transforms_response_to_collection(): void
+    public function testCountResource(): void
     {
-        $collection = $this->resource()->get();
+        $this->mockHandler->append(new Response(
+            200, [], '{"count":12345}'
+        ));
 
-        $this->assertInstanceOf(Collection::class, $collection);
-        $this->assertCount(2, $collection);
+        $response = $this->resource->count(['test' => 'query']);
+        $this->assertSame(12345, $response);
+
+        $request = $this->mockHandler->getLastRequest();
+        $this->assertSame('GET', $request->getMethod());
+        $this->assertSame('model_stubs/count.json?test=query', (string) $request->getUri());
     }
 
-    private function resource(): Resource
+    public function testCreateResource(): void
     {
-        $guzzleClient = $this->mock(GuzzleClient::class);
-        $client = new Client($guzzleClient);
+        $this->mockHandler->append(new Response(
+            201, [], '{"model_stub":{"foo":"bar"}}'
+        ));
 
-        return new ResourceTestResourceStub($client);
+        $response = $this->resource->create(['foo' => 'bar']);
+        $this->assertInstanceOf(ModelStub::class, $response);
+        $this->assertSame('bar', $response->foo);
+
+        $request = $this->mockHandler->getLastRequest();
+        $this->assertSame('POST', $request->getMethod());
+        $this->assertSame('model_stubs.json', (string) $request->getUri());
+        $this->assertSame('{"model_stub":{"foo":"bar"}}', $request->getBody()->getContents());
     }
 
-    /** @test */
-    public function it_builds_uri_correctly(): void
+    public function testDeleteResource(): void
     {
-        $guzzle = $this->mock(GuzzleClient::class);
-        $client = new Client($guzzle);
-        $resource = new ResourceTestResourceStub($client);
+        $this->mockHandler->append(new Response(204));
 
-        $this->assertSame('resource_test_model_stubs/test.json', $resource->buildUri('test'));
-        $this->assertSame('resource_test_model_stubs/test.json', $resource->buildUri('/test'));
-        $this->assertSame('resource_test_model_stubs/uri/with/multiple/directories.json', $resource->buildUri('/uri/with/multiple/directories'));
+        $response = $this->resource->delete(123456789);
+        $this->assertNull($response);
+
+        $request = $this->mockHandler->getLastRequest();
+        $this->assertSame('DELETE', $request->getMethod());
+        $this->assertSame('model_stubs/123456789.json', (string) $request->getUri());
     }
 
-    /** @test */
-    public function it_prepares_json_correctly(): void
+    public function testFindResource(): void
     {
-        $guzzle = $this->mock(GuzzleClient::class);
-        $client = new Client($guzzle);
-        $resource = new ResourceTestResourceStub($client);
+        $this->mockHandler->append(new Response(
+            200, [], '{"model_stub":{"foo":"bar"}}'
+        ));
+
+        $response = $this->resource->find(123456789, ['query' => 'string']);
+        $this->assertInstanceOf(ModelStub::class, $response);
+        $this->assertSame('bar', $response->foo);
+
+        $request = $this->mockHandler->getLastRequest();
+        $this->assertSame('GET', $request->getMethod());
+        $this->assertSame('model_stubs/123456789.json?query=string', (string) $request->getUri());
+        $this->assertSame('', $request->getBody()->getContents());
+    }
+
+    public function testListResource(): void
+    {
+        $this->mockHandler->append(new Response(
+            200, [], '{"model_stubs":[{"foo":"bar"}, {"foo":"baz"}]}'
+        ));
+
+        $response = $this->resource->get(['query' => 'string']);
+        $this->assertInstanceOf(Collection::class, $response);
+        $this->assertCount(2, $response);
+        $this->assertContainsOnlyInstancesOf(ModelStub::class, $response);
+
+        $request = $this->mockHandler->getLastRequest();
+        $this->assertSame('GET', $request->getMethod());
+        $this->assertSame('model_stubs.json?query=string', (string) $request->getUri());
+        $this->assertSame('', $request->getBody()->getContents());
+    }
+
+    public function testUpdateResource(): void
+    {
+        $this->mockHandler->append(new Response(
+            200, [], '{"model_stub":{"foo": "bar"}}'
+        ));
+
+        $response = $this->resource->update(123456789, ['foo' => 'bar']);
+        $this->assertInstanceOf(ModelStub::class, $response);
+        $this->assertSame('bar', $response->foo);
+
+        $request = $this->mockHandler->getLastRequest();
+        $this->assertSame('PUT', $request->getMethod());
+        $this->assertSame('model_stubs/123456789.json', (string) $request->getUri());
+        $this->assertSame('{"model_stub":{"foo":"bar"}}', $request->getBody()->getContents());
+    }
+
+    public function testGetChildren(): void
+    {
+        $this->assertFalse($this->resource->hasChildren());
+
+        $this->assertTrue($this->resourceWithChildren->hasChildren());
+    }
+
+    public function testPrepareJsonWithArrayable(): void
+    {
+        $this->mockHandler->append(new Response(
+            201, [], '{"model_stub":{"foo":"bar"}}'
+        ));
 
         $arrayable = new class implements Arrayable {
-            public function toArray(): array {
-                return ['bar' => 'baz'];
+            public function toArray(): array
+            {
+                return ['foo' => 'bar'];
             }
         };
 
-        $this->assertSame(['foo' => ['bar' => 'baz']], $resource->getPreparedJson(['bar' => 'baz'], 'foo'));
-        $this->assertSame(['foo' => ['bar' => 'baz']], $resource->getPreparedJson($arrayable, 'foo'));
+        $this->resource->create($arrayable);
+
+        $request = $this->mockHandler->getLastRequest();
+        $this->assertSame('{"model_stub":{"foo":"bar"}}', $request->getBody()->getContents());
     }
 
-    /** @test */
-    public function it_determines_whether_it_has_children(): void
+    public function testHasChild(): void
     {
-        $guzzle = $this->mock(GuzzleClient::class);
-        $client = new Client($guzzle);
+        $this->assertFalse($this->resource->hasChild('foo'));
 
-        $resourceWithoutChildren = new ResourceTestResourceStub($client);
-        $resourceWithChildren = new ResourceTestResourceWithChildrenStub($client);
-
-        $this->assertFalse($resourceWithoutChildren->hasChildren());
-        $this->assertTrue($resourceWithChildren->hasChildren());
+        $this->assertTrue($this->resourceWithChildren->hasChild('child'));
+        $this->assertFalse($this->resourceWithChildren->hasChild('foo'));
     }
 
-    /** @test */
-    public function it_determines_whether_it_has_a_given_child(): void
-    {
-        $guzzle = $this->mock(GuzzleClient::class);
-        $client = new Client($guzzle);
-        $resource = new ResourceTestResourceWithChildrenStub($client);
-
-        $this->assertTrue($resource->hasChild('foo'));
-        $this->assertFalse($resource->hasChild('bar'));
-    }
-
-    /** @test */
-    public function it_throws_an_exception_when_getting_instance_of_nonexistent_child(): void
+    public function testGetChildThrowsException(): void
     {
         $this->expectException(ClientException::class);
 
-        $guzzle = $this->mock(GuzzleClient::class);
-        $client = new Client($guzzle);
-        $resource = new ResourceTestResourceWithChildrenStub($client);
-
-        $resource->getChild('bar');
+        $this->resource->getChild('foo');
     }
 
-    /** @test */
-    public function it_returns_instance_of_given_child(): void
+    public function testGetChild(): void
     {
-        $guzzle = $this->mock(GuzzleClient::class);
-        $client = new Client($guzzle);
-        $resource = new ResourceTestResourceWithChildrenStub($client);
+        $child = $this->resourceWithChildren->getChild('child');
 
-        $this->assertInstanceOf(ResourceTestChildResourceStub::class, $resource->getChild('foo'));
+        $this->assertInstanceOf(ChildResourceStub::class, $child);
     }
-}
-
-final class ResourceTestResourceStub extends Resource
-{
-    protected $model = ResourceTestModelStub::class;
-
-    public function find(): Model
-    {
-        $response = new Response(json_encode([
-            'resource_test_model_stub' => [
-                'first_name' => 'Foo',
-                'last_name' => 'Bar',
-            ]
-        ]), 200);
-
-        return $this->toModel($response);
-    }
-
-    public function get(): Collection
-    {
-        $response = new Response(json_encode([
-            'resource_test_model_stubs' => [
-                ['first_name' => 'Foo', 'last_name' => 'Bar'],
-                ['first_name' => 'Baz', 'last_name' => 'Qux'],
-            ]
-        ]), 200);
-
-        return $this->toCollection($response);
-    }
-
-    public function buildUri(string $uri): string
-    {
-        return $this->uri($uri);
-    }
-
-    public function getPreparedJson($data, string $key): array
-    {
-        return $this->prepareJson($data, $key);
-    }
-}
-
-final class ResourceTestChildResourceStub extends ChildResource
-{
-    protected $model = ResourceTestModelStub::class;
-    protected $parent = ResourceTestResourceStub::class;
-}
-
-final class ResourceTestResourceWithChildrenStub extends Resource
-{
-    protected $childResources = [
-        'foo' => ResourceTestChildResourceStub::class,
-    ];
-}
-
-final class ResourceTestModelStub extends Model
-{
 }

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Strawberry\Shopify\Rest\Concerns;
 
+use Strawberry\Shopify\Models\Model;
+
 trait FindsResource
 {
     /**
