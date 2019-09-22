@@ -20,7 +20,7 @@ final class ShopResourceTest extends TestCase
     private $mockHandler;
 
     /** @var ShopResource */
-    private $shop;
+    private $resource;
 
     public function setUpTestCase(): void
     {
@@ -29,7 +29,7 @@ final class ShopResourceTest extends TestCase
             'handler' => HandlerStack::create($this->mockHandler)
         ]));
 
-        $this->shop = new ShopResource($client);
+        $this->resource = new ShopResource($client);
     }
 
     public function testGet(): void
@@ -38,7 +38,7 @@ final class ShopResourceTest extends TestCase
             new Response(200, [], $this->response('shop/get'))
         );
 
-        $response = $this->shop->get();
+        $response = $this->resource->get();
 
         $this->assertInstanceOf(Shop::class, $response);
         $this->assertSame(690933842, $response->id);
@@ -55,7 +55,7 @@ final class ShopResourceTest extends TestCase
             new Response(200, [], $this->response('shop/get'))
         );
 
-        $this->shop->get(['fields' => 'id']);
+        $this->resource->get(['fields' => 'id']);
 
         $request = $this->mockHandler->getLastRequest();
 

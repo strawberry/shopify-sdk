@@ -60,4 +60,14 @@ final class AddressResource extends ChildResource
 
         return $this->toModel($response);
     }
+
+    public function routeKey(): string
+    {
+        return 'addresses';
+    }
+
+    public function singularResourceKey(): string
+    {
+        return 'customer_address';
+    }
 }

@@ -7,10 +7,10 @@ namespace Strawberry\Shopify\Rest\Resources\Customers;
 use Illuminate\Support\Collection;
 use Strawberry\Shopify\Models\Customers\Customer;
 use Strawberry\Shopify\Models\Customers\SavedSearch;
-use Strawberry\Shopify\Rest\ChildResource;
 use Strawberry\Shopify\Rest\Concerns;
+use Strawberry\Shopify\Rest\Resource;
 
-final class SavedSearchResource extends ChildResource
+final class SavedSearchResource extends Resource
 {
     use Concerns\ListsResource,
         Concerns\FindsResource,
@@ -46,5 +46,10 @@ final class SavedSearchResource extends ChildResource
         );
 
         return $this->toCollection($response, 'customers', Customer::class);
+    }
+
+    public function routeKey(): string
+    {
+        return 'customer_saved_searches';
     }
 }

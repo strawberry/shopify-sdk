@@ -73,7 +73,7 @@ abstract class Resource
 
         return (new Collection(
             $this->data($response, $key)
-        ))->mapInto($this->model);
+        ))->mapInto($model);
     }
 
     /**
@@ -123,6 +123,11 @@ abstract class Resource
         return Str::snake(class_basename($this->model));
     }
 
+    public function routeKey(): string
+    {
+        return $this->pluralResourceKey();
+    }
+
     /**
      * Build the URI for a request to the Shopify resource.
      */
@@ -132,7 +137,7 @@ abstract class Resource
             $uri = Str::start($uri, '/');
         }
 
-        return $this->uriPrefix . $this->pluralResourceKey() . $uri . '.json';
+        return $this->uriPrefix . $this->routeKey() . $uri . '.json';
     }
 
     /**

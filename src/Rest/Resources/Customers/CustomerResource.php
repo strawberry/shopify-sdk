@@ -7,6 +7,7 @@ namespace Strawberry\Shopify\Rest\Resources\Customers;
 use Illuminate\Support\Collection;
 use Strawberry\Shopify\Models\Customers\Customer;
 use Strawberry\Shopify\Models\Customers\Invitation;
+use Strawberry\Shopify\Models\Orders\Order;
 use Strawberry\Shopify\Rest\Concerns;
 use Strawberry\Shopify\Rest\Resource;
 
@@ -25,6 +26,15 @@ final class CustomerResource extends Resource
      * @var string
      */
     protected $model = Customer::class;
+
+    /**
+     * A list of the child resources.
+     *
+     * @var string[]
+     */
+    protected $childResources = [
+        'addresses' => AddressResource::class,
+    ];
 
     /**
      * Searches for customers that match a supplied query.
@@ -55,14 +65,18 @@ final class CustomerResource extends Resource
     /**
      * Sends an account invite to a customer.
      */
-    public function sendInvite(int $id, array $options): Invitation
+    public function sendInvite(int $id, array $data = []): Invitation
     {
         $response = $this->client->post(
             $this->uri("{$id}/send_invite"),
-            $this->prepareJson($options, 'customer_invite')
+            $this->prepareJson($data, 'customer_invite')
         );
 
-        return new Invitation($this->data($response, 'customer_invite'));
+        return $this->toModel(
+            $response,
+            'customer_invite',
+            Invitation::class
+        );
     }
 
     /**
@@ -76,6 +90,10 @@ final class CustomerResource extends Resource
             $this->uri("{$id}/orders")
         );
 
-        return $this->toCollection($response, 'orders');
+        return $this->toCollection(
+            $response,
+            'orders',
+            Order::class
+        );
     }
 }

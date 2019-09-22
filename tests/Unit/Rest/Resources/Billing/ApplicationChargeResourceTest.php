@@ -1,6 +1,6 @@
 <?php
 
-namespace Strawberry\Shopify\Tests\Unit\Rest\Resources;
+namespace Strawberry\Shopify\Tests\Unit\Rest\Resources\Billing;
 
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
@@ -20,7 +20,7 @@ final class ApplicationChargeResourceTest extends TestCase
     private $mockHandler;
 
     /** @var ApplicationChargeResource */
-    private $applicationCharges;
+    private $resource;
 
     public function setUpTestCase(): void
     {
@@ -29,7 +29,7 @@ final class ApplicationChargeResourceTest extends TestCase
             'handler' => HandlerStack::create($this->mockHandler)
         ]));
 
-        $this->applicationCharges = new ApplicationChargeResource($client);
+        $this->resource = new ApplicationChargeResource($client);
     }
 
     public function testActivate(): void
@@ -38,7 +38,7 @@ final class ApplicationChargeResourceTest extends TestCase
             new Response(200, [], $this->response('billing/application_charge/activate'))
         );
 
-        $response = $this->applicationCharges->activate(
+        $response = $this->resource->activate(
             675931192,
             $this->request('billing/application_charge/activate')
         );

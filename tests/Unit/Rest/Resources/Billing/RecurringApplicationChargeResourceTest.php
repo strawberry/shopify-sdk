@@ -1,6 +1,6 @@
 <?php
 
-namespace Strawberry\Shopify\Tests\Unit\Rest\Resources;
+namespace Strawberry\Shopify\Tests\Unit\Rest\Resources\Billing;
 
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
@@ -20,7 +20,7 @@ final class RecurringApplicationChargeResourceTest extends TestCase
     private $mockHandler;
 
     /** @var RecurringApplicationChargeResource */
-    private $recurringApplicationCharges;
+    private $resource;
 
     public function setUpTestCase(): void
     {
@@ -29,7 +29,7 @@ final class RecurringApplicationChargeResourceTest extends TestCase
             'handler' => HandlerStack::create($this->mockHandler)
         ]));
 
-        $this->recurringApplicationCharges = new RecurringApplicationChargeResource($client);
+        $this->resource = new RecurringApplicationChargeResource($client);
     }
 
     public function testActivate(): void
@@ -38,7 +38,7 @@ final class RecurringApplicationChargeResourceTest extends TestCase
             new Response(200, [], $this->response('billing/recurring_application_charge/activate'))
         );
 
-        $response = $this->recurringApplicationCharges->activate(
+        $response = $this->resource->activate(
             455696195,
             $this->request('billing/recurring_application_charge/activate')
         );
@@ -56,7 +56,7 @@ final class RecurringApplicationChargeResourceTest extends TestCase
     {
         $this->mockHandler->append(new Response(204));
 
-        $response = $this->recurringApplicationCharges->cancel(123456789);
+        $response = $this->resource->cancel(123456789);
         $this->assertNull($response);
 
         $request = $this->mockHandler->getLastRequest();
@@ -70,7 +70,7 @@ final class RecurringApplicationChargeResourceTest extends TestCase
             new Response(200, [], $this->response('billing/recurring_application_charge/customize'))
         );
 
-        $response = $this->recurringApplicationCharges->updateCappedAmount(455696195, 200);
+        $response = $this->resource->updateCappedAmount(455696195, 200);
 
         $this->assertInstanceOf(RecurringApplicationCharge::class, $response);
         $this->assertSame(455696195, $response->id);
