@@ -7,54 +7,39 @@ use Strawberry\Shopify\Tests\TestCase;
 
 final class ResponseTest extends TestCase
 {
-    /** @test */
-    public function it_returns_json_decoded_content(): void
+    public function testGetContent(): void
     {
         $response = new Response('{"foo": "bar"}', 200);
 
-        $this->assertEquals([
-            'foo' => 'bar'
-        ], $response->getContent());
+        $this->assertEquals(['foo' => 'bar'], $response->getContent());
     }
 
-    /**
-     * @dataProvider successfulResponseCodes
-     * @test
-     */
-    public function it_is_successful_when_response_code_is_2xx(int $code): void
+    /** @dataProvider successfulResponseCodes */
+    public function testSuccessfulResponses(int $code): void
     {
         $response = new Response('', $code);
 
         $this->assertTrue($response->isSuccess());
     }
 
-    /**
-     * @dataProvider redirectResponseCodes
-     * @test
-     */
-    public function it_is_successful_when_response_code_is_3xx(int $code): void
+    /** @dataProvider redirectResponseCodes */
+    public function testRedirectResponses(int $code): void
     {
         $response = new Response('', $code);
 
         $this->assertTrue($response->isSuccess());
     }
 
-    /**
-     * @dataProvider clientErrorResponseCodes
-     * @test
-     */
-    public function it_is_error_when_response_code_is_4xx(int $code): void
+    /** @dataProvider clientErrorResponseCodes */
+    public function testClientErrors(int $code): void
     {
         $response = new Response('', $code);
 
         $this->assertTrue($response->isError());
     }
 
-    /**
-     * @dataProvider serverErrorResponseCodes
-     * @test
-     */
-    public function it_is_error_when_response_code_is_5xx(int $code): void
+    /** @dataProvider serverErrorResponseCodes */
+    public function testServerErrors(int $code): void
     {
         $response = new Response('', $code);
 

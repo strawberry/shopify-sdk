@@ -3,12 +3,12 @@
 namespace Strawberry\Shopify\Tests\Unit\Models;
 
 use Illuminate\Support\Collection;
-use Strawberry\Shopify\Models\Model;
 use Strawberry\Shopify\Tests\TestCase;
+use Strawberry\Shopify\Tests\Unit\Models\Stubs\ModelStub;
+use Strawberry\Shopify\Tests\Unit\Models\Stubs\CastModelStub;
 
 final class ModelTest extends TestCase
 {
-
     public function testMutator(): void
     {
         $model = new ModelStub();
@@ -114,40 +114,4 @@ final class ModelTest extends TestCase
         $this->assertIsArray($model->bar);
         $this->assertCount(2, $model->bar);
     }
-}
-
-final class ModelStub extends Model
-{
-    protected $casts = [
-        'model' => ModelStub::class,
-        'foo' => '\\This\\Is\\Not\\A\\Model',
-    ];
-    protected $castArrays = [
-        'array' => ModelStub::class,
-        'bar' => '\\This\\Is\\Not\\A\\Model'
-    ];
-
-    public function getTestMutatorAttribute(): string
-    {
-        return 'Hello, world!';
-    }
-}
-
-final class CastModelStub extends Model
-{
-    protected $casts = [
-        'int' => 'int',
-        'integer' => 'integer',
-        'real' => 'real',
-        'float' => 'float',
-        'double' => 'double',
-        'string' => 'string',
-        'bool' => 'bool',
-        'boolean' => 'boolean',
-        'object' => 'object',
-        'array' => 'array',
-        'json' => 'json',
-        'collection' => 'collection',
-        'default' => 'default',
-    ];
 }

@@ -21,6 +21,10 @@ abstract class TestCase extends BaseTestCase
         $dotenv->load();
 
         $this->base = __DIR__ . '/';
+
+        if (method_exists($this, 'setUpTestCase')) {
+            $this->setUpTestCase();
+        }
     }
 
     /**
