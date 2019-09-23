@@ -70,4 +70,9 @@ final class AddressResource extends ChildResource
     {
         return 'customer_address';
     }
+
+    public function pluralResourceKey(): string
+    {
+        return 'addresses';
+    }
 }

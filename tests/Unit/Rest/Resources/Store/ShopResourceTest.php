@@ -11,57 +11,36 @@ use Strawberry\Shopify\Models\Store\Shop;
 use Strawberry\Shopify\Rest\Resources\Store\ShopResource;
 use Strawberry\Shopify\Tests\Concerns\MocksRequests;
 use Strawberry\Shopify\Tests\TestCase;
+use Strawberry\Shopify\Tests\Unit\Rest\Resources\ResourceTestCase;
 
-final class ShopResourceTest extends TestCase
+final class ShopResourceTest extends ResourceTestCase
 {
-    use MocksRequests;
+    /** @var string */
+    protected $modelClass = Shop::class;
 
-    /** @var MockHandler */
-    private $mockHandler;
+    /** @var string */
+    protected $resourceClass = ShopResource::class;
 
-    /** @var ShopResource */
-    private $resource;
-
-    public function setUpTestCase(): void
-    {
-        $this->mockHandler = new MockHandler();
-        $client = new Client(new GuzzleClient([
-            'handler' => HandlerStack::create($this->mockHandler)
-        ]));
-
-        $this->resource = new ShopResource($client);
-    }
+    /** @var string */
+    protected $dataPath = 'shop';
 
     public function testGet(): void
     {
-        $this->mockHandler->append(
-            new Response(200, [], $this->response('shop/get'))
-        );
+        $this->queue(200, [], $this->response('get'));
 
         $response = $this->resource->get();
 
-        $this->assertInstanceOf(Shop::class, $response);
-        $this->assertSame(690933842, $response->id);
-
-        $request = $this->mockHandler->getLastRequest();
-
-        $this->assertSame('GET', $request->getMethod());
-        $this->assertSame('shop.json', (string) $request->getUri());
+        $this->assertRequest('GET', 'shop.json');
+        $this->assertModel($response);
     }
 
     public function testGetWithOptions(): void
     {
-        $this->mockHandler->append(
-            new Response(200, [], $this->response('shop/get'))
-        );
+        $this->queue(200, [], $this->response('get'));
 
-        $this->resource->get(['fields' => 'id']);
+        $response = $this->resource->get(['fields' => 'id']);
 
-        $request = $this->mockHandler->getLastRequest();
-
-        $this->assertSame(
-            'shop.json?fields=id',
-            (string) $request->getUri()
-        );
+        $this->assertRequest('GET', 'shop.json?fields=id');
+        $this->assertModel($response);
     }
 }

@@ -48,6 +48,11 @@ final class SavedSearchResource extends Resource
         return $this->toCollection($response, 'customers', Customer::class);
     }
 
+    public function singularResourceKey(): string
+    {
+        return 'customer_saved_search';
+    }
+
     public function routeKey(): string
     {
         return 'customer_saved_searches';
