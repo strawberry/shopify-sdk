@@ -81,7 +81,7 @@ final class InventoryLevelResource extends Resource
         int $available,
         bool $disconnect_if_necessary = false
     ): InventoryLevel {
-        $response = $this->client->post($this->uri('connect'), [
+        $response = $this->client->post($this->uri('set'), [
             'inventory_item_id' => $item,
             'location_id' => $location,
             'available' => $available,
