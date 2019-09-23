@@ -30,7 +30,7 @@ final class PriceRuleResource extends Resource
      * @var string[]
      */
     protected $childResources = [
-        'batchs' => BatchResource::class,
-        'priceRules' => PriceRuleResource::class,
+        'batches' => BatchResource::class,
+        'discountCodes' => DiscountCodeResource::class,
     ];
 }

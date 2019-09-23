@@ -35,7 +35,8 @@ abstract class ResourceTestCase extends TestCase
     {
         $this->mockHandler = new MockHandler();
         $this->client = new Client(new GuzzleHttpClient([
-            'handler' => HandlerStack::create($this->mockHandler)
+            'handler' => HandlerStack::create($this->mockHandler),
+            'allow_redirects' => true,
         ]));
 
         $resourceClass = $this->resourceClass;
@@ -77,5 +78,11 @@ abstract class ResourceTestCase extends TestCase
 
         $this->assertSame($method, $request->getMethod());
         $this->assertSame($uri, urldecode((string) $request->getUri()));
+    }
+
+    protected function assertChild(string $key, string $class): void
+    {
+        $this->assertTrue($this->resource->hasChild($key));
+        $this->assertInstanceOf($class, $this->resource->getChild($key));
     }
 }

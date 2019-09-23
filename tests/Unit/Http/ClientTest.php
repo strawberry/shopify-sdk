@@ -2,15 +2,17 @@
 
 namespace Strawberry\Shopify\Tests\Unit\Http;
 
+use GuzzleHttp\Client as GuzzleClient;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\ServerException;
+use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
-use GuzzleHttp\Handler\MockHandler;
-use Strawberry\Shopify\Http\Client;
-use GuzzleHttp\Client as GuzzleClient;
-use Strawberry\Shopify\Tests\TestCase;
-use GuzzleHttp\Exception\RequestException;
 use Strawberry\Shopify\Exceptions\HttpException;
+use Strawberry\Shopify\Http\Client;
+use Strawberry\Shopify\Tests\TestCase;
 
 final class ClientTest extends TestCase
 {
@@ -42,12 +44,23 @@ final class ClientTest extends TestCase
         $this->assertEquals(['hello' => 'world'], $response->getContent());
     }
 
-    public function testRequestThatThrowsRequestException(): void
+    public function testRequestThatThrowsClientException(): void
     {
         $this->expectException(HttpException::class);
 
         $this->mockHandler->append(
-            new RequestException('', new Request('GET', '/'))
+            new ClientException('', new Request('GET', '/'))
+        );
+
+        $this->client->request('GET', '/');
+    }
+
+    public function testRequestThatThrowsServerException(): void
+    {
+        $this->expectException(HttpException::class);
+
+        $this->mockHandler->append(
+            new ServerException('', new Request('GET', '/'))
         );
 
         $this->client->request('GET', '/');

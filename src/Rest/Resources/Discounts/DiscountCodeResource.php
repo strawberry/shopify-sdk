@@ -37,10 +37,9 @@ final class DiscountCodeResource extends ChildResource
      */
     public function lookup(string $code): DiscountCode
     {
-        $response = $this->client->get(
-            $this->uri('lookup'),
-            ['code' => $code]
-        );
+        $response = $this->client->get('lookup.json', [
+            'code' => $code,
+        ]);
 
         return $this->toModel($response);
     }
