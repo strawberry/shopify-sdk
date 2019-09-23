@@ -1,0 +1,16 @@
+{
+    "refund": {
+        "currency": "USD",
+        "shipping": {
+            "amount": 5.0
+        },
+        "transactions": [
+            {
+                "parent_id": 801038806,
+                "amount": 5.0,
+                "kind": "refund",
+                "gateway": "bogus"
+            }
+        ]
+    }
+}

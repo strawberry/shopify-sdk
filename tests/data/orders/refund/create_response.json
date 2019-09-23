@@ -1,0 +1,68 @@
+{
+    "refund": {
+        "id": 929361464,
+        "order_id": 450789469,
+        "created_at": "2019-08-08T15:57:57-04:00",
+        "note": null,
+        "user_id": null,
+        "processed_at": "2019-08-08T15:57:57-04:00",
+        "restock": false,
+        "admin_graphql_api_id": "gid://shopify/Refund/929361464",
+        "refund_line_items": [],
+        "transactions": [
+            {
+                "id": 1072844685,
+                "order_id": 450789469,
+                "kind": "refund",
+                "gateway": "bogus",
+                "status": "success",
+                "message": "Bogus Gateway: Forced success",
+                "created_at": "2019-08-08T15:57:57-04:00",
+                "test": true,
+                "authorization": null,
+                "location_id": null,
+                "user_id": null,
+                "parent_id": 801038806,
+                "processed_at": "2019-08-08T15:57:57-04:00",
+                "device_id": null,
+                "receipt": {},
+                "error_code": null,
+                "source_name": "755357713",
+                "amount": "5.00",
+                "currency": "USD",
+                "admin_graphql_api_id": "gid://shopify/OrderTransaction/1072844685"
+            }
+        ],
+        "order_adjustments": [
+            {
+                "id": 1030976843,
+                "order_id": 450789469,
+                "refund_id": 929361464,
+                "amount": "-5.00",
+                "tax_amount": "0.00",
+                "kind": "shipping_refund",
+                "reason": "Shipping refund",
+                "amount_set": {
+                    "shop_money": {
+                        "amount": "-5.00",
+                        "currency_code": "USD"
+                    },
+                    "presentment_money": {
+                        "amount": "-5.00",
+                        "currency_code": "USD"
+                    }
+                },
+                "tax_amount_set": {
+                    "shop_money": {
+                        "amount": "0.00",
+                        "currency_code": "USD"
+                    },
+                    "presentment_money": {
+                        "amount": "0.00",
+                        "currency_code": "USD"
+                    }
+                }
+            }
+        ]
+    }
+}

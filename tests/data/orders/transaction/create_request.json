@@ -1,0 +1,8 @@
+{
+    "transaction": {
+        "currency": "USD",
+        "amount": "10.00",
+        "kind": "capture",
+        "parent_id": 389404469
+    }
+}

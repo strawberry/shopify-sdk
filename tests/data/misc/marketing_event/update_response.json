@@ -1,0 +1,26 @@
+{
+    "marketing_event": {
+        "id": 998730532,
+        "event_type": "post",
+        "remote_id": "1000:2000",
+        "started_at": "2019-02-01T19:00:00-05:00",
+        "ended_at": "2019-02-02T19:00:00-05:00",
+        "scheduled_to_end_at": "2019-02-03T19:00:00-05:00",
+        "budget": "11.1",
+        "currency": "CAD",
+        "manage_url": null,
+        "preview_url": null,
+        "utm_campaign": "1234567890",
+        "utm_source": "facebook",
+        "utm_medium": "facebook-post",
+        "budget_type": "daily",
+        "description": null,
+        "marketing_channel": "social",
+        "paid": false,
+        "referring_domain": "facebook.com",
+        "breadcrumb_id": null,
+        "marketing_activity_id": null,
+        "admin_graphql_api_id": "gid://shopify/MarketingEvent/998730532",
+        "marketed_resources": []
+    }
+}
