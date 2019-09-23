@@ -11,7 +11,7 @@ trait FindsResource
     /**
      * Retrieves a resource with the given ID.
      */
-    public function find(int $id, array $options): Model
+    public function find(int $id, array $options = []): Model
     {
         $response = $this->client->get($this->uri((string) $id), $options);
 

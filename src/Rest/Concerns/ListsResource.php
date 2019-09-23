@@ -11,7 +11,7 @@ trait ListsResource
     /**
      * Retrieves a list of the resources.
      */
-    public function get(array $options): Collection
+    public function get(array $options = []): Collection
     {
         $response = $this->client->get($this->uri(), $options);
 
