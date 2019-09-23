@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Strawberry\Shopify\Rest\Resources\Store;
+namespace Strawberry\Shopify\Rest\Resources\ShopifyPayments;
 
 use Strawberry\Shopify\Models\ShopifyPayments\Payout;
 use Strawberry\Shopify\Rest\Concerns;

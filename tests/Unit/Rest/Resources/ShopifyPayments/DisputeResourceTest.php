@@ -16,4 +16,36 @@ final class DisputeResourceTest extends ResourceTestCase
 
     /** @var string */
     protected $dataPath = 'shopify_payments/dispute';
+
+    public function testGet(): void
+    {
+        $this->queue(200, [], $this->response('get'));
+
+        $response = $this->resource->get();
+
+        $this->assertRequest('GET', 'shopify_payments/disputes.json');
+        $this->assertCollection($response, 6);
+    }
+
+    public function testGetWithOptions(): void
+    {
+        $this->queue(200, [], $this->response('get_with_options'));
+
+        $response = $this->resource->get([
+            'status' => 'won'
+        ]);
+
+        $this->assertRequest('GET', 'shopify_payments/disputes.json?status=won');
+        $this->assertCollection($response, 1);
+    }
+
+    public function testFind(): void
+    {
+        $this->queue(200, [], $this->response('find'));
+
+        $response = $this->resource->find(598735659);
+
+        $this->assertRequest('GET', 'shopify_payments/disputes/598735659.json');
+        $this->assertModel($response);
+    }
 }

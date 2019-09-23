@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Strawberry\Shopify\Rest\Resources\Store;
+namespace Strawberry\Shopify\Rest\Resources\ShopifyPayments;
 
 use Strawberry\Shopify\Models\ShopifyPayments\Dispute;
 use Strawberry\Shopify\Rest\Concerns;
@@ -14,16 +14,16 @@ final class DisputeResource extends Resource
         Concerns\FindsResource;
 
     /**
-     * The prefix for the URI.
-     *
-     * @var string
-     */
-    protected $uriPrefix = 'shopify_payments/';
-
-    /**
      * The model that represents this resource.
      *
      * @var string
      */
     protected $model = Dispute::class;
+
+    /**
+     * The prefix for the URI.
+     *
+     * @var string
+     */
+    protected $uriPrefix = 'shopify_payments/';
 }

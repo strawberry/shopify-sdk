@@ -16,4 +16,14 @@ final class BalanceResourceTest extends ResourceTestCase
 
     /** @var string */
     protected $dataPath = 'shopify_payments/balance';
+
+    public function testGet(): void
+    {
+        $this->queue(200, [], $this->response('get'));
+
+        $response = $this->resource->get();
+
+        $this->assertRequest('GET', 'shopify_payments/balance.json');
+        $this->assertModel($response);
+    }
 }
