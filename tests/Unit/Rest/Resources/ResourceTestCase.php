@@ -42,9 +42,13 @@ abstract class ResourceTestCase extends TestCase
         $this->resource = new $resourceClass($this->client);
     }
 
-    protected function queue(...$args): void
+    protected function queue(int $statusCode, array $headers, string $data): void
     {
-        $this->mockHandler->append(new Response(...$args));
+        $this->mockHandler->append(new Response(
+            $statusCode,
+            $headers,
+            $data
+        ));
     }
 
     protected function assertModel($response): void

@@ -2,85 +2,115 @@
 
 namespace Strawberry\Shopify\Tests\Unit\Rest\Resources\Billing;
 
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Psr7\Response;
-use GuzzleHttp\Handler\MockHandler;
-use Strawberry\Shopify\Http\Client;
-use GuzzleHttp\Client as GuzzleClient;
 use Strawberry\Shopify\Models\Billing\RecurringApplicationCharge;
 use Strawberry\Shopify\Rest\Resources\Billing\RecurringApplicationChargeResource;
-use Strawberry\Shopify\Tests\Concerns\MocksRequests;
-use Strawberry\Shopify\Tests\TestCase;
+use Strawberry\Shopify\Rest\Resources\Billing\UsageChargeResource;
+use Strawberry\Shopify\Tests\Unit\Rest\Resources\ResourceTestCase;
 
-final class RecurringApplicationChargeResourceTest extends TestCase
+final class RecurringApplicationChargeResourceTest extends ResourceTestCase
 {
-    use MocksRequests;
+    /** @var string */
+    protected $modelClass = RecurringApplicationCharge::class;
 
-    /** @var MockHandler */
-    private $mockHandler;
+    /** @var string */
+    protected $resourceClass = RecurringApplicationChargeResource::class;
 
-    /** @var RecurringApplicationChargeResource */
-    private $resource;
+    /** @var string */
+    protected $dataPath = 'billing/recurring_application_charge';
 
-    public function setUpTestCase(): void
+    public function testChildren(): void
     {
-        $this->mockHandler = new MockHandler();
-        $client = new Client(new GuzzleClient([
-            'handler' => HandlerStack::create($this->mockHandler)
-        ]));
+        $this->assertTrue($this->resource->hasChildren());
+        $this->assertTrue($this->resource->hasChild('usageCharges'));
+        $this->assertInstanceOf(UsageChargeResource::class, $this->resource->getChild('usageCharges'));
+    }
 
-        $this->resource = new RecurringApplicationChargeResource($client);
+    public function testCreate(): void
+    {
+        $this->queue(201, [], $this->response('create'));
+
+        $response = $this->resource->create(
+            $this->request('create')
+        );
+
+        $this->assertRequest('POST', 'recurring_application_charges.json');
+        $this->assertModel($response);
+    }
+
+    public function testFind(): void
+    {
+        $this->queue(200, [], $this->response('find'));
+
+        $response = $this->resource->find(455696195);
+
+        $this->assertRequest('GET', 'recurring_application_charges/455696195.json');
+        $this->assertModel($response);
+    }
+
+    public function testFindWithOptions(): void
+    {
+        $this->queue(200, [], $this->response('find'));
+
+        $response = $this->resource->find(455696195, [
+            'fields' => 'id,name'
+        ]);
+
+        $this->assertRequest('GET', 'recurring_application_charges/455696195.json?fields=id,name');
+        $this->assertModel($response);
+    }
+
+    public function testGet(): void
+    {
+        $this->queue(200, [], $this->response('get'));
+
+        $response = $this->resource->get();
+
+        $this->assertRequest('GET', 'recurring_application_charges.json');
+        $this->assertCollection($response, 2);
+    }
+
+    public function testGetWithOptions(): void
+    {
+        $this->queue(200, [], $this->response('get_with_options'));
+
+        $response = $this->resource->get([
+            'since_id' => 455696195
+        ]);
+
+        $this->assertRequest('GET', 'recurring_application_charges.json?since_id=455696195');
+        $this->assertCollection($response);
     }
 
     public function testActivate(): void
     {
-        $this->mockHandler->append(
-            new Response(200, [], $this->response('billing/recurring_application_charge/activate'))
-        );
+        $this->queue(200, [], $this->response('activate'));
 
         $response = $this->resource->activate(
             455696195,
-            $this->request('billing/recurring_application_charge/activate')
+            $this->request('activate')
         );
 
-        $this->assertInstanceOf(RecurringApplicationCharge::class, $response);
-        $this->assertSame(455696195, $response->id);
-
-        $request = $this->mockHandler->getLastRequest();
-
-        $this->assertSame('POST', $request->getMethod());
-        $this->assertSame('recurring_application_charges/455696195/activate.json', (string) $request->getUri());
+        $this->assertRequest('POST', 'recurring_application_charges/455696195/activate.json');
+        $this->assertModel($response);
     }
 
     public function testCancel(): void
     {
-        $this->mockHandler->append(new Response(204));
+        $this->queue(204);
 
         $response = $this->resource->cancel(123456789);
-        $this->assertNull($response);
 
-        $request = $this->mockHandler->getLastRequest();
-        $this->assertSame('DELETE', $request->getMethod());
-        $this->assertSame('recurring_application_charges/123456789.json', (string) $request->getUri());
+        $this->assertRequest('DELETE', 'recurring_application_charges/123456789.json');
+        $this->assertNull($response);
     }
 
     public function testUpdateCappedAmount(): void
     {
-        $this->mockHandler->append(
-            new Response(200, [], $this->response('billing/recurring_application_charge/customize'))
-        );
+        $this->queue(200, [], $this->response('customize'));
 
         $response = $this->resource->updateCappedAmount(455696195, 200);
 
-        $this->assertInstanceOf(RecurringApplicationCharge::class, $response);
-        $this->assertSame(455696195, $response->id);
-
-        $request = $this->mockHandler->getLastRequest();
-
-        $this->assertSame('PUT', $request->getMethod());
-        $this->assertSame(
-            'recurring_application_charges/455696195/customize.json?recurring_application_charge%5Bcapped_amount%5D=200',
-            (string) $request->getUri()
-        );
+        $this->assertRequest('PUT', 'recurring_application_charges/455696195/customize.json?recurring_application_charge[capped_amount]=200');
+        $this->assertModel($response);
     }
 }

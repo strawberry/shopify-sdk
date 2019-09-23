@@ -2,6 +2,7 @@
     "name": "strawberry/shopify",
     "description": "An (opinionated) Shopify SDK for PHP",
     "require": {
+        "illuminate/contracts": "~5.8.0",
         "illuminate/support": "~5.8.0",
         "guzzlehttp/guzzle": "^6.3@dev",
         "jenssegers/model": "dev-master"

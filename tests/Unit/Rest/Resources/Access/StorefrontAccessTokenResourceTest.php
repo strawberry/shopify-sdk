@@ -2,7 +2,6 @@
 
 namespace Strawberry\Shopify\Tests\Unit\Rest\Resources\Access;
 
-use GuzzleHttp\Psr7\Response;
 use Strawberry\Shopify\Models\Access\StorefrontAccessToken;
 use Strawberry\Shopify\Rest\Resources\Access\StorefrontAccessTokenResource;
 use Strawberry\Shopify\Tests\Unit\Rest\Resources\ResourceTestCase;
