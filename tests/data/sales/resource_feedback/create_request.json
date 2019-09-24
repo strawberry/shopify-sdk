@@ -1,0 +1,9 @@
+{
+    "resource_feedback": {
+        "state": "requires_action",
+        "messages": [
+            "is not connected. Connect your account to use this sales channel."
+        ],
+        "feedback_generated_at": "2019-07-22T15:18:28.584842Z"
+    }
+}
