@@ -16,4 +16,28 @@ final class ArticleResourceTest extends ResourceTestCase
 
     /** @var string */
     protected $dataPath = 'online_store/article';
+
+    public function testAuthors(): void
+    {
+        $this->queue(200, [], $this->response('authors'));
+
+        $response = $this->resource->authors();
+
+        $this->assertRequest('GET', 'articles/authors.json');
+        $this->assertSame([
+            'dennis', 'John', 'Rob', 'Dennis'
+        ], $response);
+    }
+
+    public function testTags(): void
+    {
+        $this->queue(200, [], $this->response('tags'));
+
+        $response = $this->resource->tags();
+
+        $this->assertRequest('GET', 'articles/tags.json');
+        $this->assertSame([
+            'Announcing', 'Mystery'
+        ], $response);
+    }
 }

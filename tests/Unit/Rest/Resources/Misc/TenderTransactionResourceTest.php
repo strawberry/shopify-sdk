@@ -16,4 +16,14 @@ final class TenderTransactionResourceTest extends ResourceTestCase
 
     /** @var string */
     protected $dataPath = 'misc/tender_transaction';
+
+    public function testGet(): void
+    {
+        $this->queue(200, [], $this->response('get'));
+
+        $response = $this->resource->get();
+
+        $this->assertRequest('GET', 'tender_transactions.json');
+        $this->assertCollection($response, 2);
+    }
 }

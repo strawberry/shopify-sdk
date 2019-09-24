@@ -21,8 +21,7 @@ final class RecurringApplicationChargeResourceTest extends ResourceTestCase
     public function testChildren(): void
     {
         $this->assertTrue($this->resource->hasChildren());
-        $this->assertTrue($this->resource->hasChild('usageCharges'));
-        $this->assertInstanceOf(UsageChargeResource::class, $this->resource->getChild('usageCharges'));
+        $this->assertChild('usageCharges', UsageChargeResource::class);
     }
 
     public function testCreate(): void

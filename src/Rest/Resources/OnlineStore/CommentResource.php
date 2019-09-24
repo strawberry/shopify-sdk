@@ -30,7 +30,7 @@ final class CommentResource extends Resource
     public function getForArticle(
         int $article,
         int $blog,
-        array $options
+        array $options = []
     ): Collection {
         return $this->get(array_merge($options, [
             'article_id' => $article,
@@ -44,7 +44,7 @@ final class CommentResource extends Resource
     public function countForArticle(
         int $article,
         int $blog,
-        array $options
+        array $options = []
     ): int {
         return $this->count(array_merge($options, [
             'article_id' => $article,
@@ -55,7 +55,7 @@ final class CommentResource extends Resource
     /**
      * Retrieve all the comments for all the articles of a blog.
      */
-    public function getForBlog(int $blog, array $options): Collection
+    public function getForBlog(int $blog, array $options = []): Collection
     {
         return $this->get(array_merge($options, [
             'blog_id' => $blog,
@@ -67,7 +67,7 @@ final class CommentResource extends Resource
      */
     public function countForBlog(
         int $blog,
-        array $options
+        array $options = []
     ): int {
         return $this->count(array_merge($options, [
             'blog_id' => $blog,
@@ -83,7 +83,7 @@ final class CommentResource extends Resource
             $this->uri("{$id}/spam")
         );
 
-        return $this->toModel($response);
+        return new Comment($response->getContent());
     }
 
     /**
@@ -95,7 +95,7 @@ final class CommentResource extends Resource
             $this->uri("{$id}/not_spam")
         );
 
-        return $this->toModel($response);
+        return new Comment($response->getContent());
     }
 
     /**
@@ -107,7 +107,7 @@ final class CommentResource extends Resource
             $this->uri("{$id}/approve")
         );
 
-        return $this->toModel($response);
+        return new Comment($response->getContent());
     }
 
     /**
@@ -119,7 +119,7 @@ final class CommentResource extends Resource
             $this->uri("{$id}/remove")
         );
 
-        return $this->toModel($response);
+        return new Comment($response->getContent());
     }
 
     /**
@@ -131,6 +131,6 @@ final class CommentResource extends Resource
             $this->uri("{$id}/restore")
         );
 
-        return $this->toModel($response);
+        return new Comment($response->getContent());
     }
 }

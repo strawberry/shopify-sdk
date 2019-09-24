@@ -25,8 +25,7 @@ final class CustomerResourceTest extends ResourceTestCase
     public function testChildren(): void
     {
         $this->assertTrue($this->resource->hasChildren());
-        $this->assertTrue($this->resource->hasChild('addresses'));
-        $this->assertInstanceOf(AddressResource::class, $this->resource->getChild('addresses'));
+        $this->assertChild('addresses', AddressResource::class);
     }
 
     public function testGet(): void

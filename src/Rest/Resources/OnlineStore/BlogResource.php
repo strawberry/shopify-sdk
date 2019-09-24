@@ -32,19 +32,4 @@ final class BlogResource extends Resource
     protected $childResources = [
         'articles' => ArticleResource::class,
     ];
-
-    /**
-     * Retrieves a list of all the tags for this blog.
-     *
-     * @return string[]
-     */
-    public function tags(array $options = []): array
-    {
-        $response = $this->client->get(
-            $this->uri('articles/tags'),
-            $options
-        );
-
-        return $this->data($response, 'tags');
-    }
 }
