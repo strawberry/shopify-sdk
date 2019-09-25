@@ -3,13 +3,19 @@
 namespace Strawberry\Shopify\Tests\Unit\Rest\Resources\Orders;
 
 use Strawberry\Shopify\Models\Orders\Refund;
+use Strawberry\Shopify\Rest\Resources\Orders\OrderResource;
 use Strawberry\Shopify\Rest\Resources\Orders\RefundResource;
-use Strawberry\Shopify\Tests\Unit\Rest\Resources\ResourceTestCase;
+use Strawberry\Shopify\Tests\Unit\Rest\Resources\ChildResourceTestCase;
 
-final class RefundResourceTest extends ResourceTestCase
+final class RefundResourceTest extends ChildResourceTestCase
 {
     /** @var string */
     protected $modelClass = Refund::class;
+
+    /** @var array */
+    protected $parentResources = [
+        [OrderResource::class, 450789469],
+    ];
 
     /** @var string */
     protected $resourceClass = RefundResource::class;
@@ -21,9 +27,9 @@ final class RefundResourceTest extends ResourceTestCase
     {
         $this->queue(200, [], $this->response('get'));
 
-        $response = $this->resource->withParent(123456789)->get();
+        $response = $this->resource->get();
 
-        $this->assertRequest('GET', 'orders/123456789/refunds.json');
+        $this->assertRequest('GET', 'orders/450789469/refunds.json');
         $this->assertCollection($response, 1);
     }
 
@@ -31,9 +37,9 @@ final class RefundResourceTest extends ResourceTestCase
     {
         $this->queue(200, [], $this->response('find'));
 
-        $response = $this->resource->withParent(123456789)->find(509562969);
+        $response = $this->resource->find(509562969);
 
-        $this->assertRequest('GET', 'orders/123456789/refunds/509562969.json');
+        $this->assertRequest('GET', 'orders/450789469/refunds/509562969.json');
         $this->assertModel($response);
     }
 
@@ -41,11 +47,11 @@ final class RefundResourceTest extends ResourceTestCase
     {
         $this->queue(201, [], $this->response('create'));
 
-        $response = $this->resource->withParent(123456789)->create(
+        $response = $this->resource->create(
             $this->request('create')
         );
 
-        $this->assertRequest('POST', 'orders/123456789/refunds.json');
+        $this->assertRequest('POST', 'orders/450789469/refunds.json');
         $this->assertModel($response);
     }
 
@@ -53,11 +59,11 @@ final class RefundResourceTest extends ResourceTestCase
     {
         $this->queue(201, [], $this->response('calculate'));
 
-        $response = $this->resource->withParent(123456789)->calculate(
+        $response = $this->resource->calculate(
             $this->request('calculate')
         );
 
-        $this->assertRequest('POST', 'orders/123456789/refunds/calculate.json');
+        $this->assertRequest('POST', 'orders/450789469/refunds/calculate.json');
         $this->assertModel($response);
     }
 }

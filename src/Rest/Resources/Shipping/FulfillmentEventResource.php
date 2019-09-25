@@ -28,4 +28,9 @@ final class FulfillmentEventResource extends ChildResource
      * @var string
      */
     protected $parent = FulfillmentResource::class;
+
+    public function routeKey(): string
+    {
+        return 'events';
+    }
 }

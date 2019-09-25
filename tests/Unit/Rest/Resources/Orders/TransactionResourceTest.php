@@ -3,13 +3,19 @@
 namespace Strawberry\Shopify\Tests\Unit\Rest\Resources\Orders;
 
 use Strawberry\Shopify\Models\Orders\Transaction;
+use Strawberry\Shopify\Rest\Resources\Orders\OrderResource;
 use Strawberry\Shopify\Rest\Resources\Orders\TransactionResource;
-use Strawberry\Shopify\Tests\Unit\Rest\Resources\ResourceTestCase;
+use Strawberry\Shopify\Tests\Unit\Rest\Resources\ChildResourceTestCase;
 
-final class TransactionResourceTest extends ResourceTestCase
+final class TransactionResourceTest extends ChildResourceTestCase
 {
     /** @var string */
     protected $modelClass = Transaction::class;
+
+    /** @var array */
+    protected $parentResources = [
+        [OrderResource::class, 450789469],
+    ];
 
     /** @var string */
     protected $resourceClass = TransactionResource::class;
@@ -21,9 +27,9 @@ final class TransactionResourceTest extends ResourceTestCase
     {
         $this->queue(200, [], $this->response('get'));
 
-        $response = $this->resource->withParent(123456789)->get();
+        $response = $this->resource->get();
 
-        $this->assertRequest('GET', 'orders/123456789/transactions.json');
+        $this->assertRequest('GET', 'orders/450789469/transactions.json');
         $this->assertCollection($response, 3);
     }
 
@@ -31,9 +37,9 @@ final class TransactionResourceTest extends ResourceTestCase
     {
         $this->queue(200, [], $this->response('find'));
 
-        $response = $this->resource->withParent(123456789)->find(284138680);
+        $response = $this->resource->find(284138680);
 
-        $this->assertRequest('GET', 'orders/123456789/transactions/284138680.json');
+        $this->assertRequest('GET', 'orders/450789469/transactions/284138680.json');
         $this->assertModel($response);
     }
 
@@ -41,11 +47,11 @@ final class TransactionResourceTest extends ResourceTestCase
     {
         $this->queue(201, [], $this->response('create'));
 
-        $response = $this->resource->withParent(123456789)->create(
+        $response = $this->resource->create(
             $this->request('create')
         );
 
-        $this->assertRequest('POST', 'orders/123456789/transactions.json');
+        $this->assertRequest('POST', 'orders/450789469/transactions.json');
         $this->assertModel($response);
     }
 
@@ -53,9 +59,9 @@ final class TransactionResourceTest extends ResourceTestCase
     {
         $this->queue(200, [], $this->response('count'));
 
-        $response = $this->resource->withParent(123456789)->count();
+        $response = $this->resource->count();
 
-        $this->assertRequest('GET', 'orders/123456789/transactions/count.json');
+        $this->assertRequest('GET', 'orders/450789469/transactions/count.json');
         $this->assertSame(3, $response);
     }
 }

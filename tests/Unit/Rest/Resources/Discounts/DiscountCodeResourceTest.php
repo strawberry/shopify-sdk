@@ -4,12 +4,18 @@ namespace Strawberry\Shopify\Tests\Unit\Rest\Resources\Discounts;
 
 use Strawberry\Shopify\Models\Discounts\DiscountCode;
 use Strawberry\Shopify\Rest\Resources\Discounts\DiscountCodeResource;
-use Strawberry\Shopify\Tests\Unit\Rest\Resources\ResourceTestCase;
+use Strawberry\Shopify\Rest\Resources\Discounts\PriceRuleResource;
+use Strawberry\Shopify\Tests\Unit\Rest\Resources\ChildResourceTestCase;
 
-final class DiscountCodeResourceTest extends ResourceTestCase
+final class DiscountCodeResourceTest extends ChildResourceTestCase
 {
     /** @var string */
     protected $modelClass = DiscountCode::class;
+
+    /** @var array */
+    protected $parentResources = [
+        [PriceRuleResource::class, 123456789],
+    ];
 
     /** @var string */
     protected $resourceClass = DiscountCodeResource::class;
@@ -21,7 +27,7 @@ final class DiscountCodeResourceTest extends ResourceTestCase
     {
         $this->queue(200, [], $this->response('get'));
 
-        $response = $this->resource->withParent(123456789)->get();
+        $response = $this->resource->get();
 
         $this->assertRequest('GET', 'price_rules/123456789/discount_codes.json');
         $this->assertCollection($response);
@@ -31,7 +37,7 @@ final class DiscountCodeResourceTest extends ResourceTestCase
     {
         $this->queue(200, [], $this->response('find'));
 
-        $response = $this->resource->withParent(123456789)->find(507328175);
+        $response = $this->resource->find(507328175);
 
         $this->assertRequest('GET', 'price_rules/123456789/discount_codes/507328175.json');
         $this->assertModel($response);
@@ -41,7 +47,7 @@ final class DiscountCodeResourceTest extends ResourceTestCase
     {
         $this->queue(201, [], $this->response('create'));
 
-        $response = $this->resource->withParent(123456789)->create(
+        $response = $this->resource->create(
             $this->request('create')
         );
 
@@ -53,7 +59,7 @@ final class DiscountCodeResourceTest extends ResourceTestCase
     {
         $this->queue(200, [], $this->response('update'));
 
-        $response = $this->resource->withParent(123456789)->update(
+        $response = $this->resource->update(
             507328175,
             $this->request('update')
         );
@@ -66,7 +72,7 @@ final class DiscountCodeResourceTest extends ResourceTestCase
     {
         $this->queue(200);
 
-        $response = $this->resource->withParent(123456789)->delete(507328175);
+        $response = $this->resource->delete(507328175);
 
         $this->assertRequest('DELETE', 'price_rules/123456789/discount_codes/507328175.json');
         $this->assertNull($response);

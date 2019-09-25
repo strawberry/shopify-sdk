@@ -4,12 +4,18 @@ namespace Strawberry\Shopify\Tests\Unit\Rest\Resources\Products;
 
 use Strawberry\Shopify\Models\Products\Image;
 use Strawberry\Shopify\Rest\Resources\Products\ImageResource;
-use Strawberry\Shopify\Tests\Unit\Rest\Resources\ResourceTestCase;
+use Strawberry\Shopify\Rest\Resources\Products\ProductResource;
+use Strawberry\Shopify\Tests\Unit\Rest\Resources\ChildResourceTestCase;
 
-final class ImageResourceTest extends ResourceTestCase
+final class ImageResourceTest extends ChildResourceTestCase
 {
     /** @var string */
     protected $modelClass = Image::class;
+
+    /** @var array */
+    protected $parentResources = [
+        [ProductResource::class, 632910392],
+    ];
 
     /** @var string */
     protected $resourceClass = ImageResource::class;
@@ -21,9 +27,9 @@ final class ImageResourceTest extends ResourceTestCase
     {
         $this->queue(200, [], $this->response('get'));
 
-        $response = $this->resource->withParent(123456789)->get();
+        $response = $this->resource->get();
 
-        $this->assertRequest('GET', 'products/123456789/images.json');
+        $this->assertRequest('GET', 'products/632910392/images.json');
         $this->assertCollection($response, 2);
     }
 
@@ -31,9 +37,9 @@ final class ImageResourceTest extends ResourceTestCase
     {
         $this->queue(200, [], $this->response('find'));
 
-        $response = $this->resource->withParent(123456789)->find(632910392);
+        $response = $this->resource->find(632910392);
 
-        $this->assertRequest('GET', 'products/123456789/images/632910392.json');
+        $this->assertRequest('GET', 'products/632910392/images/632910392.json');
         $this->assertModel($response);
     }
 
@@ -41,11 +47,11 @@ final class ImageResourceTest extends ResourceTestCase
     {
         $this->queue(201, [], $this->response('create'));
 
-        $response = $this->resource->withParent(123456789)->create(
+        $response = $this->resource->create(
             $this->request('create')
         );
 
-        $this->assertRequest('POST', 'products/123456789/images.json');
+        $this->assertRequest('POST', 'products/632910392/images.json');
         $this->assertModel($response);
     }
 
@@ -53,12 +59,12 @@ final class ImageResourceTest extends ResourceTestCase
     {
         $this->queue(201, [], $this->response('update'));
 
-        $response = $this->resource->withParent(123456789)->update(
+        $response = $this->resource->update(
             632910392,
             $this->request('update')
         );
 
-        $this->assertRequest('PUT', 'products/123456789/images/632910392.json');
+        $this->assertRequest('PUT', 'products/632910392/images/632910392.json');
         $this->assertModel($response);
     }
 
@@ -66,9 +72,9 @@ final class ImageResourceTest extends ResourceTestCase
     {
         $this->queue(200);
 
-        $response = $this->resource->withParent(123456789)->delete(632910392);
+        $response = $this->resource->delete(632910392);
 
-        $this->assertRequest('DELETE', 'products/123456789/images/632910392.json');
+        $this->assertRequest('DELETE', 'products/632910392/images/632910392.json');
         $this->assertNull($response);
     }
 
@@ -76,9 +82,9 @@ final class ImageResourceTest extends ResourceTestCase
     {
         $this->queue(200, [], $this->response('count'));
 
-        $response = $this->resource->withParent(123456789)->count();
+        $response = $this->resource->count();
 
-        $this->assertRequest('GET', 'products/123456789/images/count.json');
+        $this->assertRequest('GET', 'products/632910392/images/count.json');
         $this->assertSame(2, $response);
     }
 }
