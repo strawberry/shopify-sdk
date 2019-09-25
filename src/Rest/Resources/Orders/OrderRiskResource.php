@@ -23,13 +23,6 @@ final class OrderRiskResource extends ChildResource
      */
     protected $model = OrderRisk::class;
 
-    /**
-     * The parent resource for this resource.
-     *
-     * @var string
-     */
-    protected $parent = OrderResource::class;
-
     public function singularResourceKey(): string
     {
         return 'risk';

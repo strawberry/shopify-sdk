@@ -23,11 +23,4 @@ final class ImageResource extends ChildResource
      * @var string
      */
     protected $model = Image::class;
-
-    /**
-     * The parent resource for this resource.
-     *
-     * @var string
-     */
-    protected $parent = ProductResource::class;
 }

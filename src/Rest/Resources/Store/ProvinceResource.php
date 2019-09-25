@@ -21,11 +21,4 @@ final class ProvinceResource extends ChildResource
      * @var string
      */
     protected $model = Province::class;
-
-    /**
-     * The parent resource for this resource.
-     *
-     * @var string
-     */
-    protected $parent = CountryResource::class;
 }

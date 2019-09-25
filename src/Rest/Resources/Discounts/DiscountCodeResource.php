@@ -17,13 +17,6 @@ final class DiscountCodeResource extends ChildResource
         Concerns\DeletesResource;
 
     /**
-     * The parent resource for this resource.
-     *
-     * @var string
-     */
-    protected $parent = PriceRuleResource::class;
-
-    /**
      * The model that represents this resource.
      *
      * @var string
