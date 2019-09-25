@@ -19,7 +19,7 @@ final class RecurringApplicationChargeResource extends Resource
     /**
      * A list of the child resources.
      *
-     * @var array
+     * @var string[]
      */
     protected $childResources = [
         'usageCharges' => UsageChargeResource::class,
@@ -58,10 +58,12 @@ final class RecurringApplicationChargeResource extends Resource
     /**
      * Updates the capped amount of an active recurring application charge.
      */
-    public function updateCappedAmount(int $id, float $amount): RecurringApplicationCharge
-    {
+    public function updateCappedAmount(
+        int $id,
+        float $amount
+    ): RecurringApplicationCharge {
         $response = $this->client->put($this->uri("{$id}/customize"), [], [
-            'recurring_application_charge[capped_amount]' => $amount
+            'recurring_application_charge' => ['capped_amount' => $amount],
         ]);
 
         return $this->toModel($response);

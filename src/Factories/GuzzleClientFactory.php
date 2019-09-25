@@ -67,7 +67,7 @@ final class GuzzleClientFactory
      */
     private function isPublicApp(array $config): bool
     {
-        return ! empty($config['access_token']);
+        return isset($config['access_token']);
     }
 
     /**
@@ -76,15 +76,7 @@ final class GuzzleClientFactory
      */
     private function isPrivateApp(array $config): bool
     {
-        if (empty($config['api_key'])) {
-            return false;
-        }
-
-        if (empty($config['api_password'])) {
-            return false;
-        }
-
-        return true;
+        return isset($config['api_key'], $config['api_password']);
     }
 
     /**

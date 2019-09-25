@@ -30,7 +30,7 @@ final class CountryResource extends Resource
     /**
      * A list of the child resources for this resource.
      *
-     * @var array
+     * @var string[]
      */
     protected $childResources = [
         'provinces' => ProvinceResource::class,

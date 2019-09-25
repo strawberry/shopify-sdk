@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Strawberry\Shopify\Rest\Resources\Discounts;
 
 use Strawberry\Shopify\Models\Discounts\DiscountCode;
-use Strawberry\Shopify\Rest\Concerns;
 use Strawberry\Shopify\Rest\ChildResource;
+use Strawberry\Shopify\Rest\Concerns;
 
 final class DiscountCodeResource extends ChildResource
 {
@@ -32,14 +32,14 @@ final class DiscountCodeResource extends ChildResource
 
     /**
      * Performs bulk operations for multiple customer addresses.
+     *
      * @todo
      */
     public function lookup(string $code): DiscountCode
     {
-        $response = $this->client->get(
-            $this->uri('lookup'),
-            ['code' => $code]
-        );
+        $response = $this->client->get('lookup.json', [
+            'code' => $code,
+        ]);
 
         return $this->toModel($response);
     }

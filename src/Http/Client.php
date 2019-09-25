@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Strawberry\Shopify\Http;
 
-use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\ServerException;
+use GuzzleHttp\Psr7\Request;
 use Strawberry\Shopify\Exceptions\HttpException;
 
 final class Client
@@ -35,7 +36,7 @@ final class Client
                 'query' => $query,
                 'json' => $json,
             ]));
-        } catch (RequestException $exception) {
+        } catch (ClientException | ServerException $exception) {
             throw HttpException::failedRequest($exception);
         }
 

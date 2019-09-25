@@ -21,6 +21,12 @@ abstract class TestCase extends BaseTestCase
         $dotenv->load();
 
         $this->base = __DIR__ . '/';
+
+        $this->setUpTestCase();
+    }
+
+    public function setUpTestCase(): void
+    {
     }
 
     /**
@@ -37,5 +43,13 @@ abstract class TestCase extends BaseTestCase
     protected function spy(...$args)
     {
         return Mockery::spy(...$args);
+    }
+
+    /**
+     * Load data from a file.
+     */
+    protected function data(string $file): string
+    {
+        return file_get_contents($this->base . $file);
     }
 }

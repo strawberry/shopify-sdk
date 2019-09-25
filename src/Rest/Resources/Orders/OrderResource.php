@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Strawberry\Shopify\Rest\Resources\Orders;
 
+use Strawberry\Shopify\Models\Orders\Order;
 use Strawberry\Shopify\Rest\Concerns;
 use Strawberry\Shopify\Rest\Resource;
-use Strawberry\Shopify\Models\Orders\Order;
 
 final class OrderResource extends Resource
 {
@@ -27,7 +27,7 @@ final class OrderResource extends Resource
     /**
      * A list of the child resources.
      *
-     * @var array
+     * @var string[]
      */
     protected $childResources = [
         'risks' => OrderRiskResource::class,
@@ -50,7 +50,7 @@ final class OrderResource extends Resource
      */
     public function open(int $id): Order
     {
-        $response = $this->client->post($this->uri("{$id}/close"));
+        $response = $this->client->post($this->uri("{$id}/open"));
 
         return $this->toModel($response);
     }
@@ -61,7 +61,7 @@ final class OrderResource extends Resource
     public function cancel(int $id, array $data): Order
     {
         $response = $this->client->post(
-            $this->uri("{$id}/close"),
+            $this->uri("{$id}/cancel"),
             $data
         );
 

@@ -1,0 +1,10 @@
+{
+    "article": {
+        "id": 134645308,
+        "title": "My new Title",
+        "author": "Your name",
+        "tags": "Tags, Will Be, Updated",
+        "body_html": "<p>Look, I can even update through a web service.</p>",
+        "published_at": "Thu Mar 24 15:45:47 UTC 2011"
+    }
+}

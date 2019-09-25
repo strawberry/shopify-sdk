@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace Strawberry\Shopify\Rest\Resources\Sales;
 
-use Strawberry\Shopify\Rest\Concerns;
-use Strawberry\Shopify\Rest\ChildResource;
-use Illuminate\Contracts\Support\Arrayable;
 use Strawberry\Shopify\Models\Sales\Payment;
+use Strawberry\Shopify\Rest\ChildResource;
+use Strawberry\Shopify\Rest\Concerns;
 
 final class PaymentResource extends ChildResource
 {

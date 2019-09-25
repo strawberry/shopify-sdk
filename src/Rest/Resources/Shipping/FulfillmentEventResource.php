@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Strawberry\Shopify\Rest\Resources\Shipping;
 
-use Strawberry\Shopify\Rest\Concerns;
-use Strawberry\Shopify\Rest\ChildResource;
 use Strawberry\Shopify\Models\Shipping\FulfillmentEvent;
+use Strawberry\Shopify\Rest\ChildResource;
+use Strawberry\Shopify\Rest\Concerns;
 
 final class FulfillmentEventResource extends ChildResource
 {

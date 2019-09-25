@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace Strawberry\Shopify\Rest\Resources\Sales;
 
+use Strawberry\Shopify\Models\Sales\ResourceFeedback;
 use Strawberry\Shopify\Rest\Concerns;
 use Strawberry\Shopify\Rest\Resource;
-use Illuminate\Contracts\Support\Arrayable;
-use Strawberry\Shopify\Models\Sales\ResourceFeedback;
 
 final class ResourceFeedbackResource extends Resource
 {
@@ -20,4 +19,9 @@ final class ResourceFeedbackResource extends Resource
      * @var string
      */
     protected $model = ResourceFeedback::class;
+
+    public function pluralResourceKey(): string
+    {
+        return $this->singularResourceKey();
+    }
 }

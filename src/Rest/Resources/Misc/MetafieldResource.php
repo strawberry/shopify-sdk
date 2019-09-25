@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Strawberry\Shopify\Rest\Resources\Misc;
 
+use Strawberry\Shopify\Models\Misc\Metafield;
 use Strawberry\Shopify\Rest\Concerns;
 use Strawberry\Shopify\Rest\Resource;
-use Strawberry\Shopify\Models\Misc\Metafield;
 
 final class MetafieldResource extends Resource
 {

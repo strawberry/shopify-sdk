@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Strawberry\Shopify\Rest\Resources\Customers;
 
 use Strawberry\Shopify\Models\Customers\Address;
-use Strawberry\Shopify\Rest\Concerns;
 use Strawberry\Shopify\Rest\ChildResource;
+use Strawberry\Shopify\Rest\Concerns;
 
 final class AddressResource extends ChildResource
 {
@@ -37,7 +37,7 @@ final class AddressResource extends ChildResource
     {
         $this->client->put($this->uri('set'), $data, [
             'address_ids' => $ids,
-            'operation' => $operation
+            'operation' => $operation,
         ]);
     }
 
@@ -52,12 +52,27 @@ final class AddressResource extends ChildResource
     /**
      * Sets the default address for a customer.
      */
-    public function setDefault(int $id): Address
+    public function default(int $id): Address
     {
         $response = $this->client->put(
             $this->uri("{$id}/default")
         );
 
         return $this->toModel($response);
+    }
+
+    public function routeKey(): string
+    {
+        return 'addresses';
+    }
+
+    public function singularResourceKey(): string
+    {
+        return 'customer_address';
+    }
+
+    public function pluralResourceKey(): string
+    {
+        return 'addresses';
     }
 }

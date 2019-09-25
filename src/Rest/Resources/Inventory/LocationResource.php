@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Strawberry\Shopify\Rest\Resources\Inventory;
 
 use Illuminate\Support\Collection;
+use Strawberry\Shopify\Models\Inventory\InventoryLevel;
+use Strawberry\Shopify\Models\Inventory\Location;
 use Strawberry\Shopify\Rest\Concerns;
 use Strawberry\Shopify\Rest\Resource;
-use Strawberry\Shopify\Models\Inventory\Location;
-use Strawberry\Shopify\Models\Inventory\InventoryLevel;
 
 final class LocationResource extends Resource
 {

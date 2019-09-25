@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Strawberry\Shopify\Rest\Resources\Products;
 
+use Strawberry\Shopify\Models\Products\Product;
 use Strawberry\Shopify\Rest\Concerns;
 use Strawberry\Shopify\Rest\Resource;
-use Strawberry\Shopify\Models\Products\Product;
 
 final class ProductResource extends Resource
 {
@@ -27,10 +27,10 @@ final class ProductResource extends Resource
     /**
      * A list of the child resources.
      *
-     * @var array
+     * @var string[]
      */
     protected $childResources = [
         'images' => ImageResource::class,
-        'variants' => VariantResource::class,
+        'variants' => ProductVariantResource::class,
     ];
 }

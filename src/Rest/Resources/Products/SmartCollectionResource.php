@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Strawberry\Shopify\Rest\Resources\Products;
 
+use Strawberry\Shopify\Models\Products\SmartCollection;
 use Strawberry\Shopify\Rest\Concerns;
 use Strawberry\Shopify\Rest\Resource;
-use Strawberry\Shopify\Models\Products\SmartCollection;
 
 final class SmartCollectionResource extends Resource
 {
@@ -24,7 +24,7 @@ final class SmartCollectionResource extends Resource
      */
     protected $model = SmartCollection::class;
 
-    public function order(int $id, array $products, ?string $order = null): void
+    public function order(int $id, array $products = [], ?string $order = null): void
     {
         $options = array_filter([
             'products' => $products,

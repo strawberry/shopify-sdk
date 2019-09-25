@@ -1,0 +1,10 @@
+{
+    "storefront_access_token": {
+      "access_token": "665d384ab486f2bc637434e3724da534",
+      "access_scope": "unauthenticated_read_product_listings",
+      "created_at": "2019-07-22T11:42:23-04:00",
+      "id": 804561103,
+      "admin_graphql_api_id": "gid://shopify/StorefrontAccessToken/804561103",
+      "title": "Test"
+    }
+  }

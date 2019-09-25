@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Strawberry\Shopify\Rest\Resources\Orders;
 
-use Strawberry\Shopify\Rest\Concerns;
-use Strawberry\Shopify\Rest\ChildResource;
 use Strawberry\Shopify\Models\Orders\OrderRisk;
+use Strawberry\Shopify\Rest\ChildResource;
+use Strawberry\Shopify\Rest\Concerns;
 
 final class OrderRiskResource extends ChildResource
 {
@@ -29,4 +29,9 @@ final class OrderRiskResource extends ChildResource
      * @var string
      */
     protected $parent = OrderResource::class;
+
+    public function singularResourceKey(): string
+    {
+        return 'risk';
+    }
 }

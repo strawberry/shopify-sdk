@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Strawberry\Shopify\Rest\Resources\Sales;
 
 use Illuminate\Support\Collection;
-use Strawberry\Shopify\Rest\Resource;
 use Strawberry\Shopify\Models\Sales\Checkout;
 use Strawberry\Shopify\Models\Sales\ShippingRate;
+use Strawberry\Shopify\Rest\Resource;
 
 final class CheckoutResource extends Resource
 {
@@ -21,7 +21,7 @@ final class CheckoutResource extends Resource
     /**
      * A list of the child resources.
      *
-     * @var array
+     * @var string[]
      */
     protected $childResources = [
         'payments' => PaymentResource::class,
@@ -57,9 +57,12 @@ final class CheckoutResource extends Resource
     /**
      * Retrieve an existing checkout.
      */
-    public function find(string $token, array $options): Checkout
+    public function find(string $token, array $options = []): Checkout
     {
-        $response = $this->client->get($this->uri($token), $options);
+        $response = $this->client->get(
+            $this->uri($token),
+            $options
+        );
 
         return $this->toModel($response);
     }
@@ -71,7 +74,7 @@ final class CheckoutResource extends Resource
     {
         $response = $this->client->put(
             $this->uri($token),
-            $this->prepare($data, 'checkout')
+            $this->prepareJson($data, 'checkout')
         );
 
         return $this->toModel($response);

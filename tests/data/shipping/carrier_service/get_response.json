@@ -1,0 +1,20 @@
+{
+    "carrier_services": [
+        {
+            "id": 1036894964,
+            "name": "Purolator",
+            "active": true,
+            "service_discovery": true,
+            "carrier_service_type": "api",
+            "format": "json",
+            "callback_url": "http://example.com/"
+        },
+        {
+            "id": 260046840,
+            "name": "ups_shipping",
+            "active": true,
+            "service_discovery": true,
+            "carrier_service_type": "legacy"
+        }
+    ]
+}

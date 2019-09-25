@@ -25,7 +25,7 @@ final class Response
         $this->headers = $headers;
     }
 
-    public function getContent(): array
+    public function getContent(): ?array
     {
         return json_decode($this->content, true);
     }

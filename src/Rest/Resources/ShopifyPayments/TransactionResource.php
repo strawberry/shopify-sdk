@@ -2,12 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Strawberry\Shopify\Rest\Resources\Store;
+namespace Strawberry\Shopify\Rest\Resources\ShopifyPayments;
 
-use Illuminate\Support\Collection;
-use Strawberry\Shopify\Rest\Resource;
-use Strawberry\Shopify\Rest\Concerns;
 use Strawberry\Shopify\Models\ShopifyPayments\Transaction;
+use Strawberry\Shopify\Rest\Concerns;
+use Strawberry\Shopify\Rest\Resource;
 
 final class TransactionResource extends Resource
 {
@@ -25,5 +24,5 @@ final class TransactionResource extends Resource
      *
      * @var string
      */
-    protected $uriPrefix = 'shopify_payments/';
+    protected $uriPrefix = 'shopify_payments/balance/';
 }

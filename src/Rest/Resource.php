@@ -8,10 +8,10 @@ use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use Strawberry\Shopify\Http\Client;
-use Strawberry\Shopify\Models\Model;
-use Strawberry\Shopify\Http\Response;
 use Strawberry\Shopify\Exceptions\ClientException;
+use Strawberry\Shopify\Http\Client;
+use Strawberry\Shopify\Http\Response;
+use Strawberry\Shopify\Models\Model;
 
 abstract class Resource
 {
@@ -21,7 +21,7 @@ abstract class Resource
     /**
      * A list of the child resources.
      *
-     * @var array
+     * @var string[]
      */
     protected $childResources = [];
 
@@ -73,7 +73,7 @@ abstract class Resource
 
         return (new Collection(
             $this->data($response, $key)
-        ))->mapInto($this->model);
+        ))->mapInto($model);
     }
 
     /**
@@ -100,7 +100,7 @@ abstract class Resource
     public function getChild(string $key): ChildResource
     {
         if (! $this->hasChild($key)) {
-            throw ClientException::childDoesntExist(get_class($this), $key);
+            throw ClientException::childDoesntExist(static::class, $key);
         }
 
         $resource = $this->childResources[$key];
@@ -123,6 +123,11 @@ abstract class Resource
         return Str::snake(class_basename($this->model));
     }
 
+    public function routeKey(): string
+    {
+        return $this->pluralResourceKey();
+    }
+
     /**
      * Build the URI for a request to the Shopify resource.
      */
@@ -132,7 +137,7 @@ abstract class Resource
             $uri = Str::start($uri, '/');
         }
 
-        return $this->uriPrefix . $this->pluralResourceKey() . $uri . '.json';
+        return $this->uriPrefix . $this->routeKey() . $uri . '.json';
     }
 
     /**

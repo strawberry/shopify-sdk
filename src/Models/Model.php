@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Strawberry\Shopify\Models;
 
-use ReflectionClass;
 use Illuminate\Support\Collection;
 use Jenssegers\Model\Model as BaseModel;
+use ReflectionClass;
 
 abstract class Model extends BaseModel
 {
@@ -14,6 +14,7 @@ abstract class Model extends BaseModel
      * Get a plain attribute (not a relationship).
      *
      * @param  string  $key
+     *
      * @return mixed
      */
     protected function getAttributeValue($key)
@@ -48,6 +49,7 @@ abstract class Model extends BaseModel
      *
      * @param  string  $key
      * @param  mixed  $value
+     *
      * @return mixed
      */
     protected function castAttribute($key, $value)
@@ -89,7 +91,8 @@ abstract class Model extends BaseModel
      * Determine whether this attribute should be cast to a model instance.
      *
      * @param  string  $key
-     * @return boolean
+     *
+     * @return bool
      */
     protected function shouldCastToSingleModel($key): bool
     {
@@ -107,7 +110,8 @@ abstract class Model extends BaseModel
      * of model instances.
      *
      * @param  string  $key
-     * @return boolean
+     *
+     * @return bool
      */
     protected function hasModelArrayCast($key): bool
     {
@@ -129,6 +133,7 @@ abstract class Model extends BaseModel
      *
      * @param  string  $key
      * @param  mixed  $value
+     *
      * @return Model
      */
     protected function castToSingleModel($class, $value): self
@@ -141,7 +146,8 @@ abstract class Model extends BaseModel
      *
      * @param  string  $key
      * @param  mixed  $value
-     * @return array
+     *
+     * @return Model[]
      */
     protected function castToModelArray($key, $value): array
     {

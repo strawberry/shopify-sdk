@@ -1,0 +1,22 @@
+{
+    "gift_cards": [
+        {
+            "id": 1063936338,
+            "balance": "10.00",
+            "created_at": "2019-09-18T10:47:25-04:00",
+            "updated_at": "2019-09-18T10:47:25-04:00",
+            "currency": "USD",
+            "initial_value": "10.00",
+            "disabled_at": null,
+            "line_item_id": null,
+            "api_client_id": null,
+            "user_id": null,
+            "customer_id": null,
+            "note": null,
+            "expires_on": null,
+            "template_suffix": null,
+            "last_characters": "mnop",
+            "order_id": null
+        }
+    ]
+}

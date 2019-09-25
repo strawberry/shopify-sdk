@@ -35,6 +35,8 @@ class ResourceProxy
      */
     public function __call(string $method, array $params): ChildResource
     {
-        return $this->resourceClass->getChild($method)->parent($this->resourceId);
+        return $this->resourceClass
+            ->getChild($method)
+            ->withParent($this->resourceId);
     }
 }

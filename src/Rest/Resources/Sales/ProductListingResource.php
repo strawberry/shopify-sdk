@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Strawberry\Shopify\Rest\Resources\Sales;
 
-use Strawberry\Shopify\Rest\Concerns;
-use Strawberry\Shopify\Rest\Resource;
 use Illuminate\Contracts\Support\Arrayable;
 use Strawberry\Shopify\Models\Sales\ProductListing;
+use Strawberry\Shopify\Rest\Concerns;
+use Strawberry\Shopify\Rest\Resource;
 
 final class ProductListingResource extends Resource
 {
@@ -25,8 +25,10 @@ final class ProductListingResource extends Resource
 
     /**
      * Retrieve product_ids that are published to a collection_id
+     *
+     * @return int[]
      */
-    public function productIds(int $id, array $options = []): array
+    public function productIds(array $options = []): array
     {
         $response = $this->client->get($this->uri('product_ids'), $options);
 
@@ -42,7 +44,7 @@ final class ProductListingResource extends Resource
     {
         $response = $this->client->put(
             $this->uri((string) $id),
-            $this->prepareJson($data, 'collection_listing')
+            $this->prepareJson($data, 'product_listing')
         );
 
         return $this->toModel($response);

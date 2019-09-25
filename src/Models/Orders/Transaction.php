@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Strawberry\Shopify\Models\Orders;
 
 use Carbon\Carbon;
-use Illuminate\Support\Collection;
 use Strawberry\Shopify\Models\Model;
 
 /**

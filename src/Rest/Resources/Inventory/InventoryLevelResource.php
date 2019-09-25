@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Strawberry\Shopify\Rest\Resources\Inventory;
 
+use Strawberry\Shopify\Models\Inventory\InventoryLevel;
 use Strawberry\Shopify\Rest\Concerns;
 use Strawberry\Shopify\Rest\Resource;
-use Strawberry\Shopify\Models\Inventory\InventoryLevel;
 
 final class InventoryLevelResource extends Resource
 {
@@ -81,7 +81,7 @@ final class InventoryLevelResource extends Resource
         int $available,
         bool $disconnect_if_necessary = false
     ): InventoryLevel {
-        $response = $this->client->post($this->uri('connect'), [
+        $response = $this->client->post($this->uri('set'), [
             'inventory_item_id' => $item,
             'location_id' => $location,
             'available' => $available,

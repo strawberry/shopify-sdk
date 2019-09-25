@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Strawberry\Shopify\Rest\Resources\Orders;
 
-use Strawberry\Shopify\Rest\Resource;
-use Strawberry\Shopify\Rest\Concerns;
 use Strawberry\Shopify\Models\Orders\AbandonedCheckout;
+use Strawberry\Shopify\Rest\Concerns;
+use Strawberry\Shopify\Rest\Resource;
 
 final class AbandonedCheckoutResource extends Resource
 {
@@ -19,4 +19,9 @@ final class AbandonedCheckoutResource extends Resource
      * @var string
      */
     protected $model = AbandonedCheckout::class;
+
+    public function singularResourceKey(): string
+    {
+        return 'checkout';
+    }
 }

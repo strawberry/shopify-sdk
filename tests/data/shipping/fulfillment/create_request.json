@@ -1,0 +1,18 @@
+{
+    "fulfillment": {
+        "location_id": 905684977,
+        "tracking_number": "123456789",
+        "tracking_company": "4PX",
+        "line_items": [
+            {
+                "id": 466157049
+            },
+            {
+                "id": 518995019
+            },
+            {
+                "id": 703073504
+            }
+        ]
+    }
+}
