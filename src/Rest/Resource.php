@@ -95,9 +95,11 @@ abstract class Resource
     /**
      * Return an instance of the child resource with the given key.
      *
+     * @param int|string  $id
+     *
      * @throws ClientException
      */
-    public function getChild(string $key): ChildResource
+    public function getChild(string $key, $id): ChildResource
     {
         if (! $this->hasChild($key)) {
             throw ClientException::childDoesntExist(static::class, $key);
@@ -105,7 +107,7 @@ abstract class Resource
 
         $resource = $this->childResources[$key];
 
-        return new $resource($this->client);
+        return new $resource($this->client, $this, $id);
     }
 
     public function singularResourceKey(): string

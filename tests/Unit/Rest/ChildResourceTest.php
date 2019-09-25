@@ -10,6 +10,7 @@ use GuzzleHttp\Client as GuzzleClient;
 use Strawberry\Shopify\Tests\TestCase;
 use Strawberry\Shopify\Rest\ChildResource;
 use Strawberry\Shopify\Tests\Stubs\Resources\ChildResourceStub;
+use Strawberry\Shopify\Tests\Stubs\Resources\ResourceStub;
 
 final class ChildResourceTest extends TestCase
 {
@@ -26,14 +27,8 @@ final class ChildResourceTest extends TestCase
             'handler' => HandlerStack::create($this->mockHandler)
         ]));
 
-        $this->resource = new ChildResourceStub($client);
-    }
-
-    public function testWithParent(): void
-    {
-        $this->resource->withParent(123456789);
-
-        $this->assertSame(123456789, $this->resource->getParentId());
+        $parent = new  ResourceStub($client);
+        $this->resource = new ChildResourceStub($client, $parent, 123456789);
     }
 
     public function testUri(): void
@@ -42,7 +37,7 @@ final class ChildResourceTest extends TestCase
             201, [], '{"model_stub":{"foo":"bar"}}'
         ));
 
-        $this->resource->withParent(123456789)->create(['foo' => 'bar']);
+        $this->resource->create(['foo' => 'bar']);
 
         $request = $this->mockHandler->getLastRequest();
         $this->assertSame('model_stubs/123456789/model_stubs.json', (string) $request->getUri());
