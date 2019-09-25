@@ -4,6 +4,7 @@ namespace Strawberry\Shopify\Tests\Unit\Rest\Resources\Shipping;
 
 use Strawberry\Shopify\Models\Shipping\Fulfillment;
 use Strawberry\Shopify\Rest\Resources\Orders\OrderResource;
+use Strawberry\Shopify\Rest\Resources\Shipping\FulfillmentEventResource;
 use Strawberry\Shopify\Rest\Resources\Shipping\FulfillmentResource;
 use Strawberry\Shopify\Tests\Unit\Rest\Resources\ChildResourceTestCase;
 
@@ -22,6 +23,12 @@ final class FulfillmentResourceTest extends ChildResourceTestCase
 
     /** @var string */
     protected $dataPath = 'shipping/fulfillment';
+
+    public function testChildren(): void
+    {
+        $this->assertTrue($this->resource->hasChildren());
+        $this->assertChild('events', FulfillmentEventResource::class);
+    }
 
     public function testGet(): void
     {

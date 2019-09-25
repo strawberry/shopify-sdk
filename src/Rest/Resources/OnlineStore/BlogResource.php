@@ -30,6 +30,6 @@ final class BlogResource extends Resource
      * @var string[]
      */
     protected $childResources = [
-        'articles' => ArticleResource::class,
+        'articles' => BlogArticleResource::class,
     ];
 }

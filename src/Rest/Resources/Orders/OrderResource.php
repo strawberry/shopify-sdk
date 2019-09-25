@@ -7,6 +7,7 @@ namespace Strawberry\Shopify\Rest\Resources\Orders;
 use Strawberry\Shopify\Models\Orders\Order;
 use Strawberry\Shopify\Rest\Concerns;
 use Strawberry\Shopify\Rest\Resource;
+use Strawberry\Shopify\Rest\Resources\Shipping\FulfillmentResource;
 
 final class OrderResource extends Resource
 {
@@ -30,8 +31,9 @@ final class OrderResource extends Resource
      * @var string[]
      */
     protected $childResources = [
-        'risks' => OrderRiskResource::class,
+        'fulfillments' => FulfillmentResource::class,
         'refunds' => RefundResource::class,
+        'risks' => OrderRiskResource::class,
         'transactions' => TransactionResource::class,
     ];
 

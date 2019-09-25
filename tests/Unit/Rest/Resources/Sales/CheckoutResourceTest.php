@@ -6,6 +6,7 @@ use Illuminate\Support\Collection;
 use Strawberry\Shopify\Models\Sales\Checkout;
 use Strawberry\Shopify\Models\Sales\ShippingRate;
 use Strawberry\Shopify\Rest\Resources\Sales\CheckoutResource;
+use Strawberry\Shopify\Rest\Resources\Sales\PaymentResource;
 use Strawberry\Shopify\Tests\Unit\Rest\Resources\ResourceTestCase;
 
 final class CheckoutResourceTest extends ResourceTestCase
@@ -18,6 +19,12 @@ final class CheckoutResourceTest extends ResourceTestCase
 
     /** @var string */
     protected $dataPath = 'sales/checkout';
+
+    public function testChildren(): void
+    {
+        $this->assertTrue($this->resource->hasChildren());
+        $this->assertChild('payments', PaymentResource::class);
+    }
 
     public function testCreate(): void
     {
