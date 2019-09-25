@@ -25,13 +25,6 @@ final class FulfillmentResource extends ChildResource
     protected $model = Fulfillment::class;
 
     /**
-     * The parent resource for this resource.
-     *
-     * @var string
-     */
-    protected $parent = OrderResource::class;
-
-    /**
      * A list of the child resources.
      *
      * @var string[]

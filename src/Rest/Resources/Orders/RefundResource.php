@@ -22,13 +22,6 @@ final class RefundResource extends ChildResource
     protected $model = Refund::class;
 
     /**
-     * The parent resource for this resource.
-     *
-     * @var string
-     */
-    protected $parent = OrderResource::class;
-
-    /**
      * Calculates a refund.
      */
     public function calculate(array $data): Refund

@@ -13,9 +13,6 @@ final class ChildResourceStub extends ChildResource
     /** @var string */
     protected $model = ModelStub::class;
 
-    /** @var string */
-    protected $parent = ResourceStub::class;
-
     public function getParentId(): int
     {
         return $this->parentId;

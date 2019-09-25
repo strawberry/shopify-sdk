@@ -20,13 +20,6 @@ final class AssetResource extends ChildResource
     protected $model = Asset::class;
 
     /**
-     * The parent resource for this resource.
-     *
-     * @var string
-     */
-    protected $parent = ThemeResource::class;
-
-    /**
      * Retrieves a single asset for a theme by its key.
      */
     public function find(string $key, array $options = []): Asset

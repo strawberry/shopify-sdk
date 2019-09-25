@@ -3,13 +3,19 @@
 namespace Strawberry\Shopify\Tests\Unit\Rest\Resources\Products;
 
 use Strawberry\Shopify\Models\Products\Variant;
+use Strawberry\Shopify\Rest\Resources\Products\ProductResource;
 use Strawberry\Shopify\Rest\Resources\Products\ProductVariantResource;
-use Strawberry\Shopify\Tests\Unit\Rest\Resources\ResourceTestCase;
+use Strawberry\Shopify\Tests\Unit\Rest\Resources\ChildResourceTestCase;
 
-final class ProductVariantResourceTest extends ResourceTestCase
+final class ProductVariantResourceTest extends ChildResourceTestCase
 {
     /** @var string */
     protected $modelClass = Variant::class;
+
+    /** @var array */
+    protected $parentResources = [
+        [ProductResource::class, 632910392],
+    ];
 
     /** @var string */
     protected $resourceClass = ProductVariantResource::class;
@@ -21,9 +27,9 @@ final class ProductVariantResourceTest extends ResourceTestCase
     {
         $this->queue(200, [], $this->response('get'));
 
-        $response = $this->resource->withParent(123456789)->get();
+        $response = $this->resource->get();
 
-        $this->assertRequest('GET', 'products/123456789/variants.json');
+        $this->assertRequest('GET', 'products/632910392/variants.json');
         $this->assertCollection($response, 4);
     }
 
@@ -31,11 +37,11 @@ final class ProductVariantResourceTest extends ResourceTestCase
     {
         $this->queue(201, [], $this->response('create'));
 
-        $response = $this->resource->withParent(123456789)->create(
+        $response = $this->resource->create(
             $this->request('create')
         );
 
-        $this->assertRequest('POST', 'products/123456789/variants.json');
+        $this->assertRequest('POST', 'products/632910392/variants.json');
         $this->assertModel($response);
     }
 
@@ -43,9 +49,9 @@ final class ProductVariantResourceTest extends ResourceTestCase
     {
         $this->queue(200);
 
-        $response = $this->resource->withParent(123456789)->delete(808950810);
+        $response = $this->resource->delete(808950810);
 
-        $this->assertRequest('DELETE', 'products/123456789/variants/808950810.json');
+        $this->assertRequest('DELETE', 'products/632910392/variants/808950810.json');
         $this->assertNull($response);
     }
 
@@ -53,9 +59,9 @@ final class ProductVariantResourceTest extends ResourceTestCase
     {
         $this->queue(200, [], $this->response('count'));
 
-        $response = $this->resource->withParent(123456789)->count();
+        $response = $this->resource->count();
 
-        $this->assertRequest('GET', 'products/123456789/variants/count.json');
+        $this->assertRequest('GET', 'products/632910392/variants/count.json');
         $this->assertSame(4, $response);
     }
 }

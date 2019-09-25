@@ -6,12 +6,18 @@ use Illuminate\Support\Collection;
 use Strawberry\Shopify\Models\Discounts\Batch;
 use Strawberry\Shopify\Models\Discounts\DiscountCode;
 use Strawberry\Shopify\Rest\Resources\Discounts\BatchResource;
-use Strawberry\Shopify\Tests\Unit\Rest\Resources\ResourceTestCase;
+use Strawberry\Shopify\Rest\Resources\Discounts\PriceRuleResource;
+use Strawberry\Shopify\Tests\Unit\Rest\Resources\ChildResourceTestCase;
 
-final class BatchResourceTest extends ResourceTestCase
+final class BatchResourceTest extends ChildResourceTestCase
 {
     /** @var string */
     protected $modelClass = Batch::class;
+
+    /** @var array */
+    protected $parentResources = [
+        [PriceRuleResource::class, 507328175],
+    ];
 
     /** @var string */
     protected $resourceClass = BatchResource::class;
@@ -23,11 +29,11 @@ final class BatchResourceTest extends ResourceTestCase
     {
         $this->queue(201, [], $this->response('create'));
 
-        $response = $this->resource->withParent(123456789)->create(
+        $response = $this->resource->create(
             $this->request('create')
         );
 
-        $this->assertRequest('POST', 'price_rules/123456789/batch.json');
+        $this->assertRequest('POST', 'price_rules/507328175/batch.json');
         $this->assertModel($response);
     }
 
@@ -35,9 +41,9 @@ final class BatchResourceTest extends ResourceTestCase
     {
         $this->queue(200, [], $this->response('find'));
 
-        $response = $this->resource->withParent(123456789)->find(173232803);
+        $response = $this->resource->find(173232803);
 
-        $this->assertRequest('GET', 'price_rules/123456789/batch/173232803.json');
+        $this->assertRequest('GET', 'price_rules/507328175/batch/173232803.json');
         $this->assertModel($response);
     }
 
@@ -45,9 +51,9 @@ final class BatchResourceTest extends ResourceTestCase
     {
         $this->queue(200, [], $this->response('discount_codes'));
 
-        $response = $this->resource->withParent(123456789)->discountCodes(987654321);
+        $response = $this->resource->discountCodes(987654321);
 
-        $this->assertRequest('GET', 'price_rules/123456789/batch/987654321/discount_codes.json');
+        $this->assertRequest('GET', 'price_rules/507328175/batch/987654321/discount_codes.json');
         $this->assertInstanceOf(Collection::class, $response);
         $this->assertContainsOnlyInstancesOf(DiscountCode::class, $response);
     }

@@ -17,13 +17,6 @@ final class AddressResource extends ChildResource
         Concerns\DeletesResource;
 
     /**
-     * The parent resource for this resource.
-     *
-     * @var string
-     */
-    protected $parent = CustomerResource::class;
-
-    /**
      * The model that represents this resource.
      *
      * @var string

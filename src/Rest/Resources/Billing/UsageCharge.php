@@ -15,13 +15,6 @@ final class UsageChargeResource extends ChildResource
         Concerns\CreatesResource;
 
     /**
-     * The parent resource for this resource.
-     *
-     * @var string
-     */
-    protected $parent = RecurringApplicationChargeResource::class;
-
-    /**
      * The model that represents this resource.
      *
      * @var string

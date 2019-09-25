@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Strawberry\Shopify\Rest;
 
+use Strawberry\Shopify\Http\Client;
+
 abstract class ChildResource extends Resource
 {
     /**
@@ -14,34 +16,21 @@ abstract class ChildResource extends Resource
     protected $parentId;
 
     /**
-     * The parent resource for this resource.
+     * The parent instance.
      *
-     * @var string
+     * @var Resource
      */
     protected $parent;
 
     /**
-     * Fluently set the resource's parent ID.
-     *
-     * @param  int|string  $id
-     *
-     * @return $this
+     * @param  int|string  $parentId
      */
-    public function withParent($id)
+    public function __construct(Client $client, Resource $parent, $parentId)
     {
-        $this->parentId = $id;
+        parent::__construct($client);
 
-        return $this;
-    }
-
-    /**
-     * Return an instance of the parent class.
-     */
-    protected function getParentInstance(): Resource
-    {
-        $parent = $this->parent;
-
-        return new $parent($this->client);
+        $this->parent = $parent;
+        $this->parentId = $parentId;
     }
 
     /**
@@ -51,6 +40,6 @@ abstract class ChildResource extends Resource
     {
         $uri = substr(parent::uri($uri), 0, -5);
 
-        return $this->getParentInstance()->uri("/{$this->parentId}/{$uri}");
+        return $this->parent->uri("/{$this->parentId}/{$uri}");
     }
 }

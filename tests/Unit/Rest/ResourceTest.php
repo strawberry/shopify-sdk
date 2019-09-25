@@ -168,12 +168,12 @@ final class ResourceTest extends TestCase
     {
         $this->expectException(ClientException::class);
 
-        $this->resource->getChild('foo');
+        $this->resource->getChild('foo', 123456789);
     }
 
     public function testGetChild(): void
     {
-        $child = $this->resourceWithChildren->getChild('child');
+        $child = $this->resourceWithChildren->getChild('child', 123456789);
 
         $this->assertInstanceOf(ChildResourceStub::class, $child);
     }

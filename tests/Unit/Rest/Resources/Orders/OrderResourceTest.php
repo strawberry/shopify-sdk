@@ -4,6 +4,10 @@ namespace Strawberry\Shopify\Tests\Unit\Rest\Resources\Orders;
 
 use Strawberry\Shopify\Models\Orders\Order;
 use Strawberry\Shopify\Rest\Resources\Orders\OrderResource;
+use Strawberry\Shopify\Rest\Resources\Orders\OrderRiskResource;
+use Strawberry\Shopify\Rest\Resources\Orders\RefundResource;
+use Strawberry\Shopify\Rest\Resources\Orders\TransactionResource;
+use Strawberry\Shopify\Rest\Resources\Shipping\FulfillmentResource;
 use Strawberry\Shopify\Tests\Unit\Rest\Resources\ResourceTestCase;
 
 final class OrderResourceTest extends ResourceTestCase
@@ -16,6 +20,15 @@ final class OrderResourceTest extends ResourceTestCase
 
     /** @var string */
     protected $dataPath = 'orders/order';
+
+    public function testChildren(): void
+    {
+        $this->assertTrue($this->resource->hasChildren());
+        $this->assertChild('fulfillments', FulfillmentResource::class);
+        $this->assertChild('refunds', RefundResource::class);
+        $this->assertChild('risks', OrderRiskResource::class);
+        $this->assertChild('transactions', TransactionResource::class);
+    }
 
     public function testGet(): void
     {

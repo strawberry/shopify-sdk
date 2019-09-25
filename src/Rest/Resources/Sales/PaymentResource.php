@@ -21,11 +21,4 @@ final class PaymentResource extends ChildResource
      * @var string
      */
     protected $model = Payment::class;
-
-    /**
-     * The parent resource for this resource.
-     *
-     * @var string
-     */
-    protected $parent = CheckoutResource::class;
 }

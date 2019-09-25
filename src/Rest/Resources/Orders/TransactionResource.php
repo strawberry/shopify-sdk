@@ -21,11 +21,4 @@ final class TransactionResource extends ChildResource
      * @var string
      */
     protected $model = Transaction::class;
-
-    /**
-     * The parent resource for this resource.
-     *
-     * @var string
-     */
-    protected $parent = OrderResource::class;
 }

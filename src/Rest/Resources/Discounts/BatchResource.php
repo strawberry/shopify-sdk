@@ -16,13 +16,6 @@ final class BatchResource extends ChildResource
         Concerns\FindsResource;
 
     /**
-     * The parent resource for this resource.
-     *
-     * @var string
-     */
-    protected $parent = PriceRuleResource::class;
-
-    /**
      * The model that represents this resource.
      *
      * @var string

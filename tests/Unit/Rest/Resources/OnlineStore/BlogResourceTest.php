@@ -3,6 +3,8 @@
 namespace Strawberry\Shopify\Tests\Unit\Rest\Resources\OnlineStore;
 
 use Strawberry\Shopify\Models\OnlineStore\Blog;
+use Strawberry\Shopify\Rest\Resources\OnlineStore\ArticleResource;
+use Strawberry\Shopify\Rest\Resources\OnlineStore\BlogArticleResource;
 use Strawberry\Shopify\Rest\Resources\OnlineStore\BlogResource;
 use Strawberry\Shopify\Tests\Unit\Rest\Resources\ResourceTestCase;
 
@@ -16,6 +18,12 @@ final class BlogResourceTest extends ResourceTestCase
 
     /** @var string */
     protected $dataPath = 'online_store/blog';
+
+    public function testChildren(): void
+    {
+        $this->assertTrue($this->resource->hasChildren());
+        $this->assertChild('articles', BlogArticleResource::class);
+    }
 
     public function testGet(): void
     {

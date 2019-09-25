@@ -25,13 +25,6 @@ final class BlogArticleResource extends ChildResource
     protected $model = Article::class;
 
     /**
-     * The parent resource for this resource.
-     *
-     * @var string
-     */
-    protected $parent = BlogResource::class;
-
-    /**
      * Retrieves a list of all tags from a specific blog.
      *
      * @return string[]

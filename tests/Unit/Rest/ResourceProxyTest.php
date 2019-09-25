@@ -24,11 +24,7 @@ final class ResourceProxyTest extends TestCase
         $proxy = new ResourceProxy($this->resource, 123456789);
 
         $this->resource->shouldReceive('getChild')
-            ->with('childResource')
-            ->andReturn($this->childResource);
-
-        $this->childResource->shouldReceive('withParent')
-            ->with(123456789)
+            ->with('childResource', 123456789)
             ->andReturn($this->childResource);
 
         $proxy->childResource();

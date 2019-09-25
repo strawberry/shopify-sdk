@@ -83,6 +83,6 @@ abstract class ResourceTestCase extends TestCase
     protected function assertChild(string $key, string $class): void
     {
         $this->assertTrue($this->resource->hasChild($key));
-        $this->assertInstanceOf($class, $this->resource->getChild($key));
+        $this->assertInstanceOf($class, $this->resource->getChild($key, 1));
     }
 }
