@@ -19,4 +19,9 @@ final class AbandonedCheckoutResource extends Resource
      * @var string
      */
     protected $model = AbandonedCheckout::class;
+
+    public function singularResourceKey(): string
+    {
+        return 'checkout';
+    }
 }

@@ -24,7 +24,7 @@ final class SmartCollectionResource extends Resource
      */
     protected $model = SmartCollection::class;
 
-    public function order(int $id, array $products, ?string $order = null): void
+    public function order(int $id, array $products = [], ?string $order = null): void
     {
         $options = array_filter([
             'products' => $products,

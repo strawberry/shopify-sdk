@@ -29,4 +29,9 @@ final class OrderRiskResource extends ChildResource
      * @var string
      */
     protected $parent = OrderResource::class;
+
+    public function singularResourceKey(): string
+    {
+        return 'risk';
+    }
 }

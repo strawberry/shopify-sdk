@@ -19,4 +19,9 @@ final class ResourceFeedbackResource extends Resource
      * @var string
      */
     protected $model = ResourceFeedback::class;
+
+    public function pluralResourceKey(): string
+    {
+        return $this->singularResourceKey();
+    }
 }

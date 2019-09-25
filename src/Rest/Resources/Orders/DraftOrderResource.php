@@ -28,10 +28,11 @@ final class DraftOrderResource extends Resource
     /**
      * Sends an invoice for the draft order.
      */
-    public function sendInvoice(int $id): DraftOrderInvoice
+    public function sendInvoice(int $id, array $data = []): DraftOrderInvoice
     {
         $response = $this->client->post(
-            $this->uri("{$id}/send_invoice")
+            $this->uri("{$id}/send_invoice"),
+            $this->prepareJson($data, 'draft_order_invoice')
         );
 
         return $this->toModel(
@@ -46,10 +47,12 @@ final class DraftOrderResource extends Resource
      */
     public function complete(int $id, bool $pending = false): DraftOrder
     {
+        $pending = $pending ? ['payment_pending' => 'true'] : [];
+
         $response = $this->client->put(
             $this->uri("{$id}/complete"),
             [],
-            ['payment_pending' => $pending]
+            $pending
         );
 
         return $this->toModel($response);

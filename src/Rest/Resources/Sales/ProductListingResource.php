@@ -44,7 +44,7 @@ final class ProductListingResource extends Resource
     {
         $response = $this->client->put(
             $this->uri((string) $id),
-            $this->prepareJson($data, 'collection_listing')
+            $this->prepareJson($data, 'product_listing')
         );
 
         return $this->toModel($response);

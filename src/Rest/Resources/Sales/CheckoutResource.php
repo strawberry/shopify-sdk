@@ -57,9 +57,12 @@ final class CheckoutResource extends Resource
     /**
      * Retrieve an existing checkout.
      */
-    public function find(string $token, array $options): Checkout
+    public function find(string $token, array $options = []): Checkout
     {
-        $response = $this->client->get($this->uri($token), $options);
+        $response = $this->client->get(
+            $this->uri($token),
+            $options
+        );
 
         return $this->toModel($response);
     }
@@ -71,7 +74,7 @@ final class CheckoutResource extends Resource
     {
         $response = $this->client->put(
             $this->uri($token),
-            $this->prepare($data, 'checkout')
+            $this->prepareJson($data, 'checkout')
         );
 
         return $this->toModel($response);

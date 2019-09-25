@@ -31,6 +31,6 @@ final class ProductResource extends Resource
      */
     protected $childResources = [
         'images' => ImageResource::class,
-        'variants' => VariantResource::class,
+        'variants' => ProductVariantResource::class,
     ];
 }

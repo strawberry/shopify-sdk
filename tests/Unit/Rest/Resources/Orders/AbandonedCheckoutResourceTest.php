@@ -16,4 +16,24 @@ final class AbandonedCheckoutResourceTest extends ResourceTestCase
 
     /** @var string */
     protected $dataPath = 'orders/abandoned_checkout';
+
+    public function testGet(): void
+    {
+        $this->queue(200, [], $this->response('get'));
+
+        $response = $this->resource->get();
+
+        $this->assertRequest('GET', 'checkouts.json');
+        $this->assertCollection($response, 7);
+    }
+
+    public function testCount(): void
+    {
+        $this->queue(200, [], $this->response('count'));
+
+        $response = $this->resource->count();
+
+        $this->assertRequest('GET', 'checkouts/count.json');
+        $this->assertSame(7, $response);
+    }
 }

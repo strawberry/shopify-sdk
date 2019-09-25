@@ -33,7 +33,7 @@ final class RefundResource extends ChildResource
      */
     public function calculate(array $data): Refund
     {
-        $response = $this->post(
+        $response = $this->client->post(
             $this->uri('calculate'),
             $this->prepareJson($data, 'refund')
         );

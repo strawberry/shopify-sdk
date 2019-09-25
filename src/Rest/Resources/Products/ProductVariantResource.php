@@ -4,16 +4,14 @@ declare(strict_types=1);
 
 namespace Strawberry\Shopify\Rest\Resources\Products;
 
-use Strawberry\Shopify\Models\Products\Image;
+use Strawberry\Shopify\Models\Products\Variant;
 use Strawberry\Shopify\Rest\ChildResource;
 use Strawberry\Shopify\Rest\Concerns;
 
-final class ImageResource extends ChildResource
+final class ProductVariantResource extends ChildResource
 {
     use Concerns\ListsResource,
-        Concerns\FindsResource,
         Concerns\CreatesResource,
-        Concerns\UpdatesResource,
         Concerns\DeletesResource,
         Concerns\CountsResource;
 
@@ -22,7 +20,7 @@ final class ImageResource extends ChildResource
      *
      * @var string
      */
-    protected $model = Image::class;
+    protected $model = Variant::class;
 
     /**
      * The parent resource for this resource.
