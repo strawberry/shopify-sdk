@@ -8,7 +8,7 @@ use Strawberry\Shopify\Models\Billing\UsageCharge;
 use Strawberry\Shopify\Rest\ChildResource;
 use Strawberry\Shopify\Rest\Concerns;
 
-final class UsageCharge extends ChildResource
+final class UsageChargeResource extends ChildResource
 {
     use Concerns\ListsResource,
         Concerns\FindsResource,
