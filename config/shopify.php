@@ -12,4 +12,6 @@ return [
         'api_password' => env('SHOPIFY_API_PASSWORD'),
         'access_token' => env('SHOPIFY_ACCESS_TOKEN'),
     ],
+
+    'shared_secret' => env('SHOPIFY_SHARED_SECRET'),
 ];

@@ -9,6 +9,7 @@ use Illuminate\Support\ServiceProvider;
 use Strawberry\Shopify\Exceptions\ClientException;
 use Strawberry\Shopify\Factories\GuzzleClientFactory;
 use Strawberry\Shopify\Rest\Client;
+use Strawberry\Shopify\Services\VerificationService;
 
 final class ShopifyServiceProvider extends ServiceProvider
 {
@@ -21,6 +22,10 @@ final class ShopifyServiceProvider extends ServiceProvider
 
     public function register(): void
     {
+        $this->app->bind(VerificationService::class, function () {
+            return new VerificationService(config('shopify.shared_secret'));
+        });
+
         $this->app->bind(Client::class, function () {
             return new Client($this->makeHttpClient());
         });
