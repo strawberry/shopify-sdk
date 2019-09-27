@@ -9,6 +9,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Strawberry\Shopify\Exceptions\ClientException;
+use Strawberry\Shopify\Factories\ModelFactory;
 use Strawberry\Shopify\Http\Client;
 use Strawberry\Shopify\Http\Response;
 use Strawberry\Shopify\Models\Model;
@@ -55,9 +56,7 @@ abstract class Resource
         $key = $key ?? $this->singularResourceKey();
         $model = $model ?? $this->model;
 
-        return new $model(
-            $this->data($response, $key)
-        );
+        return ModelFactory::make($model, $this->data($response, $key));
     }
 
     /**
