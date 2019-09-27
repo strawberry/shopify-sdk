@@ -28,8 +28,10 @@ final class MarketingEventResource extends Resource
 
     /**
      * Add engagements to a marketing engagement.
+     *
+     * @return mixed
      */
-    public function engagements(int $id, array $engagements): Collection
+    public function engagements(int $id, array $engagements)
     {
         $response = $this->client->post(
             $this->uri("{$id}/engagements"),

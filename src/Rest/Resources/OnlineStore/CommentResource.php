@@ -26,12 +26,14 @@ final class CommentResource extends Resource
 
     /**
      * Retrieve all the comments for a certain article of a blog.
+     *
+     * @return mixed
      */
     public function getForArticle(
         int $article,
         int $blog,
         array $options = []
-    ): Collection {
+    ) {
         return $this->get(array_merge($options, [
             'article_id' => $article,
             'blog_id' => $blog,
@@ -54,8 +56,10 @@ final class CommentResource extends Resource
 
     /**
      * Retrieve all the comments for all the articles of a blog.
+     *
+     * @return mixed
      */
-    public function getForBlog(int $blog, array $options = []): Collection
+    public function getForBlog(int $blog, array $options = [])
     {
         return $this->get(array_merge($options, [
             'blog_id' => $blog,

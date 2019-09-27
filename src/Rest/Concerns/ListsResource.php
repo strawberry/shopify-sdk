@@ -10,8 +10,10 @@ trait ListsResource
 {
     /**
      * Retrieves a list of the resources.
+     *
+     * @return mixed
      */
-    public function get(array $options = []): Collection
+    public function get(array $options = [])
     {
         $response = $this->client->get($this->uri(), $options);
 

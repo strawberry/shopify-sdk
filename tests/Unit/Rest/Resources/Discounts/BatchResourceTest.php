@@ -55,7 +55,7 @@ final class BatchResourceTest extends ChildResourceTestCase
         $response = $this->resource->discountCodes(987654321);
 
         $this->assertRequest('GET', 'price_rules/507328175/batch/987654321/discount_codes.json');
-        $this->assertInstanceOf(Collection::class, $response);
+        $this->assertIsArray($response);
         $this->assertContainsOnlyInstancesOf(DiscountCode::class, $response);
     }
 }

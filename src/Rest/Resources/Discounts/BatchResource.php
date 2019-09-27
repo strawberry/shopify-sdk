@@ -22,7 +22,8 @@ final class BatchResource extends ChildResource
      */
     protected $model = Batch::class;
 
-    public function discountCodes(int $id): Collection
+    /** @return mixed */
+    public function discountCodes(int $id)
     {
         $response = $this->client->get(
             $this->uri("{$id}/discount_codes")

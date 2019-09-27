@@ -97,7 +97,7 @@ final class MarketingEventResourceTest extends ResourceTestCase
 
         $this->assertPostKey('engagements');
         $this->assertRequest('POST', 'marketing_events/998730532/engagements.json');
-        $this->assertInstanceOf(Collection::class, $response);
+        $this->assertIsArray($response);
         $this->assertContainsOnlyInstancesOf(Engagement::class, $response);
     }
 }

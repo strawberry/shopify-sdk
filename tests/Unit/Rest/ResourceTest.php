@@ -106,7 +106,7 @@ final class ResourceTest extends TestCase
         ));
 
         $response = $this->resource->get(['query' => 'string']);
-        $this->assertInstanceOf(Collection::class, $response);
+        $this->assertIsArray($response);
         $this->assertCount(2, $response);
         $this->assertContainsOnlyInstancesOf(ModelStub::class, $response);
 

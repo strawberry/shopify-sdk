@@ -27,8 +27,10 @@ final class GiftCardResource extends Resource
 
     /**
      * Searches for gift card that match a supplied query.
+     *
+     * @return mixed
      */
-    public function search(string $query, array $options = []): Collection
+    public function search(string $query, array $options = [])
     {
         $response = $this->client->get(
             $this->uri('search'),

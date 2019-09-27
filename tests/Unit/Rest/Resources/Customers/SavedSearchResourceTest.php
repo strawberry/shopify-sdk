@@ -93,7 +93,7 @@ final class SavedSearchResourceTest extends ResourceTestCase
         $response = $this->resource->run(123456789);
 
         $this->assertRequest('GET', 'customer_saved_searches/123456789/customers.json');
-        $this->assertInstanceOf(Collection::class, $response);
+        $this->assertIsArray($response);
         $this->assertContainsOnlyInstancesOf(Customer::class, $response);
     }
 }
