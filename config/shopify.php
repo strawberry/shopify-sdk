@@ -14,4 +14,13 @@ return [
     ],
 
     'shared_secret' => env('SHOPIFY_SHARED_SECRET'),
+
+    /**
+     * You can swap out models for your own implementation by mapping them
+     * here. The key should be original classnamem with the value being
+     * the FQCN for your own implementation.
+     */
+    'models' => [
+        // Strawberry\Shopify\Models\Store\Shop::class => Acme\Shop::class,
+    ],
 ];
