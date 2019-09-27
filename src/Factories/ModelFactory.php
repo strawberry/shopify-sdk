@@ -25,12 +25,12 @@ final class ModelFactory
      */
     public static function make(string $model, $data): Model
     {
-        $model = static::map($model);
+        $model = static::getMapping($model);
 
         return new $model($data);
     }
 
-    private static function map(string $model): string
+    public static function getMapping(string $model): string
     {
         return static::$map[$model] ?? $model;
     }

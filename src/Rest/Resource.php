@@ -72,7 +72,7 @@ abstract class Resource
 
         return (new Collection(
             $this->data($response, $key)
-        ))->mapInto($model);
+        ))->mapInto(ModelFactory::getMapping($model));
     }
 
     /**
