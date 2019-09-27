@@ -8,7 +8,7 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
-use Strawberry\Shopify\Exceptions\ClientException;
+use Strawberry\Shopify\Exceptions\SdkException;
 use Strawberry\Shopify\Factories\CollectionFactory;
 use Strawberry\Shopify\Factories\ModelFactory;
 use Strawberry\Shopify\Http\Client;
@@ -170,7 +170,7 @@ final class ResourceTest extends TestCase
 
     public function testGetChildThrowsException(): void
     {
-        $this->expectException(ClientException::class);
+        $this->expectException(SdkException::class);
 
         $this->resource->getChild('foo', 123456789);
     }

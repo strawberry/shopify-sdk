@@ -6,7 +6,7 @@ namespace Strawberry\Shopify;
 
 use GuzzleHttp\ClientInterface;
 use Illuminate\Support\ServiceProvider;
-use Strawberry\Shopify\Exceptions\ClientException;
+use Strawberry\Shopify\Exceptions\SdkException;
 use Strawberry\Shopify\Factories\CollectionFactory;
 use Strawberry\Shopify\Factories\GuzzleClientFactory;
 use Strawberry\Shopify\Rest\Client;
@@ -40,7 +40,7 @@ final class ShopifyServiceProvider extends ServiceProvider
      * Returns a Guzzle Client instance based on the type of
      * Shopify application required.
      *
-     * @throws ClientException
+     * @throws SdkException
      */
     private function makeHttpClient(): ClientInterface
     {

@@ -6,7 +6,7 @@ namespace Strawberry\Shopify\Factories;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
-use Strawberry\Shopify\Exceptions\ClientException;
+use Strawberry\Shopify\Exceptions\SdkException;
 
 final class GuzzleClientFactory
 {
@@ -17,7 +17,7 @@ final class GuzzleClientFactory
      *
      * @return ClientInterface
      *
-     * @throws ClientException
+     * @throws SdkException
      */
     public function make(array $config): ClientInterface
     {
@@ -29,7 +29,7 @@ final class GuzzleClientFactory
             return $this->forPublicApp($config);
         }
 
-        throw ClientException::credentialsNotSet();
+        throw SdkException::credentialsNotSet();
     }
 
     /**

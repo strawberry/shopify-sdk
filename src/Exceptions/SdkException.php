@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Strawberry\Shopify\Exceptions;
 
-use RuntimeException;
+use Exception;
 
-final class ClientException extends RuntimeException
+final class SdkException extends Exception
 {
     public static function credentialsNotSet(): self
     {

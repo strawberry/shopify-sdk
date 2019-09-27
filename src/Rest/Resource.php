@@ -6,9 +6,8 @@ namespace Strawberry\Shopify\Rest;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use Strawberry\Shopify\Exceptions\ClientException;
+use Strawberry\Shopify\Exceptions\SdkException;
 use Strawberry\Shopify\Factories\CollectionFactory;
 use Strawberry\Shopify\Factories\ModelFactory;
 use Strawberry\Shopify\Http\Client;
@@ -101,12 +100,12 @@ abstract class Resource
      *
      * @param int|string  $id
      *
-     * @throws ClientException
+     * @throws SdkException
      */
     public function getChild(string $key, $id): ChildResource
     {
         if (! $this->hasChild($key)) {
-            throw ClientException::childDoesntExist(static::class, $key);
+            throw SdkException::childDoesntExist(static::class, $key);
         }
 
         $resource = $this->childResources[$key];

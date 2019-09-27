@@ -2,7 +2,7 @@
 
 namespace Strawberry\Shopify\Tests\Unit\Factories;
 
-use Strawberry\Shopify\Exceptions\ClientException;
+use Strawberry\Shopify\Exceptions\SdkException;
 use Strawberry\Shopify\Tests\TestCase;
 use Strawberry\Shopify\Factories\GuzzleClientFactory;
 
@@ -24,7 +24,7 @@ final class GuzzleClientFactoryTest extends TestCase
 
     public function testNoCredentials(): void
     {
-        $this->expectException(ClientException::class);
+        $this->expectException(SdkException::class);
 
         $client = (new GuzzleClientFactory())->make([]);
     }
@@ -32,7 +32,7 @@ final class GuzzleClientFactoryTest extends TestCase
     /** @dataProvider missingPrivateCredentials */
     public function testMissingPrivateCredentials(array $config): void
     {
-        $this->expectException(ClientException::class);
+        $this->expectException(SdkException::class);
 
         $client = (new GuzzleClientFactory())->make($config);
     }
