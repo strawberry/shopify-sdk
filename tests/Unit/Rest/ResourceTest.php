@@ -2,20 +2,22 @@
 
 namespace Strawberry\Shopify\Tests\Unit\Rest;
 
+use GuzzleHttp\Client as GuzzleClient;
+use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
-use Illuminate\Support\Collection;
-use GuzzleHttp\Handler\MockHandler;
-use Strawberry\Shopify\Http\Client;
-use Strawberry\Shopify\Rest\Resource;
-use GuzzleHttp\Client as GuzzleClient;
 use Illuminate\Contracts\Support\Arrayable;
-use Strawberry\Shopify\Tests\TestCase;
+use Illuminate\Support\Collection;
 use Strawberry\Shopify\Exceptions\ClientException;
+use Strawberry\Shopify\Factories\ModelFactory;
+use Strawberry\Shopify\Http\Client;
+use Strawberry\Shopify\Models\Store\Shop;
+use Strawberry\Shopify\Rest\Resource;
 use Strawberry\Shopify\Tests\Stubs\Models\ModelStub;
 use Strawberry\Shopify\Tests\Stubs\Resources\ChildResourceStub;
 use Strawberry\Shopify\Tests\Stubs\Resources\ResourceStub;
 use Strawberry\Shopify\Tests\Stubs\Resources\ResourceWithChildrenStub;
+use Strawberry\Shopify\Tests\TestCase;
 
 final class ResourceTest extends TestCase
 {
@@ -176,5 +178,35 @@ final class ResourceTest extends TestCase
         $child = $this->resourceWithChildren->getChild('child', 123456789);
 
         $this->assertInstanceOf(ChildResourceStub::class, $child);
+    }
+
+    public function testReturnsMappedModels(): void
+    {
+        $this->mockHandler->append(new Response(
+            200, [], '{"model_stub":{"foo":"bar"}}'
+        ));
+
+        ModelFactory::configure([ModelStub::class => Shop::class]);
+
+        $response = $this->resource->find(1);
+
+        $this->assertInstanceOf(Shop::class, $response);
+
+        ModelFactory::configure([]);
+    }
+
+    public function testReturnsMappedCollections(): void
+    {
+        $this->mockHandler->append(new Response(
+            200, [], '{"model_stubs":[{"foo":"bar"},{"baz":"qux"}]}'
+        ));
+
+        ModelFactory::configure([ModelStub::class => Shop::class]);
+
+        $response = $this->resource->get();
+
+        $this->assertContainsOnlyInstancesOf(Shop::class, $response);
+
+        ModelFactory::configure([]);
     }
 }
