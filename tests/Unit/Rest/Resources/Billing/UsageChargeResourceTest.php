@@ -32,6 +32,7 @@ final class UsageChargeResourceTest extends ChildResourceTestCase
             $this->request('create')
         );
 
+        $this->assertPostKey('usage_charge');
         $this->assertRequest('POST', 'recurring_application_charges/1034618216/usage_charges.json');
         $this->assertModel($response);
     }
@@ -46,18 +47,6 @@ final class UsageChargeResourceTest extends ChildResourceTestCase
         $this->assertModel($response);
     }
 
-    public function testFindWithOptions(): void
-    {
-        $this->queue(200, [], $this->response('find'));
-
-        $response = $this->resource->find(1034618216, [
-            'fields' => 'id,description'
-        ]);
-
-        $this->assertRequest('GET', 'recurring_application_charges/1034618216/usage_charges/1034618216.json?fields=id,description');
-        $this->assertModel($response);
-    }
-
     public function testGet(): void
     {
         $this->queue(200, [], $this->response('get'));
@@ -65,18 +54,6 @@ final class UsageChargeResourceTest extends ChildResourceTestCase
         $response = $this->resource->get();
 
         $this->assertRequest('GET', 'recurring_application_charges/1034618216/usage_charges.json');
-        $this->assertCollection($response);
-    }
-
-    public function testGetWithOptions(): void
-    {
-        $this->queue(200, [], $this->response('get'));
-
-        $response = $this->resource->get([
-            'fields' => 'id,description'
-        ]);
-
-        $this->assertRequest('GET', 'recurring_application_charges/1034618216/usage_charges.json?fields=id,description');
         $this->assertCollection($response);
     }
 }

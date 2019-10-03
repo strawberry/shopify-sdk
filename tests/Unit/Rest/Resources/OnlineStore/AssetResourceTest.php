@@ -51,6 +51,7 @@ final class AssetResourceTest extends ChildResourceTestCase
             $this->request('create_or_update')
         );
 
+        $this->assertPostKey('asset');
         $this->assertRequest('PUT', 'themes/828155753/assets.json');
         $this->assertModel($response);
     }
@@ -74,6 +75,7 @@ final class AssetResourceTest extends ChildResourceTestCase
             "<img src='backsoon-postit.png'><p>We are busy updating the store for you and will be back within the hour.</p>"
         );
 
+        $this->assertPostKey('asset');
         $this->assertRequest('PUT', 'themes/828155753/assets.json');
         $this->assertModel($response);
     }
@@ -87,6 +89,7 @@ final class AssetResourceTest extends ChildResourceTestCase
             'R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==\n'
         );
 
+        $this->assertPostKey('asset');
         $this->assertRequest('PUT', 'themes/828155753/assets.json');
         $this->assertModel($response);
     }
@@ -100,6 +103,7 @@ final class AssetResourceTest extends ChildResourceTestCase
             'http://apple.com/new_bg.gif'
         );
 
+        $this->assertPostKey('asset');
         $this->assertRequest('PUT', 'themes/828155753/assets.json');
         $this->assertModel($response);
     }
@@ -113,6 +117,7 @@ final class AssetResourceTest extends ChildResourceTestCase
             'layout/theme.liquid'
         );
 
+        $this->assertPostKey('asset');
         $this->assertRequest('PUT', 'themes/828155753/assets.json');
         $this->assertModel($response);
     }

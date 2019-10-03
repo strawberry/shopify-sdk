@@ -53,6 +53,7 @@ final class BlogResourceTest extends ResourceTestCase
             $this->request('create')
         );
 
+        $this->assertPostKey('blog');
         $this->assertRequest('POST', 'blogs.json');
         $this->assertModel($response);
     }
@@ -66,6 +67,7 @@ final class BlogResourceTest extends ResourceTestCase
             $this->request('update')
         );
 
+        $this->assertPostKey('blog');
         $this->assertRequest('PUT', 'blogs/998730532.json');
         $this->assertModel($response);
     }

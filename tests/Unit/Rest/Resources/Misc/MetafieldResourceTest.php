@@ -45,6 +45,7 @@ final class MetafieldResourceTest extends ResourceTestCase
             $this->request('create')
         );
 
+        $this->assertPostKey('metafield');
         $this->assertRequest('POST', 'metafields.json');
         $this->assertModel($response);
     }
@@ -58,6 +59,7 @@ final class MetafieldResourceTest extends ResourceTestCase
             $this->request('update')
         );
 
+        $this->assertPostKey('metafield');
         $this->assertRequest('PUT', 'metafields/721389482.json');
         $this->assertModel($response);
     }

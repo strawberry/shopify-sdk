@@ -44,4 +44,9 @@ final class BatchResource extends ChildResource
     {
         return 'batch';
     }
+
+    public function postKey(): string
+    {
+        return 'discount_codes';
+    }
 }

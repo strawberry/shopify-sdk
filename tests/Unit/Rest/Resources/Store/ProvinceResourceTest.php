@@ -52,6 +52,7 @@ final class ProvinceResourceTest extends ChildResourceTestCase
             $this->request('update')
         );
 
+        $this->assertPostKey('province');
         $this->assertRequest('PUT', 'countries/879921427/provinces/224293623.json');
         $this->assertModel($response);
     }

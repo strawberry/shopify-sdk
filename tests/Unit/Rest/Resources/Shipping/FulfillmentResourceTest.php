@@ -58,6 +58,7 @@ final class FulfillmentResourceTest extends ChildResourceTestCase
             $this->request('create')
         );
 
+        $this->assertPostKey('fulfillment');
         $this->assertRequest('POST', 'orders/450789469/fulfillments.json');
         $this->assertModel($response);
     }
@@ -71,6 +72,7 @@ final class FulfillmentResourceTest extends ChildResourceTestCase
             $this->request('update')
         );
 
+        $this->assertPostKey('fulfillment');
         $this->assertRequest('PUT', 'orders/450789469/fulfillments/450789469.json');
         $this->assertModel($response);
     }

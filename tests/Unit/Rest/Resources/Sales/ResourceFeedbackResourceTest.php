@@ -35,6 +35,7 @@ final class ResourceFeedbackResourceTest extends ResourceTestCase
             $this->request('create')
         );
 
+        $this->assertPostKey('resource_feedback');
         $this->assertRequest('POST', 'resource_feedback.json');
         $this->assertModel($response);
     }

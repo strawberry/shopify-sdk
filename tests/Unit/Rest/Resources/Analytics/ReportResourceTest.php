@@ -27,17 +27,6 @@ final class ReportResourceTest extends ResourceTestCase
         $this->assertCollection($response, 2);
     }
 
-    public function testGetWithOptions(): void
-    {
-        $this->queue(200, [], $this->response('get_with_options'));
-
-        $response = $this->resource->get([
-            'ids' => '517154478'
-        ]);
-
-        $this->assertRequest('GET', 'reports.json?ids=517154478');
-        $this->assertCollection($response, 1);
-    }
 
     public function testFind(): void
     {
@@ -49,18 +38,6 @@ final class ReportResourceTest extends ResourceTestCase
         $this->assertModel($response);
     }
 
-    public function testFindWithOptions(): void
-    {
-        $this->queue(200, [], $this->response('find_with_options'));
-
-        $response = $this->resource->find(517154478, [
-            'fields' => 'id,shopify_ql'
-        ]);
-
-        $this->assertRequest('GET', 'reports/517154478.json?fields=id,shopify_ql');
-        $this->assertModel($response);
-    }
-
     public function testCreate(): void
     {
         $this->queue(201, [], $this->response('create'));
@@ -69,6 +46,7 @@ final class ReportResourceTest extends ResourceTestCase
             $this->request('create')
         );
 
+        $this->assertPostKey('report');
         $this->assertRequest('POST', 'reports.json');
         $this->assertModel($response);
     }
@@ -82,6 +60,7 @@ final class ReportResourceTest extends ResourceTestCase
             $this->request('update')
         );
 
+        $this->assertPostKey('report');
         $this->assertRequest('PUT', 'reports/517154478.json');
         $this->assertModel($response);
     }

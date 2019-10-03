@@ -47,6 +47,7 @@ final class MarketingEventResourceTest extends ResourceTestCase
             $this->request('create')
         );
 
+        $this->assertPostKey('marketing_event');
         $this->assertRequest('POST', 'marketing_events.json');
         $this->assertModel($response);
     }
@@ -60,6 +61,7 @@ final class MarketingEventResourceTest extends ResourceTestCase
             $this->request('update')
         );
 
+        $this->assertPostKey('marketing_event');
         $this->assertRequest('PUT', 'marketing_events/998730532.json');
         $this->assertModel($response);
     }
@@ -93,6 +95,7 @@ final class MarketingEventResourceTest extends ResourceTestCase
             $this->request('engagements')
         );
 
+        $this->assertPostKey('engagements');
         $this->assertRequest('POST', 'marketing_events/998730532/engagements.json');
         $this->assertInstanceOf(Collection::class, $response);
         $this->assertContainsOnlyInstancesOf(Engagement::class, $response);

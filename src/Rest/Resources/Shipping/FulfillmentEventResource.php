@@ -26,4 +26,9 @@ final class FulfillmentEventResource extends ChildResource
     {
         return 'events';
     }
+
+    public function postKey(): string
+    {
+        return 'event';
+    }
 }

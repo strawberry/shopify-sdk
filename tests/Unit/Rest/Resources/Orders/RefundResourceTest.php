@@ -51,6 +51,7 @@ final class RefundResourceTest extends ChildResourceTestCase
             $this->request('create')
         );
 
+        $this->assertPostKey('refund');
         $this->assertRequest('POST', 'orders/450789469/refunds.json');
         $this->assertModel($response);
     }
@@ -63,6 +64,7 @@ final class RefundResourceTest extends ChildResourceTestCase
             $this->request('calculate')
         );
 
+        $this->assertPostKey('refund');
         $this->assertRequest('POST', 'orders/450789469/refunds/calculate.json');
         $this->assertModel($response);
     }

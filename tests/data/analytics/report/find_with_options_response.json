@@ -1,6 +1,0 @@
-{
-    "report": {
-        "id": 517154478,
-        "shopify_ql": "SHOW sales BY country FROM order WHERE channel.api_client_id = 123 SINCE -1m UNTIL today"
-    }
-}

@@ -45,6 +45,7 @@ final class PageResourceTest extends ResourceTestCase
             $this->request('create')
         );
 
+        $this->assertPostKey('page');
         $this->assertRequest('POST', 'pages.json');
         $this->assertModel($response);
     }
@@ -58,6 +59,7 @@ final class PageResourceTest extends ResourceTestCase
             $this->request('update')
         );
 
+        $this->assertPostKey('page');
         $this->assertRequest('PUT', 'pages/131092082.json');
         $this->assertModel($response);
     }

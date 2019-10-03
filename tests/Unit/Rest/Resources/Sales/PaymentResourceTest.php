@@ -51,6 +51,7 @@ final class PaymentResourceTest extends ChildResourceTestCase
             $this->request('create')
         );
 
+        $this->assertPostKey('payment');
         $this->assertRequest('POST', 'checkouts/7yjf4v2we7gamku6a6h7tvm8h3mmvs4x/payments.json');
         $this->assertModel($response);
     }

@@ -58,6 +58,7 @@ final class OrderResourceTest extends ResourceTestCase
             $this->request('create')
         );
 
+        $this->assertPostKey('order');
         $this->assertRequest('POST', 'orders.json');
         $this->assertModel($response);
     }
@@ -71,6 +72,7 @@ final class OrderResourceTest extends ResourceTestCase
             $this->request('update')
         );
 
+        $this->assertPostKey('order');
         $this->assertRequest('PUT', 'orders/450789469.json');
         $this->assertModel($response);
     }

@@ -45,6 +45,7 @@ final class RedirectResourceTest extends ResourceTestCase
             $this->request('create')
         );
 
+        $this->assertPostKey('redirect');
         $this->assertRequest('POST', 'redirects.json');
         $this->assertModel($response);
     }
@@ -58,6 +59,7 @@ final class RedirectResourceTest extends ResourceTestCase
             $this->request('update')
         );
 
+        $this->assertPostKey('redirect');
         $this->assertRequest('PUT', 'redirects/668809255.json');
         $this->assertModel($response);
     }

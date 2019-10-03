@@ -68,4 +68,9 @@ final class AddressResource extends ChildResource
     {
         return 'addresses';
     }
+
+    public function postKey(): string
+    {
+        return 'address';
+    }
 }

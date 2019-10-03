@@ -45,6 +45,7 @@ final class CustomCollectionResourceTest extends ResourceTestCase
             $this->request('create')
         );
 
+        $this->assertPostKey('custom_collection');
         $this->assertRequest('POST', 'custom_collections.json');
         $this->assertModel($response);
     }
@@ -58,6 +59,7 @@ final class CustomCollectionResourceTest extends ResourceTestCase
             $this->request('update')
         );
 
+        $this->assertPostKey('custom_collection');
         $this->assertRequest('PUT', 'custom_collections/841564295.json');
         $this->assertModel($response);
     }

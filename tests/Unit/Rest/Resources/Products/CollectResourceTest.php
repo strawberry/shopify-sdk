@@ -45,6 +45,7 @@ final class CollectResourceTest extends ResourceTestCase
             $this->request('create')
         );
 
+        $this->assertPostKey('collect');
         $this->assertRequest('POST', 'collects.json');
         $this->assertModel($response);
     }

@@ -25,6 +25,7 @@ final class ApplicationCreditResourceTest extends ResourceTestCase
             $this->request('create')
         );
 
+        $this->assertPostKey('application_credit');
         $this->assertRequest('POST', 'application_credits.json');
         $this->assertModel($response);
     }
@@ -39,18 +40,6 @@ final class ApplicationCreditResourceTest extends ResourceTestCase
         $this->assertModel($response);
     }
 
-    public function testFindWithOptions(): void
-    {
-        $this->queue(200, [], $this->response('find'));
-
-        $response = $this->resource->find(445365009, [
-            'fields' => 'id,amount'
-        ]);
-
-        $this->assertRequest('GET', 'application_credits/445365009.json?fields=id,amount');
-        $this->assertModel($response);
-    }
-
     public function testGet(): void
     {
         $this->queue(200, [], $this->response('get'));
@@ -58,18 +47,6 @@ final class ApplicationCreditResourceTest extends ResourceTestCase
         $response = $this->resource->get();
 
         $this->assertRequest('GET', 'application_credits.json');
-        $this->assertCollection($response);
-    }
-
-    public function testGetWithOptions(): void
-    {
-        $this->queue(200, [], $this->response('get'));
-
-        $response = $this->resource->get([
-            'fields' => 'id,amount'
-        ]);
-
-        $this->assertRequest('GET', 'application_credits.json?fields=id,amount');
         $this->assertCollection($response);
     }
 }

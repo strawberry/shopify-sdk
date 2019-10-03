@@ -33,6 +33,7 @@ final class BatchResourceTest extends ChildResourceTestCase
             $this->request('create')
         );
 
+        $this->assertPostKey('discount_codes');
         $this->assertRequest('POST', 'price_rules/507328175/batch.json');
         $this->assertModel($response);
     }
