@@ -80,7 +80,7 @@ final class CheckoutResourceTest extends ResourceTestCase
         $response = $this->resource->shippingRates('b490a9220cd14d7344024f4874f640a6');
 
         $this->assertRequest('GET', 'checkouts/b490a9220cd14d7344024f4874f640a6/shipping_rates.json');
-        $this->assertInstanceOf(Collection::class, $response);
+        $this->assertIsArray($response);
         $this->assertContainsOnlyInstancesOf(ShippingRate::class, $response);
     }
 }

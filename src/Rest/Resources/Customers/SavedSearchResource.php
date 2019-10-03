@@ -36,9 +36,9 @@ final class SavedSearchResource extends Resource
     /**
      * Retrieves all customers returned by a customer saved search.
      *
-     * @todo This needs to have the model type set to Customer.
+     * @return mixed
      */
-    public function run(int $id, array $options = []): Collection
+    public function run(int $id, array $options = [])
     {
         $response = $this->client->get(
             $this->uri("{$id}/customers"),

@@ -9,6 +9,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Strawberry\Shopify\Exceptions\ClientException;
+use Strawberry\Shopify\Factories\CollectionFactory;
 use Strawberry\Shopify\Factories\ModelFactory;
 use Strawberry\Shopify\Http\Client;
 use Strawberry\Shopify\Http\Response;
@@ -61,18 +62,22 @@ abstract class Resource
 
     /**
      * Transforms the given response to a collection of models.
+     *
+     * @return mixed
      */
     protected function toCollection(
         Response $response,
         ?string $key = null,
         ?string $model = null
-    ): Collection {
+    ) {
         $key = $key ?? $this->pluralResourceKey();
         $model = $model ?? $this->model;
 
-        return (new Collection(
-            $this->data($response, $key)
-        ))->mapInto(ModelFactory::getMapping($model));
+        $items = array_map(function ($item) use ($model) {
+            return ModelFactory::make($model, $item);
+        }, $this->data($response, $key));
+
+        return CollectionFactory::make($items);
     }
 
     /**

@@ -23,4 +23,11 @@ return [
     'models' => [
         // Strawberry\Shopify\Models\Store\Shop::class => Acme\Shop::class,
     ],
+
+    /**
+     * Collections can be set to either the default PHP array, or a model
+     * that accepts an array of items as its constructor argument such
+     * as Illuminate\Support\Collection.
+     */
+    'collection' => 'array',
 ];

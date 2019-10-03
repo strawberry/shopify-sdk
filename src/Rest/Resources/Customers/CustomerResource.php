@@ -38,8 +38,10 @@ final class CustomerResource extends Resource
 
     /**
      * Searches for customers that match a supplied query.
+     *
+     * @return mixed
      */
-    public function search(string $query, array $options = []): Collection
+    public function search(string $query, array $options = [])
     {
         $response = $this->client->get(
             $this->uri('search'),
@@ -82,9 +84,9 @@ final class CustomerResource extends Resource
     /**
      * Retrieves all orders belonging to a customer
      *
-     * @todo This needs to have the model type set to Order.
+     * @return mixed
      */
-    public function orders(int $id): Collection
+    public function orders(int $id)
     {
         $response = $this->client->get(
             $this->uri("{$id}/orders")

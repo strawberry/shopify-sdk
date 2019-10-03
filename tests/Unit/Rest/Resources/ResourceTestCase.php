@@ -62,7 +62,7 @@ abstract class ResourceTestCase extends TestCase
 
     protected function assertCollection($response, int $count = 1): void
     {
-        $this->assertInstanceOf(Collection::class, $response);
+        $this->assertIsArray($response);
         $this->assertContainsOnlyInstancesOf($this->modelClass, $response);
         $this->assertCount($count, $response);
     }

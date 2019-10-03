@@ -161,7 +161,7 @@ final class CustomerResourceTest extends ResourceTestCase
         $response = $this->resource->orders(123456789);
 
         $this->assertRequest('GET', 'customers/123456789/orders.json');
-        $this->assertInstanceOf(Collection::class, $response);
+        $this->assertIsArray($response);
         $this->assertContainsOnlyInstancesOf(Order::class, $response);
     }
 }

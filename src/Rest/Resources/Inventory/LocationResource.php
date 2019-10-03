@@ -25,8 +25,10 @@ final class LocationResource extends Resource
 
     /**
      * Retrieves a list of inventory levels for a location.
+     *
+     * @return mixed
      */
-    public function inventoryLevels(int $id): Collection
+    public function inventoryLevels(int $id)
     {
         $response = $this->client->get(
             $this->uri("{$id}/inventory_levels")

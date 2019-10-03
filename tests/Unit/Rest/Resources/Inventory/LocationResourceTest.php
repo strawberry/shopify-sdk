@@ -56,7 +56,7 @@ final class LocationResourceTest extends ResourceTestCase
         $response = $this->resource->inventoryLevels(487838322);
 
         $this->assertRequest('GET', 'locations/487838322/inventory_levels.json');
-        $this->assertInstanceOf(Collection::class, $response);
+        $this->assertIsArray($response);
         $this->assertContainsOnlyInstancesOf(InventoryLevel::class, $response);
     }
 }

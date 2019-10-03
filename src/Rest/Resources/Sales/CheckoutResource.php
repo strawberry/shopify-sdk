@@ -82,8 +82,10 @@ final class CheckoutResource extends Resource
 
     /**
      * Retrieves a list of available shipping rates for the specified checkout.
+     *
+     * @return mixed
      */
-    public function shippingRates(string $token): Collection
+    public function shippingRates(string $token)
     {
         $response = $this->client->get(
             $this->uri("{$token}/shipping_rates")

@@ -9,6 +9,7 @@ use GuzzleHttp\Psr7\Response;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
 use Strawberry\Shopify\Exceptions\ClientException;
+use Strawberry\Shopify\Factories\CollectionFactory;
 use Strawberry\Shopify\Factories\ModelFactory;
 use Strawberry\Shopify\Http\Client;
 use Strawberry\Shopify\Models\Store\Shop;
@@ -18,6 +19,7 @@ use Strawberry\Shopify\Tests\Stubs\Resources\ChildResourceStub;
 use Strawberry\Shopify\Tests\Stubs\Resources\ResourceStub;
 use Strawberry\Shopify\Tests\Stubs\Resources\ResourceWithChildrenStub;
 use Strawberry\Shopify\Tests\TestCase;
+
 
 final class ResourceTest extends TestCase
 {
@@ -106,7 +108,7 @@ final class ResourceTest extends TestCase
         ));
 
         $response = $this->resource->get(['query' => 'string']);
-        $this->assertInstanceOf(Collection::class, $response);
+        $this->assertIsArray($response);
         $this->assertCount(2, $response);
         $this->assertContainsOnlyInstancesOf(ModelStub::class, $response);
 
@@ -208,5 +210,31 @@ final class ResourceTest extends TestCase
         $this->assertContainsOnlyInstancesOf(Shop::class, $response);
 
         ModelFactory::configure([]);
+    }
+
+    public function testToCollectionReturnsArrayByDefault(): void
+    {
+        $this->mockHandler->append(new Response(
+            200, [], '{"model_stubs":[]}'
+        ));
+
+        $response = $this->resource->get();
+
+        $this->assertIsArray($response);
+    }
+
+    public function testToCollectionReturnsConfiguredType(): void
+    {
+        $this->mockHandler->append(new Response(
+            200, [], '{"model_stubs":[]}'
+        ));
+
+        CollectionFactory::configure(Collection::class);
+
+        $response = $this->resource->get();
+
+        $this->assertInstanceOf(Collection::class, $response);
+
+        CollectionFactory::configure('array');
     }
 }

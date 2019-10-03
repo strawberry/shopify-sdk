@@ -7,6 +7,7 @@ namespace Strawberry\Shopify;
 use GuzzleHttp\ClientInterface;
 use Illuminate\Support\ServiceProvider;
 use Strawberry\Shopify\Exceptions\ClientException;
+use Strawberry\Shopify\Factories\CollectionFactory;
 use Strawberry\Shopify\Factories\GuzzleClientFactory;
 use Strawberry\Shopify\Rest\Client;
 use Strawberry\Shopify\Services\VerificationService;
@@ -30,9 +31,9 @@ final class ShopifyServiceProvider extends ServiceProvider
             return new Client($this->makeHttpClient());
         });
 
-        ModelFactory::configure(
-            config('shopify.models')
-        );
+        ModelFactory::configure(config('shopify.models'));
+
+        CollectionFactory::configure(config('shopify.collection'));
     }
 
     /**
