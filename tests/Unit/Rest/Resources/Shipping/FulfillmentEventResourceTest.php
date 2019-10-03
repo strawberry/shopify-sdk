@@ -53,6 +53,7 @@ final class FulfillmentEventResourceTest extends ChildResourceTestCase
             $this->response('create')
         );
 
+        $this->assertPostKey('event');
         $this->assertRequest('POST', 'orders/450789469/fulfillments/255858046/events.json');
         $this->assertModel($response);
     }

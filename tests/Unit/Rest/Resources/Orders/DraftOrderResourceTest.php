@@ -46,6 +46,7 @@ final class DraftOrderResourceTest extends ResourceTestCase
             $this->request('create')
         );
 
+        $this->assertPostKey('draft_order');
         $this->assertRequest('POST', 'draft_orders.json');
         $this->assertModel($response);
     }
@@ -59,6 +60,7 @@ final class DraftOrderResourceTest extends ResourceTestCase
             $this->request('update')
         );
 
+        $this->assertPostKey('draft_order');
         $this->assertRequest('PUT', 'draft_orders/994118539.json');
         $this->assertModel($response);
     }
@@ -89,6 +91,7 @@ final class DraftOrderResourceTest extends ResourceTestCase
 
         $response = $this->resource->sendInvoice(994118539);
 
+        $this->assertPostKey('draft_order_invoice');
         $this->assertRequest('POST', 'draft_orders/994118539/send_invoice.json');
         $this->assertInstanceOf(DraftOrderInvoice::class, $response);
     }
@@ -102,6 +105,7 @@ final class DraftOrderResourceTest extends ResourceTestCase
             $this->request('send_invoice')
         );
 
+        $this->assertPostKey('draft_order_invoice');
         $this->assertRequest('POST', 'draft_orders/994118539/send_invoice.json');
         $this->assertInstanceOf(DraftOrderInvoice::class, $response);
     }

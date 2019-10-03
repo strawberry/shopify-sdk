@@ -51,6 +51,7 @@ final class TransactionResourceTest extends ChildResourceTestCase
             $this->request('create')
         );
 
+        $this->assertPostKey('transaction');
         $this->assertRequest('POST', 'orders/450789469/transactions.json');
         $this->assertModel($response);
     }

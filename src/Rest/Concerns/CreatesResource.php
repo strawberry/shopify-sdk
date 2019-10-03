@@ -16,7 +16,7 @@ trait CreatesResource
      */
     public function create($data): Model
     {
-        $json = $this->prepareJson($data, $this->singularResourceKey());
+        $json = $this->prepareJson($data, $this->postKey());
 
         $response = $this->client->post(
             $this->uri(), $json

@@ -48,6 +48,7 @@ final class InventoryItemResourceTest extends ResourceTestCase
             $this->request('update')
         );
 
+        $this->assertPostKey('inventory_item');
         $this->assertRequest('PUT', 'inventory_items/808950810.json');
         $this->assertModel($response);
     }

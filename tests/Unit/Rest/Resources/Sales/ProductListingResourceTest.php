@@ -46,6 +46,7 @@ final class ProductListingResourceTest extends ResourceTestCase
             $this->request('create')
         );
 
+        $this->assertPostKey('product_listing');
         $this->assertRequest('PUT', 'product_listings/921728736.json');
         $this->assertModel($response);
     }

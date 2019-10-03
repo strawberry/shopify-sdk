@@ -36,6 +36,7 @@ final class VariantResourceTest extends ResourceTestCase
             $this->request('update')
         );
 
+        $this->assertPostKey('variant');
         $this->assertRequest('PUT', 'variants/808950810.json');
         $this->assertModel($response);
     }

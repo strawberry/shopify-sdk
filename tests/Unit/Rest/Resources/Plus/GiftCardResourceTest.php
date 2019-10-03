@@ -45,6 +45,7 @@ final class GiftCardResourceTest extends ResourceTestCase
             $this->request('create')
         );
 
+        $this->assertPostKey('gift_card');
         $this->assertRequest('POST', 'gift_cards.json');
         $this->assertModel($response);
     }
@@ -58,6 +59,7 @@ final class GiftCardResourceTest extends ResourceTestCase
             $this->request('update')
         );
 
+        $this->assertPostKey('gift_card');
         $this->assertRequest('PUT', 'gift_cards/48394658.json');
         $this->assertModel($response);
     }
@@ -90,5 +92,16 @@ final class GiftCardResourceTest extends ResourceTestCase
 
         $this->assertRequest('GET', 'gift_cards/search.json?query=mnop');
         $this->assertCollection($response);
+    }
+
+    public function testDisable(): void
+    {
+        $this->queue(201, [], $this->response('create'));
+
+        $response = $this->resource->disable(48394658);
+
+        $this->assertPostKey('gift_card');
+        $this->assertRequest('POST', 'gift_cards/48394658/disable.json');
+        $this->assertModel($response);
     }
 }

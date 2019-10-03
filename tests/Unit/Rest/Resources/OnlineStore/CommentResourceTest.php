@@ -65,6 +65,7 @@ final class CommentResourceTest extends ResourceTestCase
             $this->request('create')
         );
 
+        $this->assertPostKey('comment');
         $this->assertRequest('POST', 'comments.json');
         $this->assertModel($response);
     }
@@ -78,6 +79,7 @@ final class CommentResourceTest extends ResourceTestCase
             $this->request('update')
         );
 
+        $this->assertPostKey('comment');
         $this->assertRequest('PUT', 'comments/118373535.json');
         $this->assertModel($response);
     }

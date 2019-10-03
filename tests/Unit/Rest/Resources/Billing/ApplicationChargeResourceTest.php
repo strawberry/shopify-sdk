@@ -25,6 +25,7 @@ final class ApplicationChargeResourceTest extends ResourceTestCase
             $this->request('create')
         );
 
+        $this->assertPostKey('application_charge');
         $this->assertRequest('POST', 'application_charges.json');
         $this->assertModel($response);
     }
@@ -39,18 +40,6 @@ final class ApplicationChargeResourceTest extends ResourceTestCase
         $this->assertModel($response);
     }
 
-    public function testFindWithOptions(): void
-    {
-        $this->queue(200, [], $this->response('find'));
-
-        $response = $this->resource->find(675931192, [
-            'fields' => 'id,name',
-        ]);
-
-        $this->assertRequest('GET', 'application_charges/675931192.json?fields=id,name');
-        $this->assertModel($response);
-    }
-
     public function testGet(): void
     {
         $this->queue(200, [], $this->response('get'));
@@ -59,16 +48,6 @@ final class ApplicationChargeResourceTest extends ResourceTestCase
 
         $this->assertRequest('GET', 'application_charges.json');
         $this->assertCollection($response, 3);
-    }
-
-    public function testGetWithOptions(): void
-    {
-        $this->queue(200, [], $this->response('get_with_options'));
-
-        $response = $this->resource->get(['since_id' => 556467234]);
-
-        $this->assertRequest('GET', 'application_charges.json?since_id=556467234');
-        $this->assertCollection($response, 2);
     }
 
     public function testActivate(): void
@@ -80,6 +59,7 @@ final class ApplicationChargeResourceTest extends ResourceTestCase
             $this->request('activate')
         );
 
+        $this->assertPostKey('application_charge');
         $this->assertModel($response);
         $this->assertRequest('POST', 'application_charges/675931192/activate.json');
     }

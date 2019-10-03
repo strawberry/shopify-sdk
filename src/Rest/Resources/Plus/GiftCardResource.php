@@ -37,4 +37,19 @@ final class GiftCardResource extends Resource
 
         return $this->toCollection($response);
     }
+
+    /**
+     * Searches for gift card that match a supplied query.
+     */
+    public function disable(int $id): GiftCard
+    {
+        $json = $this->prepareJson(['id' => $id], 'gift_card');
+
+        $response = $this->client->post(
+            $this->uri("{$id}/disable"),
+            $json
+        );
+
+        return $this->toModel($response);
+    }
 }

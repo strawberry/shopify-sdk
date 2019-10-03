@@ -45,6 +45,7 @@ final class CarrierServiceResourceTest extends ResourceTestCase
             $this->request('create')
         );
 
+        $this->assertPostKey('carrier_service');
         $this->assertRequest('POST', 'carrier_services.json');
         $this->assertModel($response);
     }
@@ -58,6 +59,7 @@ final class CarrierServiceResourceTest extends ResourceTestCase
             $this->request('update')
         );
 
+        $this->assertPostKey('carrier_service');
         $this->assertRequest('PUT', 'carrier_services/1036894963.json');
         $this->assertModel($response);
     }

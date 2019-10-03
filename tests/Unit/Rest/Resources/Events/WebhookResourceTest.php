@@ -55,6 +55,7 @@ final class WebhookResourceTest extends ResourceTestCase
             $this->request('create')
         );
 
+        $this->assertPostKey('webhook');
         $this->assertRequest('POST', 'webhooks.json');
         $this->assertModel($response);
     }
@@ -68,6 +69,7 @@ final class WebhookResourceTest extends ResourceTestCase
             $this->request('update')
         );
 
+        $this->assertPostKey('webhook');
         $this->assertRequest('PUT', 'webhooks/4759306.json');
         $this->assertModel($response);
     }

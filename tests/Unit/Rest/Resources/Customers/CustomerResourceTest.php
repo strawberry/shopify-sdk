@@ -38,18 +38,6 @@ final class CustomerResourceTest extends ResourceTestCase
         $this->assertCollection($response);
     }
 
-    public function testGetWithOptions(): void
-    {
-        $this->queue(200, [], $this->response('get'));
-
-        $response = $this->resource->get([
-            'since_id' => 207119551
-        ]);
-
-        $this->assertRequest('GET', 'customers.json?since_id=207119551');
-        $this->assertCollection($response);
-    }
-
     public function testSearch(): void
     {
         $this->queue(200, [], $this->response('search'));
@@ -82,18 +70,6 @@ final class CustomerResourceTest extends ResourceTestCase
         $this->assertModel($response);
     }
 
-    public function testFindWithOptions(): void
-    {
-        $this->queue(200, [], $this->response('find'));
-
-        $response = $this->resource->find(207119551, [
-            'fields' => 'id,email'
-        ]);
-
-        $this->assertRequest('GET', 'customers/207119551.json?fields=id,email');
-        $this->assertModel($response);
-    }
-
     public function testCreate(): void
     {
         $this->queue(201, [], $this->response('create'));
@@ -102,6 +78,7 @@ final class CustomerResourceTest extends ResourceTestCase
             $this->request('create')
         );
 
+        $this->assertPostKey('customer');
         $this->assertRequest('POST', 'customers.json');
         $this->assertModel($response);
     }
@@ -112,6 +89,7 @@ final class CustomerResourceTest extends ResourceTestCase
 
         $response = $this->resource->update(207119551, $this->request('update'));
 
+        $this->assertPostKey('customer');
         $this->assertRequest('PUT', 'customers/207119551.json');
         $this->assertModel($response);
     }
@@ -135,6 +113,7 @@ final class CustomerResourceTest extends ResourceTestCase
 
         $response = $this->resource->sendInvite(123456789);
 
+        $this->assertPostKey('customer_invite');
         $this->assertRequest('POST', 'customers/123456789/send_invite.json');
         $this->assertInstanceOf(Invitation::class, $response);
         $this->assertSame('bob.norman@hostmail.com', $response->to);
@@ -149,6 +128,7 @@ final class CustomerResourceTest extends ResourceTestCase
             $this->request('send_invite_with_customisation')
         );
 
+        $this->assertPostKey('customer_invite');
         $this->assertRequest('POST', 'customers/123456789/send_invite.json');
         $this->assertInstanceOf(Invitation::class, $response);
         $this->assertSame('new_test_email@shopify.com', $response->to);

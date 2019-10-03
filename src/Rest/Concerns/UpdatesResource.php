@@ -13,7 +13,7 @@ trait UpdatesResource
      */
     public function update(int $id, array $data): Model
     {
-        $json = $this->prepareJson($data, $this->singularResourceKey());
+        $json = $this->prepareJson($data, $this->postKey());
 
         $response = $this->client->put(
             $this->uri((string) $id),

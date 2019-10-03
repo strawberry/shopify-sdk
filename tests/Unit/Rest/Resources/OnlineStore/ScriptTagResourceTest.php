@@ -45,6 +45,7 @@ final class ScriptTagResourceTest extends ResourceTestCase
             $this->request('create')
         );
 
+        $this->assertPostKey('script_tag');
         $this->assertRequest('POST', 'script_tags.json');
         $this->assertModel($response);
     }
@@ -58,6 +59,7 @@ final class ScriptTagResourceTest extends ResourceTestCase
             $this->request('update')
         );
 
+        $this->assertPostKey('script_tag');
         $this->assertRequest('PUT', 'script_tags/596726825.json');
         $this->assertModel($response);
     }

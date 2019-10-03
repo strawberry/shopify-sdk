@@ -72,6 +72,14 @@ abstract class ResourceTestCase extends TestCase
         $this->assertInstanceOf($this->resourceClass, $resource);
     }
 
+    protected function assertPostKey(string $key): void
+    {
+        $request = $this->mockHandler->getLastRequest();
+        $body = json_decode($request->getBody()->getContents(), true);
+
+        $this->assertSame($key, array_key_first($body));
+    }
+
     protected function assertRequest(string $method, string $uri): void
     {
         $request = $this->mockHandler->getLastRequest();

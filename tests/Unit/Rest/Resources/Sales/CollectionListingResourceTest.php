@@ -46,6 +46,7 @@ final class CollectionListingResourceTest extends ResourceTestCase
             $this->request('create')
         );
 
+        $this->assertPostKey('collection_listing');
         $this->assertRequest('PUT', 'collection_listings/841564295.json');
         $this->assertModel($response);
     }

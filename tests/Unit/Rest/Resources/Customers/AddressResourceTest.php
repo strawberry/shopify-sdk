@@ -33,19 +33,6 @@ final class AddressResourceTest extends ChildResourceTestCase
         $this->assertCollection($response);
     }
 
-    public function testGetWithOptions(): void
-    {
-        $this->queue(200, [], $this->response('get'));
-
-        $response = $this->resource->get([
-            'limit' => 1,
-            'page' => 1,
-        ]);
-
-        $this->assertRequest('GET', 'customers/1053317301/addresses.json?limit=1&page=1');
-        $this->assertCollection($response);
-    }
-
     public function testFind(): void
     {
         $this->queue(200, [], $this->response('find'));
@@ -64,6 +51,7 @@ final class AddressResourceTest extends ChildResourceTestCase
             $this->request('create')
         );
 
+        $this->assertPostKey('address');
         $this->assertRequest('POST', 'customers/1053317301/addresses.json');
         $this->assertModel($response);
     }
@@ -77,6 +65,7 @@ final class AddressResourceTest extends ChildResourceTestCase
             $this->request('update')
         );
 
+        $this->assertPostKey('address');
         $this->assertRequest('PUT', 'customers/1053317301/addresses/207119551.json');
         $this->assertModel($response);
     }

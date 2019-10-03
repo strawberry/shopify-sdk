@@ -29,18 +29,6 @@ final class SavedSearchResourceTest extends ResourceTestCase
         $this->assertCollection($response, 3);
     }
 
-    public function testGetWithOptions(): void
-    {
-        $this->queue(200, [], $this->response('get_with_options'));
-
-        $response = $this->resource->get([
-            'since_id' => 20610973
-        ]);
-
-        $this->assertRequest('GET', 'customer_saved_searches.json?since_id=20610973');
-        $this->assertCollection($response, 2);
-    }
-
     public function testCount(): void
     {
         $this->queue(200, [], $this->response('count'));
@@ -49,18 +37,6 @@ final class SavedSearchResourceTest extends ResourceTestCase
 
         $this->assertRequest('GET', 'customer_saved_searches/count.json');
         $this->assertSame(3, $response);
-    }
-
-    public function testCountWithOptions(): void
-    {
-        $this->queue(200, [], $this->response('count_with_options'));
-
-        $response = $this->resource->count([
-            'since_id' => 20610973
-        ]);
-
-        $this->assertRequest('GET', 'customer_saved_searches/count.json?since_id=20610973');
-        $this->assertSame(2, $response);
     }
 
     public function testFind(): void
@@ -81,6 +57,7 @@ final class SavedSearchResourceTest extends ResourceTestCase
             $this->request('create')
         );
 
+        $this->assertPostKey('customer_saved_search');
         $this->assertRequest('POST', 'customer_saved_searches.json');
         $this->assertModel($response);
     }
@@ -94,6 +71,7 @@ final class SavedSearchResourceTest extends ResourceTestCase
             $this->request('update')
         );
 
+        $this->assertPostKey('customer_saved_search');
         $this->assertRequest('PUT', 'customer_saved_searches/789629109.json');
         $this->assertModel($response);
     }

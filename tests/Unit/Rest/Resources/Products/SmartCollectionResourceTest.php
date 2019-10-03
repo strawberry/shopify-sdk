@@ -45,6 +45,7 @@ final class SmartCollectionResourceTest extends ResourceTestCase
             $this->request('create')
         );
 
+        $this->assertPostKey('smart_collection');
         $this->assertRequest('POST', 'smart_collections.json');
         $this->assertModel($response);
     }
@@ -58,6 +59,7 @@ final class SmartCollectionResourceTest extends ResourceTestCase
             $this->request('update')
         );
 
+        $this->assertPostKey('smart_collection');
         $this->assertRequest('PUT', 'smart_collections/482865238.json');
         $this->assertModel($response);
     }

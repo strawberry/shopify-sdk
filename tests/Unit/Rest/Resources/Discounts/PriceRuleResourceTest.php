@@ -34,6 +34,7 @@ final class PriceRuleResourceTest extends ResourceTestCase
             $this->request('create')
         );
 
+        $this->assertPostKey('price_rule');
         $this->assertRequest('POST', 'price_rules.json');
         $this->assertModel($response);
     }
@@ -47,6 +48,7 @@ final class PriceRuleResourceTest extends ResourceTestCase
             $this->request('update')
         );
 
+        $this->assertPostKey('price_rule');
         $this->assertRequest('PUT', 'price_rules/507328175.json');
         $this->assertModel($response);
     }
@@ -58,18 +60,6 @@ final class PriceRuleResourceTest extends ResourceTestCase
         $response = $this->resource->get();
 
         $this->assertRequest('GET', 'price_rules.json');
-        $this->assertCollection($response);
-    }
-
-    public function testGetWithOptions(): void
-    {
-        $this->queue(200, [], $this->response('get'));
-
-        $response = $this->resource->get([
-            'limit' => 250
-        ]);
-
-        $this->assertRequest('GET', 'price_rules.json?limit=250');
         $this->assertCollection($response);
     }
 

@@ -34,6 +34,7 @@ final class CheckoutResourceTest extends ResourceTestCase
             $this->request('create')
         );
 
+        $this->assertPostKey('checkout');
         $this->assertRequest('POST', 'checkouts.json');
         $this->assertModel($response);
     }
@@ -67,6 +68,7 @@ final class CheckoutResourceTest extends ResourceTestCase
             $this->request('update')
         );
 
+        $this->assertPostKey('checkout');
         $this->assertRequest('PUT', 'checkouts/b490a9220cd14d7344024f4874f640a6.json');
         $this->assertModel($response);
     }

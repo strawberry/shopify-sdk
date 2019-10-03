@@ -51,6 +51,7 @@ final class ImageResourceTest extends ChildResourceTestCase
             $this->request('create')
         );
 
+        $this->assertPostKey('image');
         $this->assertRequest('POST', 'products/632910392/images.json');
         $this->assertModel($response);
     }
@@ -64,6 +65,7 @@ final class ImageResourceTest extends ChildResourceTestCase
             $this->request('update')
         );
 
+        $this->assertPostKey('image');
         $this->assertRequest('PUT', 'products/632910392/images/632910392.json');
         $this->assertModel($response);
     }

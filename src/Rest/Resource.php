@@ -110,24 +110,47 @@ abstract class Resource
         return new $resource($this->client, $this, $id);
     }
 
+    /**
+     * The key primarily used when a single resource is returned from the API.
+     */
     public function singularResourceKey(): string
     {
         return $this->guessResourceKey();
     }
 
+    /**
+     * The key primarily used when a collection of resources are returned from
+     * the API.
+     */
     public function pluralResourceKey(): string
     {
         return Str::plural($this->singularResourceKey());
     }
 
+    /**
+     * This tries to guess the resource key for the resource, based on the
+     * name of the model.
+     */
     protected function guessResourceKey(): string
     {
         return Str::snake(class_basename($this->model));
     }
 
+    /**
+     * The key used in the URI when accessing the section of the API related
+     * to this resource.
+     */
     public function routeKey(): string
     {
         return $this->pluralResourceKey();
+    }
+
+    /**
+     * The key used when making a write operation to the API.
+     */
+    public function postKey(): string
+    {
+        return $this->singularResourceKey();
     }
 
     /**

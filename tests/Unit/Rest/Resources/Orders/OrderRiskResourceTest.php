@@ -51,6 +51,7 @@ final class OrderRiskResourceTest extends ChildResourceTestCase
             $this->request('create')
         );
 
+        $this->assertPostKey('risk');
         $this->assertRequest('POST', 'orders/450789469/risks.json');
         $this->assertModel($response);
     }
@@ -64,6 +65,7 @@ final class OrderRiskResourceTest extends ChildResourceTestCase
             $this->request('update')
         );
 
+        $this->assertPostKey('risk');
         $this->assertRequest('PUT', 'orders/450789469/risks/284138680.json');
         $this->assertModel($response);
     }

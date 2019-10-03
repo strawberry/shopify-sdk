@@ -41,6 +41,7 @@ final class ProductVariantResourceTest extends ChildResourceTestCase
             $this->request('create')
         );
 
+        $this->assertPostKey('variant');
         $this->assertRequest('POST', 'products/632910392/variants.json');
         $this->assertModel($response);
     }

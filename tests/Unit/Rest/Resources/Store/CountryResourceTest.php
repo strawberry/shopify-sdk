@@ -45,6 +45,7 @@ final class CountryResourceTest extends ResourceTestCase
             $this->request('create')
         );
 
+        $this->assertPostKey('country');
         $this->assertRequest('POST', 'countries.json');
         $this->assertModel($response);
     }
@@ -58,6 +59,7 @@ final class CountryResourceTest extends ResourceTestCase
             $this->request('update')
         );
 
+        $this->assertPostKey('country');
         $this->assertRequest('PUT', 'countries/48394658.json');
         $this->assertModel($response);
     }

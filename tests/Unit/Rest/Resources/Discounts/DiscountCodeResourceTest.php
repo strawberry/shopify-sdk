@@ -51,6 +51,7 @@ final class DiscountCodeResourceTest extends ChildResourceTestCase
             $this->request('create')
         );
 
+        $this->assertPostKey('discount_code');
         $this->assertRequest('POST', 'price_rules/123456789/discount_codes.json');
         $this->assertModel($response);
     }
@@ -64,6 +65,7 @@ final class DiscountCodeResourceTest extends ChildResourceTestCase
             $this->request('update')
         );
 
+        $this->assertPostKey('discount_code');
         $this->assertRequest('PUT', 'price_rules/123456789/discount_codes/507328175.json');
         $this->assertModel($response);
     }

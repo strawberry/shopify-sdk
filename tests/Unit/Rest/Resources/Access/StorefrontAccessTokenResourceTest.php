@@ -23,6 +23,7 @@ final class StorefrontAccessTokenResourceTest extends ResourceTestCase
 
         $response = $this->resource->create($this->request('create'));
 
+        $this->assertPostKey('storefront_access_token');
         $this->assertRequest('POST', 'storefront_access_tokens.json');
         $this->assertModel($response);
     }

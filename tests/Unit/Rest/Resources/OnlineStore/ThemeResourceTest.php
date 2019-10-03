@@ -52,6 +52,7 @@ final class ThemeResourceTest extends ResourceTestCase
             $this->request('create')
         );
 
+        $this->assertPostKey('theme');
         $this->assertRequest('POST', 'themes.json');
         $this->assertModel($response);
     }
@@ -65,6 +66,7 @@ final class ThemeResourceTest extends ResourceTestCase
             $this->request('update')
         );
 
+        $this->assertPostKey('theme');
         $this->assertRequest('PUT', 'themes/828155753.json');
         $this->assertModel($response);
     }

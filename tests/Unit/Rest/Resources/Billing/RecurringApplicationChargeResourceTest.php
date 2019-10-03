@@ -32,6 +32,7 @@ final class RecurringApplicationChargeResourceTest extends ResourceTestCase
             $this->request('create')
         );
 
+        $this->assertPostKey('recurring_application_charge');
         $this->assertRequest('POST', 'recurring_application_charges.json');
         $this->assertModel($response);
     }
@@ -46,18 +47,6 @@ final class RecurringApplicationChargeResourceTest extends ResourceTestCase
         $this->assertModel($response);
     }
 
-    public function testFindWithOptions(): void
-    {
-        $this->queue(200, [], $this->response('find'));
-
-        $response = $this->resource->find(455696195, [
-            'fields' => 'id,name'
-        ]);
-
-        $this->assertRequest('GET', 'recurring_application_charges/455696195.json?fields=id,name');
-        $this->assertModel($response);
-    }
-
     public function testGet(): void
     {
         $this->queue(200, [], $this->response('get'));
@@ -66,18 +55,6 @@ final class RecurringApplicationChargeResourceTest extends ResourceTestCase
 
         $this->assertRequest('GET', 'recurring_application_charges.json');
         $this->assertCollection($response, 2);
-    }
-
-    public function testGetWithOptions(): void
-    {
-        $this->queue(200, [], $this->response('get_with_options'));
-
-        $response = $this->resource->get([
-            'since_id' => 455696195
-        ]);
-
-        $this->assertRequest('GET', 'recurring_application_charges.json?since_id=455696195');
-        $this->assertCollection($response);
     }
 
     public function testActivate(): void
@@ -89,6 +66,7 @@ final class RecurringApplicationChargeResourceTest extends ResourceTestCase
             $this->request('activate')
         );
 
+        $this->assertPostKey('recurring_application_charge');
         $this->assertRequest('POST', 'recurring_application_charges/455696195/activate.json');
         $this->assertModel($response);
     }
