@@ -7,6 +7,7 @@ namespace Strawberry\Shopify\Rest\Resources\OnlineStore;
 use Strawberry\Shopify\Models\OnlineStore\Article;
 use Strawberry\Shopify\Rest\ChildResource;
 use Strawberry\Shopify\Rest\Concerns;
+use Strawberry\Shopify\Rest\Resources\Misc\MetafieldResource;
 
 final class BlogArticleResource extends ChildResource
 {
@@ -23,6 +24,15 @@ final class BlogArticleResource extends ChildResource
      * @var string
      */
     protected $model = Article::class;
+
+    /**
+     * A list of the child resources.
+     *
+     * @var string[]
+     */
+    protected $childResources = [
+        'metafields' => MetafieldResource::class,
+    ];
 
     /**
      * Retrieves a list of all tags from a specific blog.

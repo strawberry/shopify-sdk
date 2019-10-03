@@ -7,6 +7,7 @@ namespace Strawberry\Shopify\Rest\Resources\Products;
 use Strawberry\Shopify\Models\Products\Product;
 use Strawberry\Shopify\Rest\Concerns;
 use Strawberry\Shopify\Rest\Resource;
+use Strawberry\Shopify\Rest\Resources\Misc\MetafieldResource;
 
 final class ProductResource extends Resource
 {
@@ -31,6 +32,7 @@ final class ProductResource extends Resource
      */
     protected $childResources = [
         'images' => ImageResource::class,
+        'metafields' => MetafieldResource::class,
         'variants' => ProductVariantResource::class,
     ];
 }

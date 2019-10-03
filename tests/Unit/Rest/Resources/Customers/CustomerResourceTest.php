@@ -9,6 +9,7 @@ use Strawberry\Shopify\Models\Customers\Invitation;
 use Strawberry\Shopify\Models\Orders\Order;
 use Strawberry\Shopify\Rest\Resources\Customers\AddressResource;
 use Strawberry\Shopify\Rest\Resources\Customers\CustomerResource;
+use Strawberry\Shopify\Rest\Resources\Misc\MetafieldResource;
 use Strawberry\Shopify\Tests\Unit\Rest\Resources\ResourceTestCase;
 
 final class CustomerResourceTest extends ResourceTestCase
@@ -26,6 +27,7 @@ final class CustomerResourceTest extends ResourceTestCase
     {
         $this->assertTrue($this->resource->hasChildren());
         $this->assertChild('addresses', AddressResource::class);
+        $this->assertChild('metafields', MetafieldResource::class);
     }
 
     public function testGet(): void

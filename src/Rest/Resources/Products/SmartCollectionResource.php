@@ -7,6 +7,7 @@ namespace Strawberry\Shopify\Rest\Resources\Products;
 use Strawberry\Shopify\Models\Products\SmartCollection;
 use Strawberry\Shopify\Rest\Concerns;
 use Strawberry\Shopify\Rest\Resource;
+use Strawberry\Shopify\Rest\Resources\Misc\MetafieldResource;
 
 final class SmartCollectionResource extends Resource
 {
@@ -23,6 +24,15 @@ final class SmartCollectionResource extends Resource
      * @var string
      */
     protected $model = SmartCollection::class;
+
+    /**
+     * A list of the child resources.
+     *
+     * @var string[]
+     */
+    protected $childResources = [
+        'metafields' => MetafieldResource::class,
+    ];
 
     public function order(int $id, array $products = [], ?string $order = null): void
     {

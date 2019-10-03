@@ -8,6 +8,7 @@ use Strawberry\Shopify\Models\Orders\DraftOrder;
 use Strawberry\Shopify\Models\Orders\DraftOrderInvoice;
 use Strawberry\Shopify\Rest\Concerns;
 use Strawberry\Shopify\Rest\Resource;
+use Strawberry\Shopify\Rest\Resources\Misc\MetafieldResource;
 
 final class DraftOrderResource extends Resource
 {
@@ -24,6 +25,15 @@ final class DraftOrderResource extends Resource
      * @var string
      */
     protected $model = DraftOrder::class;
+
+    /**
+     * A list of the child resources.
+     *
+     * @var string[]
+     */
+    protected $childResources = [
+        'metafields' => MetafieldResource::class,
+    ];
 
     /**
      * Sends an invoice for the draft order.

@@ -10,6 +10,7 @@ use Strawberry\Shopify\Models\Customers\Invitation;
 use Strawberry\Shopify\Models\Orders\Order;
 use Strawberry\Shopify\Rest\Concerns;
 use Strawberry\Shopify\Rest\Resource;
+use Strawberry\Shopify\Rest\Resources\Misc\MetafieldResource;
 
 final class CustomerResource extends Resource
 {
@@ -34,6 +35,7 @@ final class CustomerResource extends Resource
      */
     protected $childResources = [
         'addresses' => AddressResource::class,
+        'metafields' => MetafieldResource::class,
     ];
 
     /**

@@ -4,6 +4,7 @@ namespace Strawberry\Shopify\Tests\Unit\Rest\Resources\Orders;
 
 use Strawberry\Shopify\Models\Orders\DraftOrder;
 use Strawberry\Shopify\Models\Orders\DraftOrderInvoice;
+use Strawberry\Shopify\Rest\Resources\Misc\MetafieldResource;
 use Strawberry\Shopify\Rest\Resources\Orders\DraftOrderResource;
 use Strawberry\Shopify\Tests\Unit\Rest\Resources\ResourceTestCase;
 
@@ -17,6 +18,12 @@ final class DraftOrderResourceTest extends ResourceTestCase
 
     /** @var string */
     protected $dataPath = 'orders/draft_order';
+
+    public function testChildren(): void
+    {
+        $this->assertTrue($this->resource->hasChildren());
+        $this->assertChild('metafields', MetafieldResource::class);
+    }
 
     public function testGet(): void
     {

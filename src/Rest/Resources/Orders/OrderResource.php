@@ -7,6 +7,7 @@ namespace Strawberry\Shopify\Rest\Resources\Orders;
 use Strawberry\Shopify\Models\Orders\Order;
 use Strawberry\Shopify\Rest\Concerns;
 use Strawberry\Shopify\Rest\Resource;
+use Strawberry\Shopify\Rest\Resources\Misc\MetafieldResource;
 use Strawberry\Shopify\Rest\Resources\Shipping\FulfillmentResource;
 
 final class OrderResource extends Resource
@@ -32,6 +33,7 @@ final class OrderResource extends Resource
      */
     protected $childResources = [
         'fulfillments' => FulfillmentResource::class,
+        'metafields' => MetafieldResource::class,
         'refunds' => RefundResource::class,
         'risks' => OrderRiskResource::class,
         'transactions' => TransactionResource::class,
