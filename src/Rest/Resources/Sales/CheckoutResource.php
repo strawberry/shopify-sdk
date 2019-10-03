@@ -48,7 +48,7 @@ final class CheckoutResource extends Resource
     public function complete(string $token): Checkout
     {
         $response = $this->client->post(
-            $this->uri("{$token}/complete"),
+            $this->uri("{$token}/complete")
         );
 
         return $this->toModel($response);
