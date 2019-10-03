@@ -4,14 +4,16 @@ declare(strict_types=1);
 
 namespace Strawberry\Shopify\Http;
 
+use Exception;
 use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Exception\ClientException;
-use GuzzleHttp\Exception\ServerException;
 use GuzzleHttp\Psr7\Request;
-use Strawberry\Shopify\Exceptions\HttpException;
+use Strawberry\Shopify\Exceptions\Api\RateLimitExceeded;
+use Strawberry\Shopify\Exceptions\SdkException;
+use Strawberry\Shopify\Factories\ApiExceptionFactory;
 
 final class Client
 {
+    /** @var ClientInterface */
     private $httpClient;
 
     public function __construct(ClientInterface $httpClient)
@@ -21,6 +23,8 @@ final class Client
 
     /**
      * Makes a request to the Shopify API.
+     *
+     * @throws ApiException
      */
     public function request(
         string $method,
@@ -31,20 +35,35 @@ final class Client
     ): Response {
         try {
             $request = new Request($method, $url, $headers);
+            $options = array_filter(compact('query', 'json'));
 
-            $response = $this->httpClient->send($request, array_filter([
-                'query' => $query,
-                'json' => $json,
-            ]));
-        } catch (ClientException | ServerException $exception) {
-            throw HttpException::failedRequest($exception);
+            return $this->sendRequest($request, $options);
+        } catch (RateLimitExceeded $exception) {
+            usleep($exception->retryAfter());
+
+            return $this->request($method, $url, $query, $json, $headers);
         }
+    }
 
-        return new Response(
-            (string) $response->getBody(),
-            $response->getStatusCode(),
-            $response->getHeaders()
-        );
+    /**
+     * Sends a request to the API. If an error response is received, the most
+     * relevant exception is thrown.
+     *
+     * @throws ApiException
+     */
+    private function sendRequest(Request $request, array $options): Response
+    {
+        try {
+            $response = $this->httpClient->send($request, $options);
+
+            return new Response(
+                (string) $response->getBody(),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            );
+        } catch (Exception $exception) {
+            throw ApiExceptionFactory::make($exception);
+        }
     }
 
     /**

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Strawberry\Shopify\Rest;
 
-use Strawberry\Shopify\Exceptions\ClientException;
+use Strawberry\Shopify\Exceptions\SdkException;
 
 class ResourceProxy
 {
@@ -31,7 +31,7 @@ class ResourceProxy
     /**
      * Forward the call onto the child resource.
      *
-     * @throws ClientException
+     * @throws SdkException
      */
     public function __call(string $method, array $params): ChildResource
     {

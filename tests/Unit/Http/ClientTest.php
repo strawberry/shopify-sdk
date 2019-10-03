@@ -3,14 +3,14 @@
 namespace Strawberry\Shopify\Tests\Unit\Http;
 
 use GuzzleHttp\Client as GuzzleClient;
+use GuzzleHttp\Exception\BadResponseException;
 use GuzzleHttp\Exception\ClientException;
-use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Exception\ServerException;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
-use Strawberry\Shopify\Exceptions\HttpException;
+use Strawberry\Shopify\Exceptions\Api\ApiException;
 use Strawberry\Shopify\Http\Client;
 use Strawberry\Shopify\Tests\TestCase;
 
@@ -46,7 +46,7 @@ final class ClientTest extends TestCase
 
     public function testRequestThatThrowsClientException(): void
     {
-        $this->expectException(HttpException::class);
+        $this->expectException(ApiException::class);
 
         $this->mockHandler->append(
             new ClientException('', new Request('GET', '/'))
@@ -57,13 +57,29 @@ final class ClientTest extends TestCase
 
     public function testRequestThatThrowsServerException(): void
     {
-        $this->expectException(HttpException::class);
+        $this->expectException(ApiException::class);
 
         $this->mockHandler->append(
             new ServerException('', new Request('GET', '/'))
         );
 
         $this->client->request('GET', '/');
+    }
+
+    public function testRequestTriesAgainWhenRateLimitExceeded(): void
+    {
+        $this->mockHandler->append(
+            new BadResponseException(
+                '',
+                new Request('GET', '/'),
+                new Response(429, ['Retry-After' => '0.0'])
+            )
+        );
+        $this->mockHandler->append(new Response(200));
+
+        $response = $this->client->request('GET', '/');
+
+        $this->assertEquals(200, $response->getStatusCode());
     }
 
     public function testGet(): void
