@@ -29,6 +29,10 @@ final class ShopifyServiceProvider extends ServiceProvider
         $this->app->bind(Client::class, function () {
             return new Client($this->makeHttpClient());
         });
+
+        ModelFactory::configure(
+            config('shopify.models')
+        );
     }
 
     /**
