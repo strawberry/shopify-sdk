@@ -65,4 +65,22 @@ final class PaymentResourceTest extends ChildResourceTestCase
         $this->assertRequest('GET', 'checkouts/7yjf4v2we7gamku6a6h7tvm8h3mmvs4x/payments/count.json');
         $this->assertSame(1, $response);
     }
+
+    public function testStartSession(): void
+    {
+        $this->queue(201, [], $this->response('start_session'));
+
+        $response = $this->resource->startSession([
+            'number' => 1,
+            'first_name' => 'John',
+            'last_name' => 'Smith',
+            'month' => '5',
+            'year' => '15',
+            'verification_value' => '123',
+        ]);
+
+        $this->assertRequest('POST', 'https://elb.deposit.shopifycs.com/sessions');
+        $this->assertPostKey('credit_card');
+        $this->assertSame('83hru3obno3hu434b3u', $response);
+    }
 }
