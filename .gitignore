@@ -4,4 +4,3 @@ composer.lock
 .phpunit.result.cache
 .env
 .DS_Store
-.idea/
