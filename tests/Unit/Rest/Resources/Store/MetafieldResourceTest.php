@@ -1,21 +1,15 @@
 <?php
 
-namespace Strawberry\Shopify\Tests\Unit\Rest\Resources\Misc;
+namespace Strawberry\Shopify\Tests\Unit\Rest\Resources\Store;
 
 use Strawberry\Shopify\Models\Misc\Metafield;
-use Strawberry\Shopify\Rest\Resources\Misc\MetafieldResource;
-use Strawberry\Shopify\Rest\Resources\Products\ProductResource;
-use Strawberry\Shopify\Tests\Unit\Rest\Resources\ChildResourceTestCase;
+use Strawberry\Shopify\Rest\Resources\Store\MetafieldResource;
+use Strawberry\Shopify\Tests\Unit\Rest\Resources\ResourceTestCase;
 
-final class MetafieldResourceTest extends ChildResourceTestCase
+final class MetafieldResourceTest extends ResourceTestCase
 {
     /** @var string */
     protected $modelClass = Metafield::class;
-
-    /** @var array */
-    protected $parentResources = [
-        [ProductResource::class, 632910392],
-    ];
 
     /** @var string */
     protected $resourceClass = MetafieldResource::class;
@@ -29,7 +23,7 @@ final class MetafieldResourceTest extends ChildResourceTestCase
 
         $response = $this->resource->get();
 
-        $this->assertRequest('GET', 'products/632910392/metafields.json');
+        $this->assertRequest('GET', 'metafields.json');
         $this->assertCollection($response);
     }
 
@@ -39,7 +33,7 @@ final class MetafieldResourceTest extends ChildResourceTestCase
 
         $response = $this->resource->find(721389482);
 
-        $this->assertRequest('GET', 'products/632910392/metafields/721389482.json');
+        $this->assertRequest('GET', 'metafields/721389482.json');
         $this->assertModel($response);
     }
 
@@ -52,7 +46,7 @@ final class MetafieldResourceTest extends ChildResourceTestCase
         );
 
         $this->assertPostKey('metafield');
-        $this->assertRequest('POST', 'products/632910392/metafields.json');
+        $this->assertRequest('POST', 'metafields.json');
         $this->assertModel($response);
     }
 
@@ -66,7 +60,7 @@ final class MetafieldResourceTest extends ChildResourceTestCase
         );
 
         $this->assertPostKey('metafield');
-        $this->assertRequest('PUT', 'products/632910392/metafields/721389482.json');
+        $this->assertRequest('PUT', 'metafields/721389482.json');
         $this->assertModel($response);
     }
 
@@ -76,7 +70,7 @@ final class MetafieldResourceTest extends ChildResourceTestCase
 
         $response = $this->resource->delete(721389482);
 
-        $this->assertRequest('DELETE', 'products/632910392/metafields/721389482.json');
+        $this->assertRequest('DELETE', 'metafields/721389482.json');
         $this->assertNull($response);
     }
 
@@ -86,7 +80,7 @@ final class MetafieldResourceTest extends ChildResourceTestCase
 
         $response = $this->resource->count();
 
-        $this->assertRequest('GET', 'products/632910392/metafields/count.json');
+        $this->assertRequest('GET', 'metafields/count.json');
         $this->assertSame(1, $response);
     }
 }
