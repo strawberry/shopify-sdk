@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Strawberry\Shopify\Rest\Resources\Misc;
+namespace Strawberry\Shopify\Rest\Resources\Store;
 
 use Strawberry\Shopify\Models\Misc\Metafield;
 use Strawberry\Shopify\Rest\Concerns;
-use Strawberry\Shopify\Rest\ChildResource;
+use Strawberry\Shopify\Rest\Resource;
 
-final class MetafieldResource extends ChildResource
+final class MetafieldResource extends Resource
 {
     use Concerns\ListsResource,
         Concerns\FindsResource,

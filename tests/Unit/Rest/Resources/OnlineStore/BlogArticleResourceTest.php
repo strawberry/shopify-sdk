@@ -3,6 +3,7 @@
 namespace Strawberry\Shopify\Tests\Unit\Rest\Resources\OnlineStore;
 
 use Strawberry\Shopify\Models\OnlineStore\Article;
+use Strawberry\Shopify\Rest\Resources\Misc\MetafieldResource;
 use Strawberry\Shopify\Rest\Resources\OnlineStore\BlogArticleResource;
 use Strawberry\Shopify\Rest\Resources\OnlineStore\BlogResource;
 use Strawberry\Shopify\Tests\Unit\Rest\Resources\ChildResourceTestCase;
@@ -22,6 +23,12 @@ final class BlogArticleResourceTest extends ChildResourceTestCase
 
     /** @var string */
     protected $dataPath = 'online_store/article';
+
+    public function testChildren(): void
+    {
+        $this->assertTrue($this->resource->hasChildren());
+        $this->assertChild('metafields', MetafieldResource::class);
+    }
 
     public function testGet(): void
     {

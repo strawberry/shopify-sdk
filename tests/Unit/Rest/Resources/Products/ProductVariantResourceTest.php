@@ -3,6 +3,7 @@
 namespace Strawberry\Shopify\Tests\Unit\Rest\Resources\Products;
 
 use Strawberry\Shopify\Models\Products\Variant;
+use Strawberry\Shopify\Rest\Resources\Misc\MetafieldResource;
 use Strawberry\Shopify\Rest\Resources\Products\ProductResource;
 use Strawberry\Shopify\Rest\Resources\Products\ProductVariantResource;
 use Strawberry\Shopify\Tests\Unit\Rest\Resources\ChildResourceTestCase;
@@ -22,6 +23,12 @@ final class ProductVariantResourceTest extends ChildResourceTestCase
 
     /** @var string */
     protected $dataPath = 'products/variant';
+
+    public function testChildren(): void
+    {
+        $this->assertTrue($this->resource->hasChildren());
+        $this->assertChild('metafields', MetafieldResource::class);
+    }
 
     public function testGet(): void
     {

@@ -3,6 +3,7 @@
 namespace Strawberry\Shopify\Tests\Unit\Rest\Resources\OnlineStore;
 
 use Strawberry\Shopify\Models\OnlineStore\Blog;
+use Strawberry\Shopify\Rest\Resources\Misc\MetafieldResource;
 use Strawberry\Shopify\Rest\Resources\OnlineStore\ArticleResource;
 use Strawberry\Shopify\Rest\Resources\OnlineStore\BlogArticleResource;
 use Strawberry\Shopify\Rest\Resources\OnlineStore\BlogResource;
@@ -23,6 +24,7 @@ final class BlogResourceTest extends ResourceTestCase
     {
         $this->assertTrue($this->resource->hasChildren());
         $this->assertChild('articles', BlogArticleResource::class);
+        $this->assertChild('metafields', MetafieldResource::class);
     }
 
     public function testGet(): void

@@ -7,6 +7,7 @@ namespace Strawberry\Shopify\Rest\Resources\OnlineStore;
 use Strawberry\Shopify\Models\OnlineStore\Blog;
 use Strawberry\Shopify\Rest\Concerns;
 use Strawberry\Shopify\Rest\Resource;
+use Strawberry\Shopify\Rest\Resources\Misc\MetafieldResource;
 
 final class BlogResource extends Resource
 {
@@ -31,5 +32,6 @@ final class BlogResource extends Resource
      */
     protected $childResources = [
         'articles' => BlogArticleResource::class,
+        'metafields' => MetafieldResource::class,
     ];
 }

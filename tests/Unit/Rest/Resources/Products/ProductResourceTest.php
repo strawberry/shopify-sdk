@@ -3,6 +3,7 @@
 namespace Strawberry\Shopify\Tests\Unit\Rest\Resources\Products;
 
 use Strawberry\Shopify\Models\Products\Product;
+use Strawberry\Shopify\Rest\Resources\Misc\MetafieldResource;
 use Strawberry\Shopify\Rest\Resources\Products\ImageResource;
 use Strawberry\Shopify\Rest\Resources\Products\ProductResource;
 use Strawberry\Shopify\Rest\Resources\Products\ProductVariantResource;
@@ -23,6 +24,7 @@ final class ProductResourceTest extends ResourceTestCase
     {
         $this->assertTrue($this->resource->hasChildren());
         $this->assertChild('images', ImageResource::class);
+        $this->assertChild('metafields', MetafieldResource::class);
         $this->assertChild('variants', ProductVariantResource::class);
     }
 

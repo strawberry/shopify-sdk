@@ -3,6 +3,7 @@
 namespace Strawberry\Shopify\Tests\Unit\Rest\Resources\Products;
 
 use Strawberry\Shopify\Models\Products\SmartCollection;
+use Strawberry\Shopify\Rest\Resources\Misc\MetafieldResource;
 use Strawberry\Shopify\Rest\Resources\Products\SmartCollectionResource;
 use Strawberry\Shopify\Tests\Unit\Rest\Resources\ResourceTestCase;
 
@@ -16,6 +17,12 @@ final class SmartCollectionResourceTest extends ResourceTestCase
 
     /** @var string */
     protected $dataPath = 'products/smart_collection';
+
+    public function testChildren(): void
+    {
+        $this->assertTrue($this->resource->hasChildren());
+        $this->assertChild('metafields', MetafieldResource::class);
+    }
 
     public function testGet(): void
     {

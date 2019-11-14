@@ -6,6 +6,7 @@ namespace Strawberry\Shopify\Rest\Resources\Store;
 
 use Strawberry\Shopify\Models\Store\Shop;
 use Strawberry\Shopify\Rest\Resource;
+use Strawberry\Shopify\Rest\Resources\Misc\MetafieldResource;
 
 final class ShopResource extends Resource
 {
@@ -15,6 +16,15 @@ final class ShopResource extends Resource
      * @var string
      */
     protected $model = Shop::class;
+
+    /**
+     * A list of the child resources.
+     *
+     * @var string[]
+     */
+    protected $childResources = [
+        'metafields' => MetafieldResource::class,
+    ];
 
     /**
      * Retrieves the shop's configuration.
